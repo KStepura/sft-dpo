@@ -1,0 +1,19 @@
+# Core
+transformers==4.57.3
+datasets>=2.19.0
+accelerate>=0.33.0
+peft>=0.18.0
+trl==0.26.2
+huggingface_hub>=0.23.0
+hf_transfer
+
+# Quant / speed
+bitsandbytes>=0.43.1
+sentencepiece>=0.2.0
+
+# Eval
+evaluate>=0.4.2
+rouge-score>=0.1.2
+
+# Utils
+tqdm>=4.66.0

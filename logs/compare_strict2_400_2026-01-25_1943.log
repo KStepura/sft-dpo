@@ -1,0 +1,11 @@
+Loading tokenizer: Qwen/Qwen2.5-3B-Instruct
+Loading base model (4-bit): Qwen/Qwen2.5-3B-Instruct
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|                                            | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|██████████████████                  | 1/2 [00:10<00:10, 10.05s/it]Loading checkpoint shards: 100%|████████████████████████████████████| 2/2 [00:15<00:00,  7.51s/it]Loading checkpoint shards: 100%|████████████████████████████████████| 2/2 [00:15<00:00,  7.89s/it]
+Loading SFT adapter: outputs/qwen2.5-3b-sft-lora
+Reloading base model for DPO (4-bit): Qwen/Qwen2.5-3B-Instruct
+Loading checkpoint shards:   0%|                                            | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|██████████████████                  | 1/2 [00:02<00:02,  2.66s/it]Loading checkpoint shards: 100%|████████████████████████████████████| 2/2 [00:04<00:00,  2.36s/it]Loading checkpoint shards: 100%|████████████████████████████████████| 2/2 [00:04<00:00,  2.40s/it]
+Loading DPO adapter: outputs/qwen2.5-3b-sft-dpo-lora-strict2_400
+Running 5 prompts. Saving to: results/compare_outputs_strict2_400.jsonl
+  done 5/5
+Done.

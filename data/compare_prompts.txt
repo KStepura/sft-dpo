@@ -1,0 +1,5 @@
+Explain RLHF in simple terms.
+Draft a short study plan for learning transformers in 2 weeks.
+Summarize the concept of DPO (Direct Preference Optimization) in 5 bullet points.
+Rewrite this sentence to sound more formal: 'I wanna fix this asap.'
+Give 3 safety considerations when deploying an LLM in a customer support chatbot.

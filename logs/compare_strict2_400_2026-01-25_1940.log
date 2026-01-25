@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/workspace/thesis-llm-alignment/scripts/compare_models.py", line 240, in <module>
+    main()
+  File "/workspace/thesis-llm-alignment/scripts/compare_models.py", line 169, in main
+    prompts = read_prompts(args.prompts_path)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/thesis-llm-alignment/scripts/compare_models.py", line 50, in read_prompts
+    with open(path, "r", encoding="utf-8") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'data/compare_prompts.txt'

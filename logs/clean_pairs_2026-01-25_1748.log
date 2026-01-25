@@ -1,0 +1,4 @@
+Done. total=789, kept=678, dropped=111, trimmed=24
+Dropped breakdown: json=0, short=54, trunc=54, equal=3
+Saved to: data/dpo_pairs.strict.jsonl
+Stats saved to: data/dpo_pairs.strict.jsonl.stats.json

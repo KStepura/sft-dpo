@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-01-25 17:48:38",
+  "in_path": "data/dpo_pairs.jsonl",
+  "out_path": "data/dpo_pairs.strict.jsonl",
+  "min_chars": 20,
+  "drop_if_truncated": true,
+  "drop_if_equal": true,
+  "make_strict_prompt": true,
+  "total": 789,
+  "kept": 678,
+  "dropped": 111,
+  "trimmed": 24,
+  "dropped_json": 0,
+  "dropped_short": 54,
+  "dropped_trunc": 54,
+  "dropped_equal": 3
+}
