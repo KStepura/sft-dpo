@@ -2,8 +2,20 @@ __pycache__/
 *.pyc
 .venv/
 .ipynb_checkpoints/
+**/.ipynb_checkpoints/
 .cache/
 wandb/
-runs/*
-outputs/**/checkpoint-*/
-outputs/**/*.safetensors
+
+# Generated training/eval artifacts
+logs/
+outputs/
+results/
+
+# Keep scripts in runs/, ignore only runtime leftovers
+runs/*.log
+runs/*.out
+
+# Generated data files from local pipeline runs
+data/compare_prompts.smoke.txt
+data/dpo_pairs*.jsonl
+data/*.stats.json

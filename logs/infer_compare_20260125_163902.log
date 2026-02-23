@@ -1,52 +1,0 @@
-Loading tokenizer: Qwen/Qwen2.5-3B-Instruct
-Loading BASE model...
-`torch_dtype` is deprecated! Use `dtype` instead!
-Loading checkpoint shards:   0%|                                 | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|████████████▌            | 1/2 [00:09<00:09,  9.45s/it]Loading checkpoint shards: 100%|█████████████████████████| 2/2 [00:15<00:00,  7.20s/it]Loading checkpoint shards: 100%|█████████████████████████| 2/2 [00:15<00:00,  7.54s/it]
-Loading SFT LoRA...
-Loading DPO LoRA...
-Loading checkpoint shards:   0%|                                 | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|████████████▌            | 1/2 [00:00<00:00,  1.20it/s]Loading checkpoint shards: 100%|█████████████████████████| 2/2 [00:01<00:00,  1.61it/s]Loading checkpoint shards: 100%|█████████████████████████| 2/2 [00:01<00:00,  1.53it/s]
-
-=== Prompt 1/10 ===
-Explain RLHF in simple terms.
-
-
-=== Prompt 2/10 ===
-Write a polite email asking for an extension on a deadline.
-
-
-=== Prompt 3/10 ===
-Give 5 bullet points on why unit tests matter.
-
-
-=== Prompt 4/10 ===
-Translate to English: 'Мне нужно подготовить отчет по экспериментам.'
-
-
-=== Prompt 5/10 ===
-Solve: If a train travels 120 km in 1.5 hours, what is its average speed?
-
-
-=== Prompt 6/10 ===
-Summarize in 3 sentences: The internet changed how people communicate and learn.
-
-
-=== Prompt 7/10 ===
-Write a short Python function to compute factorial.
-
-
-=== Prompt 8/10 ===
-What are two pros and two cons of remote work?
-
-
-=== Prompt 9/10 ===
-Explain what overfitting is and how to reduce it.
-
-
-=== Prompt 10/10 ===
-Draft a short study plan for learning transformers in 2 weeks.
-
-
-Saved: results/compare_outputs.jsonl
-Done in 183.2s
-
-Tip: open file with: head -n 1 results/compare_outputs.jsonl
