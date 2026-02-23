@@ -84,8 +84,7 @@ def generate_one(
     do_sample: bool,
 ) -> str:
     inputs = tok(prompt_text, return_tensors="pt")
-    # device_map="auto" -> часть может быть на разных девайсах, но input_ids обычно на первом.
-    # Для 4-bit чаще всего всё на одной GPU, но на всякий:
+    # device_map="auto" ->:
     if hasattr(model, "device"):
         device = model.device
         inputs = {k: v.to(device) for k, v in inputs.items()}
@@ -104,7 +103,6 @@ def generate_one(
 
     decoded = tok.decode(out[0], skip_special_tokens=True)
 
-    # аккуратно вырежем prompt (если он префикс)
     if decoded.startswith(prompt_text):
         return decoded[len(prompt_text):].strip()
     return decoded.strip()

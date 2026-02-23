@@ -76,8 +76,6 @@ def main():
         optim="paged_adamw_8bit",
         warmup_ratio=0.03,
         lr_scheduler_type="cosine",
-
-        # ВАЖНО: длина задается здесь
         max_length=args.max_seq_len,
     )
 
@@ -175,8 +173,6 @@ def main():
         optim="paged_adamw_8bit",
         warmup_ratio=0.03,
         lr_scheduler_type="cosine",
-
-        # ВАЖНО: длина задается здесь
         max_length=args.max_seq_len,
     )
 

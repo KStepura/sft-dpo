@@ -43,7 +43,6 @@ def main():
     os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
     os.makedirs(os.path.dirname(args.out_path), exist_ok=True)
 
-    # Небольшой фикс: у Qwen часто pad_token не задан
     print("Loading tokenizer:", args.base_model_id)
     tok = AutoTokenizer.from_pretrained(args.base_model_id, use_fast=True)
     if tok.pad_token is None:
