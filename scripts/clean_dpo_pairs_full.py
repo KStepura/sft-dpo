@@ -4,7 +4,7 @@ import argparse
 from collections import Counter
 
 # режем любые "переходы" к следующему диалогу/инструкции
-CUT_PATTERNS = [
+CUT_PATTERNS_ALPACA = [
     r"###\s*Instruction\s*:",
     r"###\s*Input\s*:",
     r"###\s*Response\s*:",
@@ -14,27 +14,39 @@ CUT_PATTERNS = [
     r"You are an AI assistant\.",
 ]
 
+# Qwen-style chat markers (and generic role tags)
+CUT_PATTERNS_CHAT = CUT_PATTERNS_ALPACA + [
+    r"<\|im_start\|>\s*user",
+    r"<\|im_start\|>\s*system",
+    r"<\|im_start\|>\s*assistant",
+    r"<\|im_end\|>",
+    r"<\|redacted_im_end\|>",
+]
+
+
 def norm_ws(s: str) -> str:
     s = (s or "").replace("\r\n", "\n").replace("\r", "\n")
     s = re.sub(r"\n{3,}", "\n\n", s)
     return s.strip()
 
-def clean_prompt(p: str) -> str:
+
+def clean_prompt(p: str, prompt_style: str) -> str:
     p = norm_ws(p)
-    # гарантируем, что prompt заканчивается ровно на "### Response:"
-    if "### Response:" in p:
-        head, _sep, _tail = p.partition("### Response:")
-        p = head + "### Response:"
-    else:
-        p = p + "\n\n### Response:"
+    if prompt_style == "alpaca":
+        if "### Response:" in p:
+            head, _sep, _tail = p.partition("### Response:")
+            p = head + "### Response:"
+        else:
+            p = p + "\n\n### Response:"
     return p
 
-def cut_at_markers(x: str) -> str:
+
+def cut_at_markers(x: str, patterns: list[str]) -> str:
     """Обрезает по самому раннему вхождению любого маркера (даже если он не на новой строке)."""
     if not x:
         return ""
     hits = []
-    for pat in CUT_PATTERNS:
+    for pat in patterns:
         m = re.search(pat, x)
         if m:
             hits.append(m.start())
@@ -42,15 +54,16 @@ def cut_at_markers(x: str) -> str:
         x = x[:min(hits)].strip()
     return x
 
-def postprocess_text(x: str) -> str:
+
+def postprocess_text(x: str, prompt_style: str) -> str:
     x0 = x or ""
     x = norm_ws(x0)
 
     # если модель начала с "### Response:" — убираем
     x = re.sub(r"^\s*###\s*Response\s*:\s*", "", x).strip()
 
-    # режем по любым маркерам следующей инструкции/роли
-    x = cut_at_markers(x)
+    patterns = CUT_PATTERNS_CHAT if prompt_style == "chat" else CUT_PATTERNS_ALPACA
+    x = cut_at_markers(x, patterns)
 
     # иногда "### Response:" встречается несколько раз — оставим последнюю часть
     # (после cut_at_markers это обычно уже не нужно, но оставим на всякий)
@@ -64,6 +77,7 @@ def postprocess_text(x: str) -> str:
 
     return x
 
+
 def looks_truncated(x: str) -> bool:
     x = (x or "").strip()
     if not x:
@@ -72,6 +86,7 @@ def looks_truncated(x: str) -> bool:
         return True
     return False
 
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--in_path", required=True)
@@ -79,8 +94,18 @@ def main():
     ap.add_argument("--min_chars", type=int, default=20)
     ap.add_argument("--drop_if_truncated", action="store_true")
     ap.add_argument("--drop_if_equal", action="store_true")
-    ap.add_argument("--make_strict_prompt", action="store_true",
-                    help="prompt в выходе будет без финального \\n и ровно заканчивается на '### Response:'")
+    ap.add_argument(
+        "--prompt_style",
+        type=str,
+        choices=("chat", "alpaca"),
+        default="chat",
+        help="Должен совпадать с build_dpo_pairs / train_sft.",
+    )
+    ap.add_argument(
+        "--make_strict_prompt",
+        action="store_true",
+        help="alpaca: prompt заканчивается на '### Response:'. chat: убирает лишние хвостовые \\n.",
+    )
     ap.add_argument("--stats_path", default=None, help="куда сохранить статистику (json)")
     args = ap.parse_args()
 
@@ -106,9 +131,9 @@ def main():
             chosen = obj.get("chosen", "")
             rejected = obj.get("rejected", "")
 
-            prompt2 = clean_prompt(prompt)
-            chosen2 = postprocess_text(chosen)
-            rejected2 = postprocess_text(rejected)
+            prompt2 = clean_prompt(prompt, args.prompt_style)
+            chosen2 = postprocess_text(chosen, args.prompt_style)
+            rejected2 = postprocess_text(rejected, args.prompt_style)
 
             if (prompt2 != norm_ws(prompt)) or (chosen2 != norm_ws(chosen)) or (rejected2 != norm_ws(rejected)):
                 trimmed += 1
@@ -132,8 +157,16 @@ def main():
                 reasons["chosen_eq_rejected"] += 1
                 continue
 
+            if args.make_strict_prompt:
+                if args.prompt_style == "alpaca":
+                    out_prompt = prompt2
+                else:
+                    out_prompt = prompt2.rstrip("\n")
+            else:
+                out_prompt = prompt2 + "\n"
+
             out = {
-                "prompt": prompt2 if args.make_strict_prompt else (prompt2 + "\n"),
+                "prompt": out_prompt,
                 "chosen": chosen2,
                 "rejected": rejected2,
             }
@@ -155,6 +188,7 @@ def main():
         with open(args.stats_path, "w", encoding="utf-8") as f:
             json.dump(stats, f, ensure_ascii=False, indent=2)
         print(f"Stats saved to: {args.stats_path}")
+
 
 if __name__ == "__main__":
     main()

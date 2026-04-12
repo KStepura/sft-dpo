@@ -1,0 +1,51 @@
+{
+  "name": "smoke_cpu",
+  "base_model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "dataset_id": "tatsu-lab/alpaca",
+  "prompt_style": "chat",
+  "seed": 42,
+  "paths": {
+    "data_raw": "data/dpo_pairs.smoke_cpu.raw.jsonl",
+    "data_clean": "data/dpo_pairs.smoke_cpu.clean.jsonl",
+    "outputs_root": "outputs/experiments"
+  },
+  "data": {
+    "num_examples": 8,
+    "max_new_tokens": 48,
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "min_chars": 20,
+    "drop_if_truncated": true,
+    "drop_if_equal": true,
+    "make_strict_prompt": true
+  },
+  "sft": {
+    "max_steps": 2,
+    "max_train_samples": 4096,
+    "lr": 0.0002,
+    "batch_size": 1,
+    "grad_accum": 4,
+    "max_seq_len": 512
+  },
+  "dpo": {
+    "betas": [0.1],
+    "max_steps": 2,
+    "lr": 1e-05,
+    "batch_size": 1,
+    "grad_accum": 4,
+    "max_length": 512,
+    "max_prompt_length": 256
+  },
+  "eval": {
+    "prompts": [
+      "Explain RLHF in simple terms.",
+      "Give 3 bullet points on why unit tests matter.",
+      "Translate to English: 'Мне нужно подготовить отчет по экспериментам.'",
+      "What is overfitting and how can we reduce it?"
+    ],
+    "max_new_tokens": 64,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "do_sample": false
+  }
+}

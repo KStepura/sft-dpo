@@ -13,4 +13,5 @@ python scripts/train_dpo.py \
   --max_length 1024 \
   --max_prompt_length 512 \
   --lr 1e-5 \
-  --beta 0.1
+  --beta 0.1 \
+  --seed 42

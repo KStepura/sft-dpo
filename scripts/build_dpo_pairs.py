@@ -6,13 +6,15 @@ import torch
 from datasets import load_dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
+from prompt_utils import format_alpaca_prompt_prefix, format_chat_prompt_prefix
 
-def make_prompt(ex) -> str:
-    instr = (ex.get("instruction") or "").strip()
-    inp = (ex.get("input") or "").strip()
-    if inp:
-        return f"### Instruction:\n{instr}\n\n### Input:\n{inp}\n\n### Response:\n"
-    return f"### Instruction:\n{instr}\n\n### Response:\n"
+
+def make_prompt(ex, tok, prompt_style: str) -> str:
+    instr = ex.get("instruction") or ""
+    inp = ex.get("input") or ""
+    if prompt_style == "chat":
+        return format_chat_prompt_prefix(tok, instr, inp)
+    return format_alpaca_prompt_prefix(instr, inp)
 
 
 def postprocess_rejected(text: str) -> str:
@@ -36,6 +38,13 @@ def main():
     ap.add_argument("--max_new_tokens", type=int, default=128)
     ap.add_argument("--temperature", type=float, default=0.7)
     ap.add_argument("--top_p", type=float, default=0.9)
+    ap.add_argument(
+        "--prompt_style",
+        type=str,
+        choices=("chat", "alpaca"),
+        default="chat",
+        help="Must match SFT / cleaning (chat for *-Instruct models).",
+    )
 
     args = ap.parse_args()
     os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
@@ -49,18 +58,19 @@ def main():
     if tok.pad_token is None:
         tok.pad_token = tok.eos_token
 
-    bnb_cfg = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.bfloat16,
-        bnb_4bit_use_double_quant=True,
-    )
+    has_cuda = torch.cuda.is_available()
+    quantization_config = None
+    model_kwargs = {"device_map": "auto"} if has_cuda else {}
+    if has_cuda:
+        quantization_config = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_compute_dtype=torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16,
+            bnb_4bit_use_double_quant=True,
+        )
+        model_kwargs["quantization_config"] = quantization_config
 
-    model = AutoModelForCausalLM.from_pretrained(
-        args.base_model_id,
-        device_map="auto",
-        quantization_config=bnb_cfg,
-    )
+    model = AutoModelForCausalLM.from_pretrained(args.base_model_id, **model_kwargs)
     model.eval()
 
     os.makedirs(os.path.dirname(args.out_path), exist_ok=True)
@@ -68,7 +78,7 @@ def main():
     written = 0
     with open(args.out_path, "w", encoding="utf-8") as f:
         for i, ex in enumerate(ds):
-            prompt = make_prompt(ex)
+            prompt = make_prompt(ex, tok, args.prompt_style)
             chosen = (ex.get("output") or "").strip()
 
             inputs = tok(prompt, return_tensors="pt")

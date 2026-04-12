@@ -9,4 +9,6 @@ python scripts/train_sft.py \
   --max_steps 200 \
   --batch_size 1 \
   --grad_accum 16 \
-  --max_seq_len 1024
+  --max_seq_len 1024 \
+  --seed 42 \
+  --prompt_style chat

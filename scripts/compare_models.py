@@ -108,19 +108,21 @@ def generate_one(
     return decoded.strip()
 
 
-def load_base_4bit(base_model_id: str) -> AutoModelForCausalLM:
-    bnb_cfg = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.bfloat16 if torch.cuda.is_available() else torch.float16,
-        bnb_4bit_use_double_quant=True,
-    )
-    model = AutoModelForCausalLM.from_pretrained(
-        base_model_id,
-        device_map="auto",
-        quantization_config=bnb_cfg,
-        torch_dtype=(torch.bfloat16 if torch.cuda.is_available() else torch.float16),
-    )
+def load_base_model(base_model_id: str) -> AutoModelForCausalLM:
+    has_cuda = torch.cuda.is_available()
+    model_kwargs = {"device_map": "auto"} if has_cuda else {}
+    if has_cuda:
+        bnb_cfg = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_compute_dtype=torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16,
+            bnb_4bit_use_double_quant=True,
+        )
+        model_kwargs["quantization_config"] = bnb_cfg
+        model_kwargs["torch_dtype"] = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
+    else:
+        model_kwargs["torch_dtype"] = torch.float32
+    model = AutoModelForCausalLM.from_pretrained(base_model_id, **model_kwargs)
     model.eval()
     return model
 
@@ -170,16 +172,16 @@ def main():
     print(f"Loading tokenizer: {args.base_model_id}")
     tok = load_tokenizer(args.base_model_id)
 
-    print(f"Loading base model (4-bit): {args.base_model_id}")
-    base_model = load_base_4bit(args.base_model_id)
+    print(f"Loading base model: {args.base_model_id}")
+    base_model = load_base_model(args.base_model_id)
 
     print(f"Loading SFT adapter: {args.sft_adapter_dir}")
     sft_model = attach_lora(base_model, args.sft_adapter_dir)
 
     # Чтобы DPO не “наследовал” SFT-адаптер внутри того же объекта, грузим отдельную копию base.
     # Это чуть дороже по памяти, но сравнение будет корректным.
-    print(f"Reloading base model for DPO (4-bit): {args.base_model_id}")
-    base_for_dpo = load_base_4bit(args.base_model_id)
+    print(f"Reloading base model for DPO: {args.base_model_id}")
+    base_for_dpo = load_base_model(args.base_model_id)
 
     print(f"Loading DPO adapter: {args.dpo_adapter_dir}")
     dpo_model = attach_lora(base_for_dpo, args.dpo_adapter_dir)
