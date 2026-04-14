@@ -39,6 +39,14 @@ pip install --upgrade torch torchvision torchaudio --index-url https://download.
 
 Подставьте нужный индекс с [pytorch.org](https://pytorch.org/get-started/locally/).
 
+То же одной командой из корня репозитория (по умолчанию **cu124**; для другой линии CUDA — аргументом):
+
+```bash
+source env.sh
+bash runs/install_torch_cuda.sh        # cu124
+bash runs/install_torch_cuda.sh cu121  # пример: другой wheel-индекс
+```
+
 Опционально для приватных/гейтед моделей:
 
 ```bash
