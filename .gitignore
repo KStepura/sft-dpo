@@ -20,3 +20,7 @@ runs/*.out
 data/compare_prompts.smoke.txt
 data/dpo_pairs*.jsonl
 data/*.stats.json
+
+# Local thesis/project texts (do not commit)
+text_diploma/
+text_project_proposal/
