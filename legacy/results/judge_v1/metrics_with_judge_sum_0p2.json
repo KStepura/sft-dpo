@@ -1,0 +1,31 @@
+{
+  "track": "summarization",
+  "num_eval_items": 40,
+  "base": {
+    "rougeL_f1": 0.2919
+  },
+  "sft": {
+    "rougeL_f1": 0.2919
+  },
+  "dpo": {
+    "rougeL_f1": 0.2859
+  },
+  "primary_metric": "rougeL_f1",
+  "llm_judge": {
+    "judge_model": "qwen2.5:7b",
+    "judge_base_url": "http://127.0.0.1:11434/v1",
+    "judge_json_mode": false,
+    "judge_sleep_sec": 0.15,
+    "num_judged_items": 40,
+    "judge_failures": 0,
+    "base": {
+      "llm_judge_score": 7.0
+    },
+    "sft": {
+      "llm_judge_score": 7.0
+    },
+    "dpo": {
+      "llm_judge_score": 7.0
+    }
+  }
+}

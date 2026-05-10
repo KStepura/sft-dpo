@@ -1,26 +1,60 @@
+# ───────────────────────────────────────────────────────────
+# Python / venv / caches
+# ───────────────────────────────────────────────────────────
 __pycache__/
 **/__pycache__/
 *.pyc
+*.egg-info/
 .venv/
 .ipynb_checkpoints/
 **/.ipynb_checkpoints/
 .cache/
 wandb/
 
-# Generated training/eval artifacts
-logs/
-outputs/
-results/
+# OS
+.DS_Store
 
-# Keep scripts in runs/, ignore only runtime leftovers
-runs/*.log
-runs/*.out
+# Editor / IDE local metadata
+.vscode/
+.idea/
 
-# Generated data files from local pipeline runs
-data/compare_prompts.smoke.txt
-data/dpo_pairs*.jsonl
-data/*.stats.json
+# Local-only notes and any dotfile-prefixed scratch files
+.session*
+.notes*
+.memory*
 
-# Local thesis/project texts (do not commit)
+# ───────────────────────────────────────────────────────────
+# Private / drafts (kept locally only)
+# ───────────────────────────────────────────────────────────
+overleaf text/
 text_diploma/
 text_project_proposal/
+draft/
+final/
+
+# ───────────────────────────────────────────────────────────
+# Heavy / regenerable artifacts
+#   outputs/ — LoRA adapters and DPO checkpoints (~27 GB)
+#   logs/    — raw stdout/stderr of training and overnight chains
+# ───────────────────────────────────────────────────────────
+/outputs/
+/logs/
+
+# ───────────────────────────────────────────────────────────
+# DPO preference pairs are regenerable from raw datasets;
+# eval refs (data/refs.*.jsonl) ARE committed.
+# ───────────────────────────────────────────────────────────
+data/dpo_pairs*.jsonl
+data/*.stats.json
+data/compare_prompts.smoke.txt
+
+# ───────────────────────────────────────────────────────────
+# Legacy planning notes (keep locally; superseded by docs/*.md)
+# ───────────────────────────────────────────────────────────
+legacy/docs/*.md
+
+# ───────────────────────────────────────────────────────────
+# Generated markdown reports (CSV stays canonical; MD from scripts)
+# ───────────────────────────────────────────────────────────
+/results/aggregate.md
+/results/raw_vs_clean.md

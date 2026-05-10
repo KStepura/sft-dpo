@@ -1,0 +1,34 @@
+Saved metrics to results/experiments/benchmark_dialog_base_20260503_182808/metrics/metrics_beta_0p05.json
+Saved metrics to results/experiments/benchmark_dialog_base_20260503_182808/metrics/metrics_beta_0p1.json
+Saved metrics to results/experiments/benchmark_dialog_base_20260503_182808/metrics/metrics_beta_0p2.json
+Saved metrics to results/experiments/benchmark_dialog_base_20260503_182808/metrics/metrics_beta_0p5.json
+Saved metrics to results/experiments/benchmark_mbpp_code_base_20260504_042309/metrics/metrics_beta_0p1.json
+Saved metrics to results/experiments/benchmark_mbpp_code_base_20260504_042309/metrics/metrics_beta_0p2.json
+Saved metrics to results/experiments/benchmark_summarization_base_20260503_232644/metrics/metrics_beta_0p05.json
+Saved metrics to results/experiments/benchmark_summarization_base_20260503_232644/metrics/metrics_beta_0p1.json
+Saved metrics to results/experiments/benchmark_summarization_base_20260503_232644/metrics/metrics_beta_0p2.json
+Saved metrics to results/experiments/benchmark_summarization_base_20260503_232644/metrics/metrics_beta_0p5.json
+Scanning results/experiments ...
+
+  [skip] smoke_quick_base_20260503_003133: track not set in summary.json
+Experiments : 3
+Compare files: 10
+Prompts      : 280
+API calls    : ~1680  (3 pairs × 2 directions × prompts)
+Sleep/call   : 0.15s  →  sleep budget ~252s
+
+=== benchmark_dialog_base_20260503_182808  track=dialog  (4 beta(s)) ===
+  compare_beta_0p05.jsonl  (25 prompts, ~150 calls)  → metrics_beta_0p05.json
+  compare_beta_0p1.jsonl  (25 prompts, ~150 calls)  → metrics_beta_0p1.json
+  compare_beta_0p2.jsonl  (25 prompts, ~150 calls)  → metrics_beta_0p2.json
+  compare_beta_0p5.jsonl  (25 prompts, ~150 calls)  → metrics_beta_0p5.json
+=== benchmark_mbpp_code_base_20260504_042309  track=code  (2 beta(s)) ===
+  compare_beta_0p1.jsonl  (40 prompts, ~240 calls)  → metrics_beta_0p1.json
+  compare_beta_0p2.jsonl  (40 prompts, ~240 calls)  → metrics_beta_0p2.json
+=== benchmark_summarization_base_20260503_232644  track=summarization  (4 beta(s)) ===
+  compare_beta_0p05.jsonl  (25 prompts, ~150 calls)  → metrics_beta_0p05.json
+  compare_beta_0p1.jsonl  (25 prompts, ~150 calls)  → metrics_beta_0p1.json
+  compare_beta_0p2.jsonl  (25 prompts, ~150 calls)  → metrics_beta_0p2.json
+  compare_beta_0p5.jsonl  (25 prompts, ~150 calls)  → metrics_beta_0p5.json
+
+Done in 1197s.  ok=10  errors=0

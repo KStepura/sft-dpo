@@ -1,0 +1,14 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading tokenizer: Qwen/Qwen2.5-3B
+Loading base model (чистый inference): Qwen/Qwen2.5-3B
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:11<00:11, 11.89s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:18<00:00,  8.84s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:18<00:00,  9.30s/it]
+Loading separate base copy for SFT adapter: Qwen/Qwen2.5-3B
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.79s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:06<00:00,  3.02s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:06<00:00,  3.14s/it]
+Loading SFT adapter: outputs/experiments/pilot_alpaca_sft_dpo_base_20260503_004025/sft
+Loading separate base copy for DPO adapter: Qwen/Qwen2.5-3B
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.98s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:06<00:00,  3.09s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:06<00:00,  3.23s/it]
+Loading DPO adapter: outputs/experiments/pilot_alpaca_sft_dpo_base_20260503_004025/dpo_beta_0p2
+Running 7 prompts. Saving to: results/experiments/pilot_alpaca_sft_dpo_base_20260503_004025/compare/compare_beta_0p2.jsonl
+  done 5/7
+  done 7/7
+Done.

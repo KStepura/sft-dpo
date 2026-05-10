@@ -1,0 +1,235 @@
+{
+  "exp_id": "benchmark_summarization_base_20260503_232644",
+  "created_at": "2026-05-04T04:23:01",
+  "config_path": "/workspace/thesis-llm-alignment/configs/benchmark_summarization_base.json",
+  "seed": 42,
+  "track": "summarization",
+  "clean_stats_path": "results/experiments/benchmark_summarization_base_20260503_232644/clean_stats.json",
+  "steps": [
+    {
+      "name": "build_dpo_pairs",
+      "seconds": 4278.26,
+      "log_path": "results/experiments/benchmark_summarization_base_20260503_232644/logs/01_build_dpo_pairs.log"
+    },
+    {
+      "name": "clean_dpo_pairs",
+      "seconds": 0.24,
+      "log_path": "results/experiments/benchmark_summarization_base_20260503_232644/logs/02_clean_dpo_pairs.log"
+    },
+    {
+      "name": "train_sft",
+      "seconds": 2748.36,
+      "log_path": "results/experiments/benchmark_summarization_base_20260503_232644/logs/03_train_sft.log"
+    },
+    {
+      "name": "train_dpo_beta_0p05",
+      "seconds": 2280.93,
+      "log_path": "results/experiments/benchmark_summarization_base_20260503_232644/logs/04_train_dpo_beta_0p05.log"
+    },
+    {
+      "name": "compare_beta_0p05",
+      "seconds": 520.17,
+      "log_path": "results/experiments/benchmark_summarization_base_20260503_232644/logs/05_compare_beta_0p05.log"
+    },
+    {
+      "name": "eval_metrics_beta_0p05",
+      "seconds": 3.27,
+      "log_path": "results/experiments/benchmark_summarization_base_20260503_232644/logs/06_eval_metrics_beta_0p05.log"
+    },
+    {
+      "name": "train_dpo_beta_0p1",
+      "seconds": 2136.72,
+      "log_path": "results/experiments/benchmark_summarization_base_20260503_232644/logs/04_train_dpo_beta_0p1.log"
+    },
+    {
+      "name": "compare_beta_0p1",
+      "seconds": 505.69,
+      "log_path": "results/experiments/benchmark_summarization_base_20260503_232644/logs/05_compare_beta_0p1.log"
+    },
+    {
+      "name": "eval_metrics_beta_0p1",
+      "seconds": 2.47,
+      "log_path": "results/experiments/benchmark_summarization_base_20260503_232644/logs/06_eval_metrics_beta_0p1.log"
+    },
+    {
+      "name": "train_dpo_beta_0p2",
+      "seconds": 2154.07,
+      "log_path": "results/experiments/benchmark_summarization_base_20260503_232644/logs/04_train_dpo_beta_0p2.log"
+    },
+    {
+      "name": "compare_beta_0p2",
+      "seconds": 509.65,
+      "log_path": "results/experiments/benchmark_summarization_base_20260503_232644/logs/05_compare_beta_0p2.log"
+    },
+    {
+      "name": "eval_metrics_beta_0p2",
+      "seconds": 4.72,
+      "log_path": "results/experiments/benchmark_summarization_base_20260503_232644/logs/06_eval_metrics_beta_0p2.log"
+    },
+    {
+      "name": "train_dpo_beta_0p5",
+      "seconds": 2140.88,
+      "log_path": "results/experiments/benchmark_summarization_base_20260503_232644/logs/04_train_dpo_beta_0p5.log"
+    },
+    {
+      "name": "compare_beta_0p5",
+      "seconds": 487.56,
+      "log_path": "results/experiments/benchmark_summarization_base_20260503_232644/logs/05_compare_beta_0p5.log"
+    },
+    {
+      "name": "eval_metrics_beta_0p5",
+      "seconds": 3.78,
+      "log_path": "results/experiments/benchmark_summarization_base_20260503_232644/logs/06_eval_metrics_beta_0p5.log"
+    }
+  ],
+  "compare": [
+    {
+      "beta": 0.05,
+      "path": "results/experiments/benchmark_summarization_base_20260503_232644/compare/compare_beta_0p05.jsonl",
+      "stats": {
+        "num_prompts": 25,
+        "avg_len_base": 598.0,
+        "avg_len_sft": 189.9,
+        "avg_len_dpo": 284.2
+      },
+      "dpo_metrics_path": "outputs/experiments/benchmark_summarization_base_20260503_232644/dpo_beta_0p05/dpo_metrics.json",
+      "dpo_metrics": {
+        "kl_final": null,
+        "loss_final": 0.24,
+        "reward_margin_final": 2.0318706035614014,
+        "num_log_records": 20,
+        "checkpoint": "outputs/experiments/benchmark_summarization_base_20260503_232644/dpo_beta_0p05/checkpoint-200",
+        "kl_candidates": {},
+        "beta": 0.05,
+        "max_steps": 200,
+        "dpo_data_path": "data/dpo_pairs.benchmark_summarization_base.clean.jsonl"
+      },
+      "metrics_path": "results/experiments/benchmark_summarization_base_20260503_232644/metrics/metrics_beta_0p05.json",
+      "metrics": {
+        "track": "summarization",
+        "num_eval_items": 25,
+        "base": {
+          "rougeL_f1": 0.1881
+        },
+        "sft": {
+          "rougeL_f1": 0.3103
+        },
+        "dpo": {
+          "rougeL_f1": 0.2199
+        },
+        "primary_metric": "rougeL_f1"
+      }
+    },
+    {
+      "beta": 0.1,
+      "path": "results/experiments/benchmark_summarization_base_20260503_232644/compare/compare_beta_0p1.jsonl",
+      "stats": {
+        "num_prompts": 25,
+        "avg_len_base": 598.0,
+        "avg_len_sft": 189.9,
+        "avg_len_dpo": 272.6
+      },
+      "dpo_metrics_path": "outputs/experiments/benchmark_summarization_base_20260503_232644/dpo_beta_0p1/dpo_metrics.json",
+      "dpo_metrics": {
+        "kl_final": null,
+        "loss_final": 0.1481,
+        "reward_margin_final": 3.148477792739868,
+        "num_log_records": 20,
+        "checkpoint": "outputs/experiments/benchmark_summarization_base_20260503_232644/dpo_beta_0p1/checkpoint-200",
+        "kl_candidates": {},
+        "beta": 0.1,
+        "max_steps": 200,
+        "dpo_data_path": "data/dpo_pairs.benchmark_summarization_base.clean.jsonl"
+      },
+      "metrics_path": "results/experiments/benchmark_summarization_base_20260503_232644/metrics/metrics_beta_0p1.json",
+      "metrics": {
+        "track": "summarization",
+        "num_eval_items": 25,
+        "base": {
+          "rougeL_f1": 0.1881
+        },
+        "sft": {
+          "rougeL_f1": 0.3103
+        },
+        "dpo": {
+          "rougeL_f1": 0.2228
+        },
+        "primary_metric": "rougeL_f1"
+      }
+    },
+    {
+      "beta": 0.2,
+      "path": "results/experiments/benchmark_summarization_base_20260503_232644/compare/compare_beta_0p2.jsonl",
+      "stats": {
+        "num_prompts": 25,
+        "avg_len_base": 598.0,
+        "avg_len_sft": 189.9,
+        "avg_len_dpo": 271.5
+      },
+      "dpo_metrics_path": "outputs/experiments/benchmark_summarization_base_20260503_232644/dpo_beta_0p2/dpo_metrics.json",
+      "dpo_metrics": {
+        "kl_final": null,
+        "loss_final": 0.0797,
+        "reward_margin_final": 4.704823017120361,
+        "num_log_records": 20,
+        "checkpoint": "outputs/experiments/benchmark_summarization_base_20260503_232644/dpo_beta_0p2/checkpoint-200",
+        "kl_candidates": {},
+        "beta": 0.2,
+        "max_steps": 200,
+        "dpo_data_path": "data/dpo_pairs.benchmark_summarization_base.clean.jsonl"
+      },
+      "metrics_path": "results/experiments/benchmark_summarization_base_20260503_232644/metrics/metrics_beta_0p2.json",
+      "metrics": {
+        "track": "summarization",
+        "num_eval_items": 25,
+        "base": {
+          "rougeL_f1": 0.1881
+        },
+        "sft": {
+          "rougeL_f1": 0.3103
+        },
+        "dpo": {
+          "rougeL_f1": 0.2267
+        },
+        "primary_metric": "rougeL_f1"
+      }
+    },
+    {
+      "beta": 0.5,
+      "path": "results/experiments/benchmark_summarization_base_20260503_232644/compare/compare_beta_0p5.jsonl",
+      "stats": {
+        "num_prompts": 25,
+        "avg_len_base": 598.0,
+        "avg_len_sft": 189.9,
+        "avg_len_dpo": 244.4
+      },
+      "dpo_metrics_path": "outputs/experiments/benchmark_summarization_base_20260503_232644/dpo_beta_0p5/dpo_metrics.json",
+      "dpo_metrics": {
+        "kl_final": null,
+        "loss_final": 0.0286,
+        "reward_margin_final": 7.5227251052856445,
+        "num_log_records": 20,
+        "checkpoint": "outputs/experiments/benchmark_summarization_base_20260503_232644/dpo_beta_0p5/checkpoint-200",
+        "kl_candidates": {},
+        "beta": 0.5,
+        "max_steps": 200,
+        "dpo_data_path": "data/dpo_pairs.benchmark_summarization_base.clean.jsonl"
+      },
+      "metrics_path": "results/experiments/benchmark_summarization_base_20260503_232644/metrics/metrics_beta_0p5.json",
+      "metrics": {
+        "track": "summarization",
+        "num_eval_items": 25,
+        "base": {
+          "rougeL_f1": 0.1881
+        },
+        "sft": {
+          "rougeL_f1": 0.3103
+        },
+        "dpo": {
+          "rougeL_f1": 0.2549
+        },
+        "primary_metric": "rougeL_f1"
+      }
+    }
+  ]
+}

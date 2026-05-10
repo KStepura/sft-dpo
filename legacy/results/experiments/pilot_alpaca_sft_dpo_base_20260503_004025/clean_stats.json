@@ -1,0 +1,13 @@
+{
+  "kept": 694,
+  "dropped": 91,
+  "trimmed": 16,
+  "reasons": {
+    "rejected_too_short": 4,
+    "chosen_eq_rejected": 16,
+    "chosen_too_short": 51,
+    "looks_truncated": 20
+  },
+  "in_path": "data/dpo_pairs.pilot_alpaca_base.raw.jsonl",
+  "out_path": "data/dpo_pairs.pilot_alpaca_base.clean.jsonl"
+}

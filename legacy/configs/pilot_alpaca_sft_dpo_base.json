@@ -1,0 +1,55 @@
+{
+  "name": "pilot_alpaca_sft_dpo_base",
+  "track": "",
+  "description": "Alpaca SFT then DPO grid on fixed instruction-following prompts (base model, Alpaca prompt format).",
+  "base_model_id": "Qwen/Qwen2.5-3B",
+  "dataset_id": "tatsu-lab/alpaca",
+  "prompt_style": "alpaca",
+  "seed": 42,
+  "paths": {
+    "data_raw": "data/dpo_pairs.pilot_alpaca_base.raw.jsonl",
+    "data_clean": "data/dpo_pairs.pilot_alpaca_base.clean.jsonl",
+    "outputs_root": "outputs/experiments"
+  },
+  "data": {
+    "num_examples": 800,
+    "max_new_tokens": 128,
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "min_chars": 20,
+    "drop_if_truncated": true,
+    "drop_if_equal": true,
+    "make_strict_prompt": true
+  },
+  "sft": {
+    "max_steps": 200,
+    "lr": 0.0002,
+    "batch_size": 1,
+    "grad_accum": 16,
+    "max_seq_len": 1024
+  },
+  "dpo": {
+    "betas": [0.05, 0.1, 0.2, 0.5],
+    "max_steps": 200,
+    "lr": 1e-05,
+    "batch_size": 1,
+    "grad_accum": 16,
+    "max_length": 1024,
+    "max_prompt_length": 512
+  },
+  "eval": {
+    "prompts": [
+      "Explain RLHF in simple terms.",
+      "Summarize this in 3 sentences: Large language models are adapted for specialized tasks through post-training.",
+      "Write a polite email asking for a 2-day extension for assignment submission.",
+      "Translate to English: 'Мне нужно подготовить отчет по экспериментам.'",
+      "Write Python code for factorial with input validation.",
+      "Give 4 risks of deploying an LLM in production and how to mitigate them.",
+      "Explain overfitting and give 3 practical ways to reduce it."
+    ],
+    "max_new_tokens": 180,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "do_sample": false
+  }
+}

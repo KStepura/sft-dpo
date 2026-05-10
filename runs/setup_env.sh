@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-WORKDIR="/workspace/thesis-llm-alignment"
+WORKDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 VENV_PATH="$WORKDIR/.venv"
 
 # Prefer newer Python for modern ML stack compatibility.
@@ -107,7 +107,7 @@ PY
 echo
 echo "Setup complete."
 echo "Use in future sessions:"
-echo "  source /workspace/thesis-llm-alignment/env.sh"
+echo "  source $WORKDIR/env.sh"
 echo
 echo "Notebook kernel registered as:"
 echo "  Python (thesis-venv)"

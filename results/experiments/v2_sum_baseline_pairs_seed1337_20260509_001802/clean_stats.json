@@ -1,0 +1,11 @@
+{
+  "kept": 513,
+  "dropped": 21,
+  "trimmed": 14,
+  "reasons": {
+    "looks_truncated": 14,
+    "rejected_too_short": 7
+  },
+  "in_path": "data/dpo_pairs.v2_sum_baseline_seed1337.raw.jsonl",
+  "out_path": "data/dpo_pairs.v2_sum_baseline_seed1337.clean.jsonl"
+}

@@ -1,0 +1,12 @@
+[select] dev_n=8, total refs=25
+[select] loading base: Qwen/Qwen2.5-3B
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:15<00:15, 15.31s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:23<00:00, 11.31s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:23<00:00, 11.91s/it]
+[select] loading adapter from experiment_v2/outputs/v2_track_summarization_nojudge_20260506_210741/dpo_beta_0p3/checkpoint-10
+  checkpoint-10: score=0.2705
+[select] loading adapter from experiment_v2/outputs/v2_track_summarization_nojudge_20260506_210741/dpo_beta_0p3/checkpoint-20
+  checkpoint-20: score=0.2634
+[select] loading adapter from experiment_v2/outputs/v2_track_summarization_nojudge_20260506_210741/dpo_beta_0p3/checkpoint-30
+  checkpoint-30: score=0.2633
+[select] loading adapter from experiment_v2/outputs/v2_track_summarization_nojudge_20260506_210741/dpo_beta_0p3/checkpoint-40
+  checkpoint-40: score=0.2705
+[select] selected=experiment_v2/outputs/v2_track_summarization_nojudge_20260506_210741/dpo_beta_0p3/checkpoint-10 reason=argmax dev-summarization

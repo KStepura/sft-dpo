@@ -1,0 +1,5 @@
+Explain RLHF in simple terms.
+Give 3 bullet points on why unit tests matter.
+Translate to English: 'Мне нужно подготовить отчет по экспериментам.'
+What is overfitting and how can we reduce it?
+Write a short Python function to compute factorial.

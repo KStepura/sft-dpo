@@ -1,0 +1,101 @@
+diff --git a/scripts/train_dpo.py b/scripts/train_dpo.py
+index 9c1e7d9..7db84aa 100644
+--- a/scripts/train_dpo.py
++++ b/scripts/train_dpo.py
+@@ -13,6 +13,14 @@ def main():
+     ap = argparse.ArgumentParser()
+     ap.add_argument("--base_model_id", type=str, default="Qwen/Qwen2.5-3B-Instruct")
+     ap.add_argument("--sft_adapter_dir", type=str, default="outputs/qwen2.5-3b-sft-lora")
++    ap.add_argument(
++        "--policy_adapter_dir",
++        type=str,
++        default=None,
++        help="Optional LoRA dir for the trainable policy (e.g. partial DPO checkpoint with weights only). "
++        "The frozen reference model always loads --sft_adapter_dir. Use when resume_from_checkpoint fails "
++        "(missing trainer_state.json) but adapter_model.safetensors exists.",
++    )
+     ap.add_argument("--dpo_data_path", type=str, default="data/dpo_pairs.jsonl")
+     ap.add_argument("--output_dir", type=str, default="outputs/qwen2.5-3b-sft-dpo-lora")
+     ap.add_argument("--max_steps", type=int, default=200)
+@@ -23,6 +31,36 @@ def main():
+     ap.add_argument("--max_prompt_length", type=int, default=512)
+     ap.add_argument("--beta", type=float, default=0.1)
+     ap.add_argument("--seed", type=int, default=42)
++    ap.add_argument(
++        "--resume_from_checkpoint",
++        type=str,
++        default=None,
++        help="Optional Trainer checkpoint dir (e.g. .../checkpoint-200) to resume training.",
++    )
++    ap.add_argument(
++        "--save_steps",
++        type=int,
++        default=100,
++        help="Save a checkpoint every N steps. Set small (e.g. 10) to enable "
++             "post-hoc checkpoint selection — DPO often peaks early before "
++             "collapsing into reward hacking, so frequent saves let you pick "
++             "the best step on a held-out set.",
++    )
++    ap.add_argument(
++        "--save_total_limit",
++        type=int,
++        default=2,
++        help="How many checkpoints to retain. Increase when --save_steps is small "
++             "so early-training checkpoints are preserved.",
++    )
++    ap.add_argument(
++        "--loss_type",
++        type=str,
++        default="sigmoid",
++        choices=("sigmoid", "ipo", "hinge"),
++        help="DPO loss variant. 'ipo' is more robust to easy chosen/rejected "
++             "pairs and less prone to collapse than the default 'sigmoid'.",
++    )
+     args = ap.parse_args()
+ 
+     os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+@@ -64,8 +102,11 @@ def main():
+         **model_kwargs,
+     )
+ 
+-    print("Loading SFT adapter (trainable):", args.sft_adapter_dir)
+-    model = PeftModel.from_pretrained(base_model, args.sft_adapter_dir, is_trainable=True)
++    policy_dir = args.policy_adapter_dir or args.sft_adapter_dir
++    print("Loading trainable policy LoRA from:", policy_dir)
++    if args.policy_adapter_dir:
++        print("(reference model still uses SFT adapter:", args.sft_adapter_dir + ")")
++    model = PeftModel.from_pretrained(base_model, policy_dir, is_trainable=True)
+ 
+     print("Building reference model (frozen, same as SFT startpoint)")
+     ref_base = AutoModelForCausalLM.from_pretrained(
+@@ -83,9 +124,10 @@ def main():
+         learning_rate=args.lr,
+         per_device_train_batch_size=args.batch_size,
+         gradient_accumulation_steps=args.grad_accum,
+-        logging_steps=10,
+-        save_steps=100,
+-        save_total_limit=2,
++        logging_steps=max(1, min(10, args.save_steps)),
++        save_steps=args.save_steps,
++        save_total_limit=args.save_total_limit,
++        save_strategy="steps",
+         bf16=use_bf16,
+         fp16=use_fp16,
+         report_to="none",
+@@ -95,6 +137,7 @@ def main():
+         beta=args.beta,
+         max_length=args.max_length,
+         max_prompt_length=args.max_prompt_length,
++        loss_type=args.loss_type,
+     )
+ 
+     trainer = DPOTrainer(
+@@ -105,7 +148,7 @@ def main():
+         processing_class=tok,
+     )
+ 
+-    trainer.train()
++    trainer.train(resume_from_checkpoint=args.resume_from_checkpoint)
+     trainer.save_model(args.output_dir)
+     tok.save_pretrained(args.output_dir)
+     print("Done. Saved to:", args.output_dir)

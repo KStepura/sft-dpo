@@ -1,0 +1,34 @@
+{
+  "track": "code",
+  "num_eval_items": 40,
+  "base": {
+    "test_pass_rate": 0.0583,
+    "tests_total": 120
+  },
+  "sft": {
+    "test_pass_rate": 0.0583,
+    "tests_total": 120
+  },
+  "dpo": {
+    "test_pass_rate": 0.0417,
+    "tests_total": 120
+  },
+  "primary_metric": "test_pass_rate",
+  "llm_judge": {
+    "judge_model": "qwen2.5:7b",
+    "judge_base_url": "http://127.0.0.1:11434/v1",
+    "judge_json_mode": false,
+    "judge_sleep_sec": 0.15,
+    "num_judged_items": 40,
+    "judge_failures": 0,
+    "base": {
+      "llm_judge_score": 6.8
+    },
+    "sft": {
+      "llm_judge_score": 6.825
+    },
+    "dpo": {
+      "llm_judge_score": 6.675
+    }
+  }
+}

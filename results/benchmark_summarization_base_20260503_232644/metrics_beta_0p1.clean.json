@@ -1,0 +1,16 @@
+{
+  "track": "summarization",
+  "num_eval_items": 25,
+  "num_ref_items": 25,
+  "align_rate": 1.0,
+  "base": {
+    "rougeL_f1": 0.2939
+  },
+  "sft": {
+    "rougeL_f1": 0.3103
+  },
+  "dpo": {
+    "rougeL_f1": 0.2228
+  },
+  "primary_metric": "rougeL_f1"
+}

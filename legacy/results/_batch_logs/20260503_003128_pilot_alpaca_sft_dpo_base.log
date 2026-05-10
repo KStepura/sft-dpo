@@ -1,0 +1,9 @@
+[run_experiment] CUDA OK: NVIDIA GeForce RTX 5090
+
+[build_dpo_pairs] /workspace/thesis-llm-alignment/.venv/bin/python scripts/build_dpo_pairs.py --base_model_id Qwen/Qwen2.5-3B --dataset_id tatsu-lab/alpaca --out_path data/dpo_pairs.pilot_alpaca_base.raw.jsonl --num_examples 800 --seed 42 --max_new_tokens 128 --temperature 0.7 --top_p 0.9 --prompt_style alpaca
+
+[clean_dpo_pairs] /workspace/thesis-llm-alignment/.venv/bin/python scripts/clean_dpo_pairs_full.py --prompt_style alpaca --in_path data/dpo_pairs.pilot_alpaca_base.raw.jsonl --out_path data/dpo_pairs.pilot_alpaca_base.clean.jsonl --min_chars 20 --stats_path results/experiments/pilot_alpaca_sft_dpo_base_20260503_004025/clean_stats.json --drop_if_truncated --drop_if_equal --make_strict_prompt
+
+[train_sft] /workspace/thesis-llm-alignment/.venv/bin/python scripts/train_sft.py --model_id Qwen/Qwen2.5-3B --dataset_id tatsu-lab/alpaca --output_dir outputs/experiments/pilot_alpaca_sft_dpo_base_20260503_004025/sft --max_steps 200 --lr 0.0002 --batch_size 1 --grad_accum 16 --max_seq_len 1024 --seed 42 --prompt_style alpaca
+
+[train_dpo_beta_0p05] /workspace/thesis-llm-alignment/.venv/bin/python scripts/train_dpo.py --base_model_id Qwen/Qwen2.5-3B --sft_adapter_dir outputs/experiments/pilot_alpaca_sft_dpo_base_20260503_004025/sft --dpo_data_path data/dpo_pairs.pilot_alpaca_base.clean.jsonl --output_dir outputs/experiments/pilot_alpaca_sft_dpo_base_20260503_004025/dpo_beta_0p05 --max_steps 200 --batch_size 1 --grad_accum 16 --max_length 1024 --max_prompt_length 512 --lr 1e-05 --beta 0.05 --seed 42

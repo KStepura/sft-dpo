@@ -1,0 +1,16 @@
+[select] dev_n=8, total refs=40
+[select] loading base: Qwen/Qwen2.5-3B
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:09<00:09,  9.41s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:15<00:00,  7.16s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:15<00:00,  7.50s/it]
+[select] loading adapter from experiment_v2/outputs/v2_track_code_mbpp_seed1337_20260509_044029/dpo_beta_0p3/checkpoint-10
+  checkpoint-10: score=0.0000
+[select] loading adapter from experiment_v2/outputs/v2_track_code_mbpp_seed1337_20260509_044029/dpo_beta_0p3/checkpoint-20
+  checkpoint-20: score=0.0417
+[select] loading adapter from experiment_v2/outputs/v2_track_code_mbpp_seed1337_20260509_044029/dpo_beta_0p3/checkpoint-30
+  checkpoint-30: score=0.0000
+[select] loading adapter from experiment_v2/outputs/v2_track_code_mbpp_seed1337_20260509_044029/dpo_beta_0p3/checkpoint-40
+  checkpoint-40: score=0.0417
+[select] loading adapter from experiment_v2/outputs/v2_track_code_mbpp_seed1337_20260509_044029/dpo_beta_0p3/checkpoint-50
+  checkpoint-50: score=0.0417
+[select] loading adapter from experiment_v2/outputs/v2_track_code_mbpp_seed1337_20260509_044029/dpo_beta_0p3/checkpoint-60
+  checkpoint-60: score=0.0000
+[select] selected=experiment_v2/outputs/v2_track_code_mbpp_seed1337_20260509_044029/dpo_beta_0p3/checkpoint-20 reason=argmax dev-code

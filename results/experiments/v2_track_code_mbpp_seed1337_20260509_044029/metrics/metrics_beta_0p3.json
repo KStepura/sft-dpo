@@ -1,0 +1,19 @@
+{
+  "track": "code",
+  "num_eval_items": 40,
+  "num_ref_items": 40,
+  "align_rate": 1.0,
+  "base": {
+    "test_pass_rate": 0.0167,
+    "tests_total": 120
+  },
+  "sft": {
+    "test_pass_rate": 0.0,
+    "tests_total": 120
+  },
+  "dpo": {
+    "test_pass_rate": 0.0,
+    "tests_total": 120
+  },
+  "primary_metric": "test_pass_rate"
+}

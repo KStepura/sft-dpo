@@ -1,0 +1,13 @@
+{
+  "kept": 686,
+  "dropped": 89,
+  "trimmed": 31,
+  "reasons": {
+    "looks_truncated": 21,
+    "rejected_too_short": 9,
+    "chosen_too_short": 46,
+    "chosen_eq_rejected": 13
+  },
+  "in_path": "data/dpo_pairs.benchmark_dialog_base.raw.jsonl",
+  "out_path": "data/dpo_pairs.benchmark_dialog_base.clean.jsonl"
+}

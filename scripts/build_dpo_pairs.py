@@ -6,6 +6,11 @@ import torch
 from datasets import load_dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
+try:
+    from peft import PeftModel
+except ImportError:  # baseline policy_source doesn't need PEFT
+    PeftModel = None  # type: ignore
+
 from prompt_utils import format_alpaca_prompt_prefix, format_chat_prompt_prefix
 
 
@@ -15,6 +20,13 @@ def make_prompt(ex, tok, prompt_style: str) -> str:
     if prompt_style == "chat":
         return format_chat_prompt_prefix(tok, instr, inp)
     return format_alpaca_prompt_prefix(instr, inp)
+
+
+def row_to_example_mbpp(row: dict) -> dict:
+    """MBPP: task text + reference code."""
+    text = (row.get("text") or "").strip()
+    code = (row.get("code") or "").strip()
+    return {"instruction": text, "input": "", "output": code}
 
 
 def postprocess_rejected(text: str) -> str:
@@ -45,12 +57,50 @@ def main():
         default="chat",
         help="Must match SFT / cleaning (chat for *-Instruct models).",
     )
+    ap.add_argument("--dataset_format", choices=("alpaca", "mbpp"), default="alpaca")
+    ap.add_argument("--dataset_split", type=str, default="train", help="HF split name.")
+    ap.add_argument(
+        "--policy_source",
+        choices=("baseline", "onpolicy", "mixed"),
+        default="baseline",
+        help=(
+            "How chosen/rejected pairs are produced. "
+            "baseline: chosen=gold dataset output, rejected=base model T=0.7. "
+            "onpolicy: chosen=SFT greedy, rejected=SFT high-T. "
+            "mixed: chosen=SFT greedy, rejected=base T=0.7. "
+            "Non-baseline modes require --sft_adapter_dir."
+        ),
+    )
+    ap.add_argument(
+        "--sft_adapter_dir",
+        type=str,
+        default=None,
+        help="LoRA dir for the SFT model. Required when policy_source != baseline.",
+    )
+    ap.add_argument(
+        "--chosen_temperature",
+        type=float,
+        default=0.0,
+        help="Sampling temperature for chosen (onpolicy/mixed). 0.0 means greedy.",
+    )
+    ap.add_argument(
+        "--rejected_temperature",
+        type=float,
+        default=1.2,
+        help="Sampling temperature for rejected (onpolicy). Higher → more diverse.",
+    )
+    ap.add_argument(
+        "--rejected_top_p",
+        type=float,
+        default=0.95,
+        help="Nucleus top_p for rejected (onpolicy).",
+    )
 
     args = ap.parse_args()
     os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
-    print(f"Loading dataset: {args.dataset_id}")
-    ds = load_dataset(args.dataset_id, split="train").shuffle(seed=args.seed)
+    print(f"Loading dataset: {args.dataset_id} ({args.dataset_format}, split={args.dataset_split})")
+    ds = load_dataset(args.dataset_id, split=args.dataset_split).shuffle(seed=args.seed)
     ds = ds.select(range(min(args.num_examples, len(ds))))
     print(f"Using {len(ds)} examples for DPO pairs")
 
@@ -70,36 +120,87 @@ def main():
         )
         model_kwargs["quantization_config"] = quantization_config
 
-    model = AutoModelForCausalLM.from_pretrained(args.base_model_id, **model_kwargs)
-    model.eval()
+    base_model = AutoModelForCausalLM.from_pretrained(args.base_model_id, **model_kwargs)
+    base_model.eval()
+
+    sft_model = None
+    if args.policy_source != "baseline":
+        if not args.sft_adapter_dir:
+            raise SystemExit(
+                f"--sft_adapter_dir is required for policy_source={args.policy_source}"
+            )
+        if PeftModel is None:
+            raise SystemExit("peft is not installed; cannot load SFT adapter.")
+        # Separate base copy for SFT — keeping the baseline `base_model` instance
+        # untouched lets the `mixed` policy generate rejected samples from the
+        # original base in the same run.
+        base_for_sft = AutoModelForCausalLM.from_pretrained(args.base_model_id, **model_kwargs)
+        sft_model = PeftModel.from_pretrained(base_for_sft, args.sft_adapter_dir)
+        sft_model.eval()
+
+    def _generate(model, prompt_text: str, *, temperature: float, top_p: float) -> str:
+        inputs = tok(prompt_text, return_tensors="pt")
+        inputs = {k: v.to(model.device) for k, v in inputs.items()}
+        do_sample = temperature > 0.0
+        with torch.no_grad():
+            out = model.generate(
+                **inputs,
+                max_new_tokens=args.max_new_tokens,
+                do_sample=do_sample,
+                temperature=temperature if do_sample else None,
+                top_p=top_p if do_sample else None,
+                pad_token_id=tok.pad_token_id,
+                eos_token_id=tok.eos_token_id,
+            )
+        decoded = tok.decode(out[0], skip_special_tokens=True)
+        return decoded[len(prompt_text):] if decoded.startswith(prompt_text) else decoded
 
     os.makedirs(os.path.dirname(args.out_path), exist_ok=True)
 
+    print(f"policy_source={args.policy_source}")
     written = 0
     with open(args.out_path, "w", encoding="utf-8") as f:
-        for i, ex in enumerate(ds):
+        for i, row in enumerate(ds):
+            if args.dataset_format == "mbpp":
+                ex = row_to_example_mbpp(dict(row))
+            else:
+                ex = dict(row)
             prompt = make_prompt(ex, tok, args.prompt_style)
-            chosen = (ex.get("output") or "").strip()
 
-            inputs = tok(prompt, return_tensors="pt")
-            inputs = {k: v.to(model.device) for k, v in inputs.items()}
-
-            with torch.no_grad():
-                out = model.generate(
-                    **inputs,
-                    max_new_tokens=args.max_new_tokens,
-                    do_sample=True,
-                    temperature=args.temperature,
-                    top_p=args.top_p,
-                    pad_token_id=tok.pad_token_id,
-                    eos_token_id=tok.eos_token_id,
+            if args.policy_source == "baseline":
+                chosen = (ex.get("output") or "").strip()
+                rejected_raw = _generate(
+                    base_model, prompt,
+                    temperature=args.temperature, top_p=args.top_p,
                 )
+                rejected = postprocess_rejected(rejected_raw)
+            elif args.policy_source == "onpolicy":
+                chosen_raw = _generate(
+                    sft_model, prompt,
+                    temperature=args.chosen_temperature, top_p=1.0,
+                )
+                rejected_raw = _generate(
+                    sft_model, prompt,
+                    temperature=args.rejected_temperature, top_p=args.rejected_top_p,
+                )
+                chosen = postprocess_rejected(chosen_raw)
+                rejected = postprocess_rejected(rejected_raw)
+            else:  # mixed: chosen from SFT (greedy), rejected from base (T=0.7)
+                chosen_raw = _generate(
+                    sft_model, prompt,
+                    temperature=args.chosen_temperature, top_p=1.0,
+                )
+                rejected_raw = _generate(
+                    base_model, prompt,
+                    temperature=args.temperature, top_p=args.top_p,
+                )
+                chosen = postprocess_rejected(chosen_raw)
+                rejected = postprocess_rejected(rejected_raw)
 
-            decoded = tok.decode(out[0], skip_special_tokens=True)
-            rejected = decoded[len(prompt):] if decoded.startswith(prompt) else decoded
-            rejected = postprocess_rejected(rejected)
-
-            if len(rejected) < 20:
+            if len(chosen) < 20 or len(rejected) < 20:
+                continue
+            if chosen.strip() == rejected.strip():
+                # No preference signal; skip.
                 continue
 
             rec = {"prompt": prompt, "chosen": chosen, "rejected": rejected}

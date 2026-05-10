@@ -1,0 +1,72 @@
+{
+  "name": "v2_track_code_mbpp",
+  "track": "code",
+  "description": "MBPP code v2: on-policy DPO, IPO, чекпойнт-selection. Подаётся в run_track_code_experiment.py (отдельный сценарий, готовит refs из MBPP test split).",
+  "base_model_id": "Qwen/Qwen2.5-3B",
+  "train_dataset_id": "google-research-datasets/mbpp",
+  "eval_dataset_id": "google-research-datasets/mbpp",
+  "train_split": "train",
+  "eval_split": "test",
+  "prompt_style": "alpaca",
+  "seed": 42,
+  "paths": {
+    "data_raw": "data/dpo_pairs.v2_mbpp.raw.jsonl",
+    "data_clean": "data/dpo_pairs.v2_mbpp.clean.jsonl",
+    "outputs_root": "outputs"
+  },
+  "data": {
+    "num_examples": 400,
+    "max_new_tokens": 160,
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "min_chars": 20,
+    "drop_if_truncated": true,
+    "drop_if_equal": true,
+    "make_strict_prompt": true,
+    "policy_source": "onpolicy",
+    "chosen_temperature": 0.0,
+    "rejected_temperature": 1.2,
+    "rejected_top_p": 0.95
+  },
+  "sft": {
+    "max_steps": 500,
+    "lr": 0.0002,
+    "batch_size": 1,
+    "grad_accum": 16,
+    "max_seq_len": 1024,
+    "no_packing": true
+  },
+  "dpo": {
+    "betas": [
+      0.3
+    ],
+    "max_steps": 60,
+    "lr": 2e-06,
+    "batch_size": 1,
+    "grad_accum": 16,
+    "max_length": 1024,
+    "max_prompt_length": 512,
+    "loss_type": "ipo",
+    "save_steps": 10,
+    "save_total_limit": 8,
+    "select_checkpoint": true
+  },
+  "eval": {
+    "num_eval_examples": 40,
+    "eval_seed": 42,
+    "max_new_tokens": 220,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "do_sample": false,
+    "postprocess_outputs": true
+  },
+  "judge": {
+    "model": "qwen2.5:7b",
+    "base_url": "http://127.0.0.1:11434/v1",
+    "api_key": "",
+    "json_mode": false,
+    "sleep_sec": 0.15,
+    "timeout_sec": 120
+  },
+  "_exp_id": "v2_track_code_mbpp_20260507_164026"
+}

@@ -1,0 +1,11 @@
+{
+  "kept": 358,
+  "dropped": 16,
+  "trimmed": 14,
+  "reasons": {
+    "rejected_too_short": 5,
+    "looks_truncated": 11
+  },
+  "in_path": "data/dpo_pairs.benchmark_mbpp_base.raw.jsonl",
+  "out_path": "data/dpo_pairs.benchmark_mbpp_base.clean.jsonl"
+}

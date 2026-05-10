@@ -1,0 +1,7 @@
+Explain RLHF in simple terms.
+Summarize this in 3 sentences: Large language models are adapted for specialized tasks through post-training.
+Write a polite email asking for a 2-day extension for assignment submission.
+Translate to English: 'Мне нужно подготовить отчет по экспериментам.'
+Write Python code for factorial with input validation.
+Give 4 risks of deploying an LLM in production and how to mitigate them.
+Explain overfitting and give 3 practical ways to reduce it.

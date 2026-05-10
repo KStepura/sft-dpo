@@ -1,0 +1,17 @@
+Loading tokenizer: Qwen/Qwen2.5-3B
+Loading base model (чистый inference): Qwen/Qwen2.5-3B
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:08<00:08,  8.95s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:13<00:00,  6.62s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:13<00:00,  6.97s/it]
+Loading separate base copy for SFT adapter: Qwen/Qwen2.5-3B
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.45s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:05<00:00,  2.71s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:05<00:00,  2.82s/it]
+Loading SFT adapter: /workspace/thesis-llm-alignment/experiment_v2/outputs/v2_track_summarization_seed1337_nojudge_20260507_043001/sft
+Loading separate base copy for DPO adapter: Qwen/Qwen2.5-3B
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.59s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:05<00:00,  2.76s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:05<00:00,  2.88s/it]
+Loading DPO adapter: experiment_v2/outputs/v2_sum_baseline_pairs_seed1337_20260509_001802/dpo_beta_0p3_best
+Running 25 prompts. Saving to: results/experiments/v2_sum_baseline_pairs_seed1337_20260509_001802/compare/compare_beta_0p3.jsonl
+  done 5/25
+  done 10/25
+  done 15/25
+  done 20/25
+  done 25/25
+Done.

@@ -1,0 +1,40 @@
+Write a function to remove the matching tuples from the given two tuples.
+Write a function to find number of lists present in the given tuple.
+Write a python function to find the first natural number whose factorial is divisible by x.
+Write a python function to find the largest number that can be formed with the given digits.
+Write a function to print check if the triangle is equilateral or not.
+Write a function to sort the given list based on the occurrence of first element of tuples.
+Write a python function to check if a given number is one less than twice its reverse.
+Write a function to convert a list of multiple integers into a single integer.
+Write a function that matches a word at the end of a string, with optional punctuation.
+Write a function to find sum of the numbers in a list between the indices of a specified range.
+Write a python function to find the most significant bit number which is also a set bit.
+Write a function for computing square roots using the babylonian method.
+Write a function to check if all values are same in a dictionary.
+[link text](https:// [link text](https:// [link text](https://)))write a function to convert a string to a list.
+Write a python function to shift last element to first position in the given list.
+Write a python function to find the sum of common divisors of two given numbers.
+Write a function to find out the number of ways of painting the fence such that at most 2 adjacent posts have the same color for the given fence with n posts and k colors.
+Write a function to repeat the given tuple n times.
+Write a function to remove all the tuples with length k.
+Write a python function to count the number of substrings with same first and last characters.
+Write a function to sort a list of tuples using lambda.
+Write a python function to check whether all the bits are unset in the given range or not.
+Write a function to find the surface area of a cone.
+Write a python function to find smallest number in a list.
+Write a python function to find the first element occurring k times in a given array.
+Write a python function to count hexadecimal numbers for a given range.
+Write a python function to check whether the hexadecimal number is even or odd.
+Write a python function to find the sublist having minimum length.
+Write a function to check the given decimal with a precision of 2 by using regex.
+Write a python function to count the number of prime numbers less than a given non-negative number.
+Write a python function to count the maximum number of equilateral triangles that can be formed within a given equilateral triangle.
+Write a python function to remove first and last occurrence of a given character from the string.
+Write a function to find the nth newman–shanks–williams prime number.
+Write a function to perform index wise addition of tuple elements in the given two nested tuples.
+Write a function to remove even characters in a string.
+Write a function to sort counter by value.
+Write a function to check if a substring is present in a given list of string values.
+Write a python function to count the occcurences of an element in a tuple.
+Write a python function to count positive numbers in a list.
+Write a function to perform index wise multiplication of tuple elements in the given two tuples.

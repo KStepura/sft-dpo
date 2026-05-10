@@ -1,0 +1,8 @@
+{
+  "kept": 53,
+  "dropped": 0,
+  "trimmed": 1,
+  "reasons": {},
+  "in_path": "data/dpo_pairs.v2_smoke.raw.jsonl",
+  "out_path": "data/dpo_pairs.v2_smoke.clean.jsonl"
+}

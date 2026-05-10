@@ -1,0 +1,8 @@
+{
+  "kept": 4,
+  "dropped": 0,
+  "trimmed": 0,
+  "reasons": {},
+  "in_path": "data/dpo_pairs.v2_mbpp.raw.jsonl",
+  "out_path": "data/dpo_pairs.v2_mbpp.clean.jsonl"
+}

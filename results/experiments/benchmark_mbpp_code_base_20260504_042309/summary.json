@@ -1,0 +1,142 @@
+{
+  "exp_id": "benchmark_mbpp_code_base_20260504_042309",
+  "created_at": "2026-05-04T09:09:49",
+  "config_path": "/workspace/thesis-llm-alignment/configs/benchmark_mbpp_code_base.json",
+  "seed": 42,
+  "track": "code",
+  "steps": [
+    {
+      "name": "prepare_eval_data",
+      "seconds": 13.29,
+      "log_path": "results/experiments/benchmark_mbpp_code_base_20260504_042309/logs/00_prepare_eval_data.log"
+    },
+    {
+      "name": "build_dpo_pairs",
+      "seconds": 2826.08,
+      "log_path": "results/experiments/benchmark_mbpp_code_base_20260504_042309/logs/01_build_dpo_pairs.log"
+    },
+    {
+      "name": "clean_dpo_pairs",
+      "seconds": 0.13,
+      "log_path": "results/experiments/benchmark_mbpp_code_base_20260504_042309/logs/02_clean_dpo_pairs.log"
+    },
+    {
+      "name": "train_sft",
+      "seconds": 6198.57,
+      "log_path": "results/experiments/benchmark_mbpp_code_base_20260504_042309/logs/03_train_sft.log"
+    },
+    {
+      "name": "train_dpo_beta_0p1",
+      "seconds": 3160.33,
+      "log_path": "results/experiments/benchmark_mbpp_code_base_20260504_042309/logs/04_train_dpo_beta_0p1.log"
+    },
+    {
+      "name": "compare_beta_0p1",
+      "seconds": 857.6,
+      "log_path": "results/experiments/benchmark_mbpp_code_base_20260504_042309/logs/05_compare_beta_0p1.log"
+    },
+    {
+      "name": "eval_metrics_beta_0p1",
+      "seconds": 29.3,
+      "log_path": "results/experiments/benchmark_mbpp_code_base_20260504_042309/logs/06_eval_metrics_beta_0p1.log"
+    },
+    {
+      "name": "train_dpo_beta_0p2",
+      "seconds": 3245.77,
+      "log_path": "results/experiments/benchmark_mbpp_code_base_20260504_042309/logs/04_train_dpo_beta_0p2.log"
+    },
+    {
+      "name": "compare_beta_0p2",
+      "seconds": 836.7,
+      "log_path": "results/experiments/benchmark_mbpp_code_base_20260504_042309/logs/05_compare_beta_0p2.log"
+    },
+    {
+      "name": "eval_metrics_beta_0p2",
+      "seconds": 32.81,
+      "log_path": "results/experiments/benchmark_mbpp_code_base_20260504_042309/logs/06_eval_metrics_beta_0p2.log"
+    }
+  ],
+  "compare": [
+    {
+      "beta": 0.1,
+      "path": "results/experiments/benchmark_mbpp_code_base_20260504_042309/compare/compare_beta_0p1.jsonl",
+      "stats": {
+        "num_prompts": 40,
+        "avg_len_base": 594.8,
+        "avg_len_sft": 170.9,
+        "avg_len_dpo": 151.5
+      },
+      "metrics_path": "results/experiments/benchmark_mbpp_code_base_20260504_042309/metrics/metrics_beta_0p1.json",
+      "metrics": {
+        "track": "code",
+        "num_eval_items": 40,
+        "base": {
+          "test_pass_rate": 0.0167,
+          "tests_total": 120
+        },
+        "sft": {
+          "test_pass_rate": 0.0667,
+          "tests_total": 120
+        },
+        "dpo": {
+          "test_pass_rate": 0.025,
+          "tests_total": 120
+        },
+        "primary_metric": "test_pass_rate"
+      },
+      "dpo_metrics_path": "outputs/experiments/benchmark_mbpp_code_base_20260504_042309/dpo_beta_0p1/dpo_metrics.json",
+      "dpo_metrics": {
+        "kl_final": null,
+        "loss_final": 0.0001,
+        "reward_margin_final": 13.6693696975708,
+        "num_log_records": 30,
+        "checkpoint": "outputs/experiments/benchmark_mbpp_code_base_20260504_042309/dpo_beta_0p1/checkpoint-300",
+        "kl_candidates": {},
+        "beta": 0.1,
+        "max_steps": 300,
+        "dpo_data_path": "data/dpo_pairs.benchmark_mbpp_base.clean.jsonl"
+      }
+    },
+    {
+      "beta": 0.2,
+      "path": "results/experiments/benchmark_mbpp_code_base_20260504_042309/compare/compare_beta_0p2.jsonl",
+      "stats": {
+        "num_prompts": 40,
+        "avg_len_base": 594.8,
+        "avg_len_sft": 170.9,
+        "avg_len_dpo": 151.8
+      },
+      "metrics_path": "results/experiments/benchmark_mbpp_code_base_20260504_042309/metrics/metrics_beta_0p2.json",
+      "metrics": {
+        "track": "code",
+        "num_eval_items": 40,
+        "base": {
+          "test_pass_rate": 0.0167,
+          "tests_total": 120
+        },
+        "sft": {
+          "test_pass_rate": 0.0667,
+          "tests_total": 120
+        },
+        "dpo": {
+          "test_pass_rate": 0.025,
+          "tests_total": 120
+        },
+        "primary_metric": "test_pass_rate"
+      },
+      "dpo_metrics_path": "outputs/experiments/benchmark_mbpp_code_base_20260504_042309/dpo_beta_0p2/dpo_metrics.json",
+      "dpo_metrics": {
+        "kl_final": null,
+        "loss_final": 0.0,
+        "reward_margin_final": 18.96023178100586,
+        "num_log_records": 30,
+        "checkpoint": "outputs/experiments/benchmark_mbpp_code_base_20260504_042309/dpo_beta_0p2/checkpoint-300",
+        "kl_candidates": {},
+        "beta": 0.2,
+        "max_steps": 300,
+        "dpo_data_path": "data/dpo_pairs.benchmark_mbpp_base.clean.jsonl"
+      }
+    }
+  ],
+  "clean_stats_path": "results/experiments/benchmark_mbpp_code_base_20260504_042309/clean_stats.json"
+}

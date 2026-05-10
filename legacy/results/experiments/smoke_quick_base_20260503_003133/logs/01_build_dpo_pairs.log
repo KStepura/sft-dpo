@@ -1,0 +1,5 @@
+Loading dataset: tatsu-lab/alpaca (alpaca, split=train)
+Using 64 examples for DPO pairs
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:11<00:11, 11.19s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:17<00:00,  8.47s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:17<00:00,  8.88s/it]
+Written 50 pairs
+Done. Saved 60 pairs to data/dpo_pairs.smoke_quick_base.raw.jsonl

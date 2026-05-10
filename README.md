@@ -1,112 +1,131 @@
 # thesis-llm-alignment
 
-Репозиторий для практического сравнения `base` vs `SFT` vs `DPO` (LoRA/TRL) на одной базовой модели:
-- сбор preference-пар,
-- обучение SFT и DPO (несколько `beta`),
-- генерация сравнений,
-- автоматическая оценка метрик,
-- опциональная оценка `LLM-as-a-judge` через OpenAI-compatible API (включая локальный сервер).
+Пайплайн сравнения SFT и DPO на одной базовой модели. Кросс-доменная оценка на трёх треках.
 
-Подробный запуск на GPU: `GPU_RUN.md`.
+| | |
+|---|---|
+| Модель | `Qwen/Qwen2.5-3B` (без instruction-tuning) |
+| Адаптация | LoRA r=16, α=32 + 4-bit NF4 (QLoRA) |
+| DPO loss | IPO (главный) или sigmoid |
+| Треки | dialog (Alpaca), summarization (Alpaca-style), code (MBPP) |
 
 ## Быстрый старт
 
 ```bash
 bash runs/setup_env.sh
 source env.sh
-python scripts/run_experiment.py --config configs/smoke_cpu.json
+
+# smoke (~10 мин на GPU)
+.venv/bin/python scripts/run_experiment.py --config configs/smoke_quick.json
+
+# главный прогон summarization (~3 ч на RTX 4090)
+.venv/bin/python scripts/run_experiment.py --config configs/summarization.json
 ```
 
-`smoke_cpu` рассчитан на запуск без GPU (малая модель + ограниченные сэмплы).
+GPU и окружение — в [`docs/GPU.md`](docs/GPU.md) и [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md).
 
-## Что делает пайплайн
+## Что делает один прогон
 
-`scripts/run_experiment.py` запускает шаги по конфигу:
-1. `build_dpo_pairs.py`
-2. `clean_dpo_pairs_full.py`
-3. `train_sft.py`
-4. `train_dpo.py` для каждого `beta`
-5. `compare_models.py` для каждого `beta`
+`scripts/run_experiment.py` запускает по JSON-конфигу:
 
-Артефакты эксперимента:
-- `results/experiments/<exp_id>/summary.json`
-- `results/experiments/<exp_id>/resolved_config.json`
-- `results/experiments/<exp_id>/compare/compare_beta_*.jsonl`
-- `results/experiments/<exp_id>/logs/*.log`
-- `outputs/experiments/<exp_id>/sft` и `outputs/experiments/<exp_id>/dpo_beta_*`
+1. подготовка eval-набора (промпты + референсы);
+2. SFT (LoRA, 4-bit NF4, `packing=False`);
+3. построение preference-пар (`baseline-pairs` или `on-policy`);
+4. очистка пар;
+5. DPO (IPO/sigmoid, несколько β); все чекпойнты сохраняются;
+6. пост-hoc выбор лучшего DPO-чекпойнта на dev-сплите;
+7. сравнительная генерация `base/SFT/DPO` с симметричной обрезкой хвостов;
+8. метрики (ROUGE-L, `dialog_heuristic`, `test_pass_rate`) и опциональный LLM-judge.
 
-## Конфиги и типовые запуски
+Артефакты прогона:
 
-- CPU smoke: `configs/smoke_cpu.json`
-- GPU smoke: `configs/smoke_gpu.json` или `bash runs/run_gpu_smoke.sh`
-- Сетка диплома: `configs/diploma_grid_v1.json` или `bash runs/run_gpu_diploma.sh`
-- Облегченная сетка: `configs/diploma_grid_light.json` или `bash runs/run_gpu_diploma_light.sh`
-
-Пример:
-
-```bash
-python scripts/run_experiment.py --config configs/diploma_grid_v1.json
+```
+results/experiments/<exp_id>/
+├── summary.json
+├── refs.jsonl
+├── compare/compare_beta_<β>.jsonl
+└── metrics/metrics_beta_<β>.json
+outputs/<exp_id>/sft/                              ← LoRA-адаптеры (gitignored, ~1 GB на эксперимент)
+outputs/<exp_id>/dpo_beta_<β>/checkpoint-*/
 ```
 
-## Оценка метрик
+## Структура
 
-`scripts/eval_metrics.py` принимает:
-- `--track`: `dialog` | `summarization` | `code`
-- `--refs_path`: эталонные данные (`prompt`, `reference`, для `code` также `tests`)
-- `--compare_path`: JSONL с ответами `base/sft/dpo`
-- `--out_path`: куда сохранить метрики
-
-### Метрики по трекам
-
-- `summarization`: `rougeL_f1`
-- `dialog`: `dialog_heuristic` (простой эвристический скор)
-- `code`: `test_pass_rate` (запуск тестов из `refs`)
-
-### LLM judge (опционально)
-
-Добавьте флаги:
-- `--judge_model`
-- `--judge_base_url` (OpenAI-compatible endpoint, например `http://127.0.0.1:11434/v1`)
-- `--judge_api_key` (для localhost можно не задавать: подставляется `local`)
-
-Дополнительно:
-- `--judge_json_mode` (включать для OpenAI; для локальных серверов обычно не нужно)
-- `--judge_sleep_sec` (по умолчанию 0.15)
-- `--judge_timeout_sec` (по умолчанию 120)
-
-Пример (локальный Ollama/vLLM gateway):
-
-```bash
-python scripts/eval_metrics.py \
-  --track summarization \
-  --refs_path results/experiments/track_sum_v1_20260415_163422/refs.jsonl \
-  --compare_path results/experiments/track_sum_v1_20260415_163422/compare/compare_beta_0p1.jsonl \
-  --out_path results/metrics_with_judge_sum_0p1.json \
-  --judge_model qwen2.5:7b \
-  --judge_base_url http://127.0.0.1:11434/v1
+```
+.
+├── README.md, PROJECT_MAP.md
+├── env.sh, requirements.txt
+├── full_pipeline_run.ipynb           ← end-to-end демо
+│
+├── scripts/                          ← основной пайплайн
+│   ├── run_experiment.py             ← оркестратор
+│   ├── train_sft.py, train_dpo.py
+│   ├── build_dpo_pairs.py, clean_dpo_pairs_full.py
+│   ├── compare_models.py, eval_metrics.py
+│   ├── run_judge_batch.py            ← LLM-as-a-judge через Ollama
+│   └── analysis/                     ← постанализ: фигуры, агрегатор, RAW/CLEAN
+│
+├── configs/                          ← все актуальные JSON-конфиги
+├── runs/                             ← shell-обёртки (cross-domain, overnight, judge)
+├── data/                             ← eval refs (DPO pairs gitignored)
+├── patches/                          ← git-diff фиксов scripts/
+│
+├── results/                          ← финальные результаты
+│   ├── aggregate.{csv,md}            ← сводка по всем прогонам
+│   ├── raw_vs_clean.{csv,md}         ← эффект симметричной обрезки
+│   ├── cross_domain_d{1..6}_*/       ← cross-domain transfer
+│   ├── benchmark_*_base_*/           ← clean-recomputed base-метрики
+│   └── experiments/<exp_id>/         ← per-experiment compare.jsonl и metrics
+├── figures/                          ← 9 PDF + PNG (главные графики)
+│
+├── docs/                             ← документация
+│   ├── AUDIT_FINDINGS.md             ← методологические ошибки ранней серии
+│   ├── FIXES.md                      ← конкретные правки кода
+│   ├── RESEARCH_QUESTIONS.md         ← RQ1–RQ4 и связь с экспериментами
+│   ├── EXPERIMENT_DESIGN.md          ← дизайн, гиперпараметры, бюджет
+│   └── GPU.md, ENVIRONMENT.md        ← запуск и окружение
+│
+└── legacy/                           ← старые конфиги и результаты, не вошедшие в финал
+    ├── runs/                         ← старые shell-обёртки
+    ├── configs/                      ← конфиги, не дошедшие до публикации
+    └── results/                      ← старые pilot/smoke метрики
 ```
 
-## Сводная таблица по экспериментам
+LoRA-адаптеры (`outputs/`, ~27 GB) и raw-логи (`logs/`) исключены из git как регенерируемые. См. [`.gitignore`](.gitignore).
 
-```bash
-python scripts/aggregate_results.py
+## Главные результаты
+
+| | |
+|---|---|
+| Главный эффект | Summarization, on-policy IPO, β=0.3, 3 seed: DPO стабильно > SFT, Δ = +0.012 ± 0.005 ROUGE-L F1 |
+| Apples-to-apples ablation | baseline-pairs vs on-policy на 2 seed: знак Δ переворачивается с −0.008 ± 0.001 на +0.015 ± 0.001 |
+| Sigmoid vs IPO (на on-policy) | sigmoid не коллапсирует, +0.004; IPO даёт +0.014 |
+| β-сканирование (5 точек) | колоколообразная кривая, max при β=0.3 |
+| Multi-seed dialog (n=2) | DPO > SFT по эвристике, Δ = +0.019 ± 0.005 |
+| Multi-seed code (n=2) | in-domain alignment tax: SFT/DPO < base устойчиво на двух seed |
+| Cross-domain 3×3 (D1–D6) | cross-domain SFT на code превосходит in-domain; dialog↔sum симметричен; code разрушает остальные домены |
+| RAW vs CLEAN | симметричная обрезка хвостов «`### Instruction:`» поднимает ROUGE-L base с 0.188 до 0.294 |
+
+Сводная таблица — [`results/aggregate.csv`](results/aggregate.csv) (а также `aggregate.md` после `scripts/analysis/aggregate.py`; `.md` в git не коммитится). Разбор фиксов v1 → v2 — [`docs/FIXES.md`](docs/FIXES.md) и [`docs/AUDIT_FINDINGS.md`](docs/AUDIT_FINDINGS.md).
+
+## Воспроизведение
+
+| Что нужно | Команда |
+|---|---|
+| Один эксперимент | `.venv/bin/python scripts/run_experiment.py --config configs/<name>.json` |
+| Multi-seed на summarization | `configs/summarization.json`, `..._seed1337.json`, `..._seed2024.json` |
+| β-сканирование | `configs/sum_beta_0p{05,1,5,7}.json` (β=0.3 покрыт главным конфигом) |
+| Apples-to-apples | `configs/sum_baseline_pairs{,_seed1337}.json` vs `configs/summarization{,_seed1337}.json` |
+| IPO vs sigmoid | `configs/sum_sigmoid.json` vs `configs/summarization.json` |
+| Cross-domain D1–D6 | `bash runs/run_cross_domain_d1.sh && bash runs/run_cross_domain_d2.sh && bash runs/run_cross_domain_matrix.sh` |
+| Полная ночная цепочка | `bash runs/run_overnight_chain.sh` |
+| Перегенерация фигур | `.venv/bin/python scripts/analysis/make_figures.py` |
+| Перегенерация сводки | `.venv/bin/python scripts/analysis/aggregate.py` |
+
+## Цитирование
+
 ```
-
-Выход: `results/experiments/summary_table.csv`.
-
-## Важные замечания
-
-- Для instruct-моделей используйте `prompt_style: "chat"` в конфиге.
-- Для старых alpaca-style шаблонов при ручной обработке можно использовать `prompt_style: "alpaca"`.
-- Для воспроизводимой оценки в compare обычно держат `eval.do_sample: false`.
-
-## Структура проекта
-
-- `scripts/` — основной код пайплайна и метрик
-- `configs/` — конфиги экспериментов
-- `runs/` — shell-обертки для запусков
-- `data/` — локальные наборы и промежуточные данные
-- `outputs/` — адаптеры и модели после тренировки
-- `results/` — сравнения, метрики, сводки
-
-Окружение и переиспользование кэша: `ENVIRONMENT_REUSE.md`.
+Степура Е.В. Адаптация языковой модели: сравнение Supervised Fine-Tuning и
+Direct Preference Optimization на кросс-доменных бенчмарках. Бакалаврская
+ВКР, НИУ ВШЭ, ФКН, 2026.
+```

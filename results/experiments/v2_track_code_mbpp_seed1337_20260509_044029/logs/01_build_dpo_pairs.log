@@ -1,0 +1,6 @@
+Loading dataset: google-research-datasets/mbpp (mbpp, split=train)
+Using 374 examples for DPO pairs
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:12<00:12, 12.52s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:18<00:00,  8.81s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:18<00:00,  9.36s/it]
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.25s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:05<00:00,  2.58s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:05<00:00,  2.68s/it]
+policy_source=onpolicy
+Done. Saved 2 pairs to experiment_v2/data/dpo_pairs.v2_mbpp_seed1337.raw.jsonl

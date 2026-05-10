@@ -34,6 +34,15 @@ def main():
         default=None,
         help="If set, use only this many shuffled training rows (saves RAM on CPU smoke).",
     )
+    ap.add_argument("--dataset_split", type=str, default="train")
+    ap.add_argument("--dataset_format", choices=("alpaca", "mbpp"), default="alpaca")
+    ap.add_argument(
+        "--no_packing",
+        action="store_true",
+        help="Disable example packing in SFTTrainer. Avoids cross-contamination "
+             "between samples when flash_attention_2 is not available. "
+             "Recommended for cleaner gradients at the cost of throughput.",
+    )
     args = ap.parse_args()
 
     os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
@@ -41,9 +50,9 @@ def main():
     use_bf16 = has_cuda and torch.cuda.is_bf16_supported()
     use_fp16 = has_cuda and not use_bf16
 
-    print(f"Loading dataset: {args.dataset_id}")
+    print(f"Loading dataset: {args.dataset_id} ({args.dataset_format}, split={args.dataset_split})")
     ds = load_dataset(args.dataset_id)
-    train = ds["train"].shuffle(seed=args.seed)
+    train = ds[args.dataset_split].shuffle(seed=args.seed)
     if args.max_train_samples is not None and args.max_train_samples > 0:
         n = min(args.max_train_samples, len(train))
         train = train.select(range(n))
@@ -54,7 +63,16 @@ def main():
     if tok.pad_token is None:
         tok.pad_token = tok.eos_token
 
-    if args.prompt_style == "chat":
+    if args.dataset_format == "mbpp":
+
+        def formatting_fun(ex):
+            instr = (ex.get("text") or "").strip()
+            out = (ex.get("code") or "").strip()
+            if args.prompt_style == "chat":
+                return format_chat_supervised(tok, instr, "", out)
+            return format_alpaca_supervised(instr, "", out)
+
+    elif args.prompt_style == "chat":
 
         def formatting_fun(ex):
             return format_chat_supervised(
@@ -108,7 +126,7 @@ def main():
         save_total_limit=2,
         bf16=use_bf16,
         fp16=use_fp16,
-        packing=has_cuda,
+        packing=(has_cuda and not args.no_packing),
         report_to="none",
         optim="paged_adamw_8bit" if has_cuda else "adamw_torch",
         warmup_ratio=0.03,

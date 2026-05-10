@@ -1,0 +1,12 @@
+[select] dev_n=8, total refs=25
+[select] loading base: Qwen/Qwen2.5-3B
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:09<00:09,  9.79s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:15<00:00,  7.14s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:15<00:00,  7.53s/it]
+[select] loading adapter from experiment_v2/outputs/v2_sum_beta0p7_sweep_20260508_234024/dpo_beta_0p7/checkpoint-10
+  checkpoint-10: score=0.2634
+[select] loading adapter from experiment_v2/outputs/v2_sum_beta0p7_sweep_20260508_234024/dpo_beta_0p7/checkpoint-20
+  checkpoint-20: score=0.2705
+[select] loading adapter from experiment_v2/outputs/v2_sum_beta0p7_sweep_20260508_234024/dpo_beta_0p7/checkpoint-30
+  checkpoint-30: score=0.2705
+[select] loading adapter from experiment_v2/outputs/v2_sum_beta0p7_sweep_20260508_234024/dpo_beta_0p7/checkpoint-40
+  checkpoint-40: score=0.2705
+[select] selected=experiment_v2/outputs/v2_sum_beta0p7_sweep_20260508_234024/dpo_beta_0p7/checkpoint-20 reason=argmax dev-summarization

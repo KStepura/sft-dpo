@@ -1,0 +1,51 @@
+{
+  "name": "benchmark_mbpp_code_base",
+  "track": "code",
+  "description": "MBPP: preference pairs from train split, eval pass_rate on held-out tasks (base, Alpaca prompts).",
+  "base_model_id": "Qwen/Qwen2.5-3B",
+  "train_dataset_id": "google-research-datasets/mbpp",
+  "eval_dataset_id": "google-research-datasets/mbpp",
+  "train_split": "train",
+  "eval_split": "test",
+  "prompt_style": "alpaca",
+  "seed": 42,
+  "paths": {
+    "data_raw": "data/dpo_pairs.benchmark_mbpp_base.raw.jsonl",
+    "data_clean": "data/dpo_pairs.benchmark_mbpp_base.clean.jsonl",
+    "outputs_root": "outputs/experiments"
+  },
+  "data": {
+    "num_examples": 600,
+    "max_new_tokens": 160,
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "min_chars": 20,
+    "drop_if_truncated": true,
+    "drop_if_equal": true,
+    "make_strict_prompt": true
+  },
+  "sft": {
+    "max_steps": 500,
+    "lr": 0.0002,
+    "batch_size": 1,
+    "grad_accum": 16,
+    "max_seq_len": 1024
+  },
+  "dpo": {
+    "betas": [0.1, 0.2],
+    "max_steps": 300,
+    "lr": 1e-05,
+    "batch_size": 1,
+    "grad_accum": 16,
+    "max_length": 1024,
+    "max_prompt_length": 512
+  },
+  "eval": {
+    "num_eval_examples": 40,
+    "eval_seed": 42,
+    "max_new_tokens": 220,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "do_sample": false
+  }
+}

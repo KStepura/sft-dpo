@@ -1,0 +1,13 @@
+[run_experiment] CUDA OK: NVIDIA GeForce RTX 5090
+
+[build_dpo_pairs] /workspace/thesis-llm-alignment/.venv/bin/python scripts/build_dpo_pairs.py --base_model_id Qwen/Qwen2.5-3B --dataset_id tatsu-lab/alpaca --out_path data/dpo_pairs.smoke_quick_base.raw.jsonl --num_examples 64 --seed 42 --max_new_tokens 96 --temperature 0.7 --top_p 0.9 --prompt_style alpaca
+
+[clean_dpo_pairs] /workspace/thesis-llm-alignment/.venv/bin/python scripts/clean_dpo_pairs_full.py --prompt_style alpaca --in_path data/dpo_pairs.smoke_quick_base.raw.jsonl --out_path data/dpo_pairs.smoke_quick_base.clean.jsonl --min_chars 20 --stats_path results/experiments/smoke_quick_base_20260503_003133/clean_stats.json --drop_if_truncated --drop_if_equal --make_strict_prompt
+
+[train_sft] /workspace/thesis-llm-alignment/.venv/bin/python scripts/train_sft.py --model_id Qwen/Qwen2.5-3B --dataset_id tatsu-lab/alpaca --output_dir outputs/experiments/smoke_quick_base_20260503_003133/sft --max_steps 20 --lr 0.0002 --batch_size 1 --grad_accum 8 --max_seq_len 768 --seed 42 --prompt_style alpaca
+
+[train_dpo_beta_0p1] /workspace/thesis-llm-alignment/.venv/bin/python scripts/train_dpo.py --base_model_id Qwen/Qwen2.5-3B --sft_adapter_dir outputs/experiments/smoke_quick_base_20260503_003133/sft --dpo_data_path data/dpo_pairs.smoke_quick_base.clean.jsonl --output_dir outputs/experiments/smoke_quick_base_20260503_003133/dpo_beta_0p1 --max_steps 20 --batch_size 1 --grad_accum 8 --max_length 768 --max_prompt_length 384 --lr 1e-05 --beta 0.1 --seed 42
+
+[compare_beta_0p1] /workspace/thesis-llm-alignment/.venv/bin/python scripts/compare_models.py --base_model_id Qwen/Qwen2.5-3B --sft_adapter_dir outputs/experiments/smoke_quick_base_20260503_003133/sft --dpo_adapter_dir outputs/experiments/smoke_quick_base_20260503_003133/dpo_beta_0p1 --prompts_path results/experiments/smoke_quick_base_20260503_003133/prompts.txt --out_path results/experiments/smoke_quick_base_20260503_003133/compare/compare_beta_0p1.jsonl --max_new_tokens 120 --temperature 0.0 --top_p 1.0 --prompt_style alpaca --seed 42
+
+Experiment complete: results/experiments/smoke_quick_base_20260503_003133

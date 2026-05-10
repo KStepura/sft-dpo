@@ -1,0 +1,466 @@
+{
+  "track": "dialog",
+  "num_eval_items": 15,
+  "base": {
+    "dialog_heuristic": 0.6533
+  },
+  "sft": {
+    "dialog_heuristic": 0.5467
+  },
+  "dpo": {
+    "dialog_heuristic": 0.5067
+  },
+  "primary_metric": "dialog_heuristic",
+  "llm_judge": {
+    "judge_model": "qwen2.5:7b",
+    "judge_base_url": "http://127.0.0.1:11434/v1",
+    "judge_json_mode": false,
+    "num_judged_items": 15,
+    "judge_failures": 0,
+    "win_rates": {
+      "base": 0.1667,
+      "sft": 0.1333,
+      "dpo": 0.1
+    },
+    "pairs": {
+      "base_vs_sft": {
+        "base_wins": 3,
+        "sft_wins": 2,
+        "ties": 10,
+        "base_win_rate": 0.2,
+        "sft_win_rate": 0.1333,
+        "tie_rate": 0.6667,
+        "position_consistent_rate": 0.5333,
+        "items": [
+          {
+            "idx": 0,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B provides a more complete explanation and examples, while Answer A is incomplete.",
+            "reason_ba": "Answer A is more complete and accurate, providing a full explanation of both learning types and their goals. Answer B is cut off and lacks the second part of the explanation."
+          },
+          {
+            "idx": 1,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers correctly implement a palindrome check function and provide test cases. They also accurately follow the instruction for writing a function, though Answer B is more detailed in its docstring.",
+            "reason_ba": "Both answers correctly implement the function and provide valid test cases, but Answer A includes docstrings for better clarity."
+          },
+          {
+            "idx": 2,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B provides a more accurate and helpful summary, while Answer A is incomplete. Answer B also follows instructions better by providing context for attention mechanisms.",
+            "reason_ba": "Answer A is more helpful and clearer, providing a slightly more detailed explanation. Answer B is accurate but less clear and concise."
+          },
+          {
+            "idx": 3,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are accurate, helpful, and clear. Answer B is slightly more concise.",
+            "reason_ba": "Both answers are equally helpful, accurate, follow instructions, and clear."
+          },
+          {
+            "idx": 4,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more formal, well-structured, and polite. It also offers to reschedule, which Answer B does not.",
+            "reason_ba": "Answer B is more detailed, professional, and includes a polite request for rescheduling, making it more helpful and clear."
+          },
+          {
+            "idx": 5,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more detailed, accurate, and follows the instruction better. Answer B repeats points and includes irrelevant information.",
+            "reason_ba": "Answer B provides more accurate and relevant differences, including architectural details and performance implications. Answer A is repetitive."
+          },
+          {
+            "idx": 6,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more comprehensive, addressing the core concept and potential issues. Answer B focuses on overfitting but misses other critical problems.",
+            "reason_ba": "Answer A is more helpful and clear, providing a full explanation of gradient descent and overfitting. Answer B is concise but lacks the detail about potential issues during training."
+          },
+          {
+            "idx": 7,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly addresses the user's request, while Answer B is irrelevant to the prompt.",
+            "reason_ba": "Answer A correctly addresses the original prompt, while Answer B is irrelevant to the task."
+          },
+          {
+            "idx": 8,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A provides a more detailed explanation of tokenization and its importance, making it more helpful and clearer.",
+            "reason_ba": "Both answers are clear, accurate, and follow instructions. Answer B is slightly more detailed but both address the prompt effectively."
+          },
+          {
+            "idx": 9,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A provides a more comprehensive list of advantages and disadvantages, is well-structured, and avoids repetition. Answer B has redundant points and lacks clarity in some descriptions.",
+            "reason_ba": "Answer B is more concise, well-structured, and clearly presents the advantages and disadvantages. Answer A is repetitive and lacks clarity."
+          },
+          {
+            "idx": 10,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly addresses the prompt without unnecessary details. Both answers are accurate, but B provides additional information about how step decay works which isn't requested.",
+            "reason_ba": "Answer A is more accurate and clearer, specifying that the learning rate is for updating network weights. Answer B incorrectly states it's a step size towards a minimum."
+          },
+          {
+            "idx": 11,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are identical and fully address the request, accurate, follow instructions, and are clear.",
+            "reason_ba": "Both answers are identical and do not translate the prompt into Russian, only repeat it in English."
+          },
+          {
+            "idx": 12,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly addresses the cosine similarity task, while Answer B incorrectly computes a sum of natural numbers.",
+            "reason_ba": "Both answers correctly compute the sum of the first n natural numbers and follow instructions equally well."
+          },
+          {
+            "idx": 13,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A provides a more detailed explanation and offers additional practical solutions, making it more helpful and clearer.",
+            "reason_ba": "Answer A is more concise and directly addresses the user's request. Answer B includes irrelevant information about 'lol' and a longer explanation."
+          },
+          {
+            "idx": 14,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more helpful, clear, and follows instructions better. It's also more polite and detailed.",
+            "reason_ba": "Answer B is more detailed and polite, but slightly longer. Answer A meets all criteria effectively within the expected format."
+          }
+        ]
+      },
+      "base_vs_dpo": {
+        "base_wins": 2,
+        "dpo_wins": 2,
+        "ties": 11,
+        "base_win_rate": 0.1333,
+        "dpo_win_rate": 0.1333,
+        "tie_rate": 0.7333,
+        "position_consistent_rate": 0.3333,
+        "items": [
+          {
+            "idx": 0,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B provides a more complete explanation of supervised learning and reinforcement learning, including their key characteristics. Answer A is incomplete and lacks the second part of the prompt.",
+            "reason_ba": "Answer B is incomplete and cuts off the explanation of supervised learning. Answer A provides a full comparison and examples for both types."
+          },
+          {
+            "idx": 1,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B correctly implements the palindrome check function and follows instructions, while A does not address the given prompt.",
+            "reason_ba": "Both answers correctly implement the function and include test cases, with no significant differences in quality across criteria."
+          },
+          {
+            "idx": 2,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B provides a more accurate and helpful summary, while Answer A is incomplete. Answer B also follows instructions better by providing context for attention mechanisms.",
+            "reason_ba": "Answer A is more helpful and clearer, providing a slightly more detailed explanation. Answer B is accurate but less clear and concise."
+          },
+          {
+            "idx": 3,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both are helpful and accurate. Answer A is more concise, thus slightly better.",
+            "reason_ba": "Both answers are accurate, helpful, and clear. Answer B is slightly more precise but neither exceeds length or tone constraints."
+          },
+          {
+            "idx": 4,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more professional, well-structured, and polite. It also offers to reschedule the meeting.",
+            "reason_ba": "Answer B is more professional, includes a salutation and closing, and provides an alternative solution."
+          },
+          {
+            "idx": 5,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more accurate and clearer, providing correct information about the architecture, input processing, memory usage, training, and performance differences. Answer B contains some inaccuracies and less clarity.",
+            "reason_ba": "Answer B provides more accurate and relevant differences, especially in architecture and input processing. It also mentions memory usage and performance, which are key aspects."
+          },
+          {
+            "idx": 6,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly addresses the prompt. Answer B introduces concepts like overfitting, which were not asked for.",
+            "reason_ba": "Answer A provides more detail on overfitting and learning rate, while Answer B is concise but less comprehensive."
+          },
+          {
+            "idx": 7,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly addresses the user's request, while Answer B does not follow the given instruction.",
+            "reason_ba": "Answer A correctly addresses the original prompt, while Answer B does not follow instructions and provides an unrelated function."
+          },
+          {
+            "idx": 8,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A provides a more detailed explanation of tokenization and its importance, making it more helpful. It also uses slightly more precise language.",
+            "reason_ba": "Both answers are clear, accurate, and follow instructions. Answer B is slightly more detailed but both equally address the prompt."
+          },
+          {
+            "idx": 9,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A provides a more detailed and structured response, covering all aspects of the prompt. Answer B is less clear and concise.",
+            "reason_ba": "Answer A is more structured and directly addresses the prompt, while Answer B's points are not clearly separated into advantages and disadvantages."
+          },
+          {
+            "idx": 10,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more accurate and clearer, using the correct term 'optimizer' instead of 'model'. It also provides a slightly better explanation of what the learning rate does.",
+            "reason_ba": "Answer A is more concise and directly addresses the prompt, while Answer B includes additional information about the optimizer and loss function that was not asked for."
+          },
+          {
+            "idx": 11,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are identical and fully address the request, accurate, follow instructions, and are clear.",
+            "reason_ba": "Both answers are identical and do not translate the prompt into Russian, only repeating it in English."
+          },
+          {
+            "idx": 12,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly addresses the cosine similarity task, while Answer B is a duplicate of an incorrect response to a different prompt.",
+            "reason_ba": "Both answers correctly compute the sum of the first n natural numbers but are incomplete due to a missing closing parenthesis."
+          },
+          {
+            "idx": 13,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A provides a more detailed explanation and additional practical solution (using advanced model architecture).",
+            "reason_ba": "Answer A is more concise and directly addresses the user's request, while Answer B includes irrelevant information about 'lol' and a longer explanation."
+          },
+          {
+            "idx": 14,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more detailed, polite, and follows the prompt's instructions better.",
+            "reason_ba": "Answer B is more detailed and includes an attachment mention, which isn't strictly required but adds helpful information. Otherwise, both are equally polite and clear."
+          }
+        ]
+      },
+      "sft_vs_dpo": {
+        "sft_wins": 2,
+        "dpo_wins": 1,
+        "ties": 12,
+        "sft_win_rate": 0.1333,
+        "dpo_win_rate": 0.0667,
+        "tie_rate": 0.8,
+        "position_consistent_rate": 0.5333,
+        "items": [
+          {
+            "idx": 0,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A provides more detailed explanations and examples, making it clearer.",
+            "reason_ba": "Answer B provides clearer goals for each type of learning and more precise examples."
+          },
+          {
+            "idx": 1,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are helpful, accurate, follow instructions, and are clear. Answer B includes string normalization but is less concise.",
+            "reason_ba": "Both answers are equally helpful, accurate, follow instructions, and clear."
+          },
+          {
+            "idx": 2,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are equally helpful, accurate, follow instructions, and clear.",
+            "reason_ba": "Both answers are equally helpful, accurate, follow instructions, and clear."
+          },
+          {
+            "idx": 3,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Both are helpful and accurate. Answer B adds 'success' which is not in the original, slightly altering meaning.",
+            "reason_ba": "Answer B is more accurate as it specifically mentions 'training' which aligns with the original Russian text."
+          },
+          {
+            "idx": 4,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both answers are helpful, accurate, and follow instructions. Answer B is slightly more polite with 'Thank you for your understanding,' but content is very similar.",
+            "reason_ba": "Answer A is more helpful and clear, as it directly addresses the user's request. Answer B is slightly less clear due to 'the date and time you have requested' vs 'the date and time you have proposed'."
+          },
+          {
+            "idx": 5,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more accurate and consistent, while Answer B includes incorrect information (e.g., training time and context/data requirements).",
+            "reason_ba": "Answer A is more accurate and provides clearer distinctions, while Answer B includes redundant points."
+          },
+          {
+            "idx": 6,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and easier to read, while Answer B includes an additional detail about the learning rate.",
+            "reason_ba": "Answer A provides more detail on the concept and additional information about potential issues (learning rate), making it more comprehensive."
+          },
+          {
+            "idx": 7,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are correct, follow instructions, and are clear. Answer A uses 'word_freq' while B uses 'word_count', but this doesn't affect functionality.",
+            "reason_ba": "Both answers are correct, follow instructions, and are clear. Answer B just uses a different function name."
+          },
+          {
+            "idx": 8,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly addresses the importance of tokenization for understanding sentence structure, while Answer B provides a bit more detail but slightly deviates from the core focus.",
+            "reason_ba": "Answer A is more concise and directly addresses the user's request, while Answer B includes redundant information about understanding sentence structure."
+          },
+          {
+            "idx": 9,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A provides more detailed explanations and covers all criteria well, while Answer B is concise but less clear in some points.",
+            "reason_ba": "Answer A is more concise and directly addresses the prompt, while Answer B includes redundant information."
+          },
+          {
+            "idx": 10,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more accurate and clearer, correctly describing the learning rate as an optimizer parameter. Answer B incorrectly refers to it as a model parameter.",
+            "reason_ba": "Answer A is more accurate and clearer, correctly stating that the learning rate scheduler adjusts the learning rate during training. Answer B incorrectly states that it adjusts the optimizer's learning rate over time."
+          },
+          {
+            "idx": 11,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B uses the correct verb 'настроена' (tuned) instead of 'подобрана' (selected), making it more accurate.",
+            "reason_ba": "Answer A is more accurate and commonly used in translations. Answer B uses 'подобрана' which means 'selected,' not 'fine-tuned.'"
+          },
+          {
+            "idx": 12,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are identical and fully meet the criteria.",
+            "reason_ba": "Both answers are identical and fully meet the criteria."
+          },
+          {
+            "idx": 13,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B repeats the phrase 'accurate and descriptive inputs' which is redundant. Answer A is clearer.",
+            "reason_ba": "Answer A provides a slightly more detailed explanation and includes monitoring the model’s output as a way to reduce hallucination, which is not explicitly mentioned in Answer B."
+          },
+          {
+            "idx": 14,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are equally helpful, accurate, follow instructions, and clear.",
+            "reason_ba": "Both emails are polite, accurate, and well-structured. Answer A is slightly more detailed with 'greatly' in the closing."
+          }
+        ]
+      }
+    }
+  }
+}

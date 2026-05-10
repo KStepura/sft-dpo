@@ -1,0 +1,420 @@
+diff --git a/scripts/eval_metrics.py b/scripts/eval_metrics.py
+index 664d565..aed750e 100644
+--- a/scripts/eval_metrics.py
++++ b/scripts/eval_metrics.py
+@@ -24,6 +24,20 @@ def load_jsonl(path: Path) -> List[Dict[str, Any]]:
+     return rows
+ 
+ 
++def truncate_at_instruction(text: str) -> str:
++    # Base models without instruct-tuning sometimes hallucinate a follow-up
++    # "### Instruction:" block after answering, inflating length and tanking
++    # ROUGE precision. Mirrors postprocess_rejected in build_dpo_pairs.py.
++    text = (text or "").strip()
++    for cut_mark in ["\n\n### Instruction:", "\n### Instruction:"]:
++        if cut_mark in text:
++            text = text.split(cut_mark, 1)[0].strip()
++    resp_mark = "### Response:"
++    if text.count(resp_mark) >= 2:
++        text = text.split(resp_mark)[-1].strip()
++    return text
++
++
+ def extract_code_block(text: str) -> str:
+     text = text or ""
+     m = re.search(r"```(?:python)?\n(.*?)```", text, flags=re.S)
+@@ -109,52 +123,96 @@ def _chat_completion_openai_compat(
+     raise RuntimeError(f"chat completion failed after retries: {last_err}")
+ 
+ 
+-def _judge_prompt(track: str, prompt: str, reference: str, answer: str) -> List[Dict[str, str]]:
+-    sys = (
+-        "You are a strict but fair evaluator. Return ONLY JSON with keys: "
+-        '"score" (integer 1-10) and "reason" (short string). No extra text.'
++_RUBRICS: Dict[str, List[str]] = {
++    "dialog": [
++        "Helpfulness: does the answer fully address the user's request?",
++        "Accuracy: is the content factually correct?",
++        "Instruction-following: does it respect format, length, and tone constraints?",
++        "Clarity: is it well-structured and easy to read?",
++    ],
++    "summarization": [
++        "Faithfulness: does it accurately reflect the source without distortion?",
++        "Coverage: are all key points from the original captured?",
++        "Conciseness: is it free of unnecessary padding or repetition?",
++        "Readability: is it fluent and clear?",
++    ],
++    "code": [
++        "Correctness: would the code work correctly for the given task?",
++        "Completeness: are edge cases and all requirements handled?",
++        "Clarity: is the code readable and well-structured?",
++        "Efficiency: is the approach reasonable and not wasteful?",
++    ],
++}
++
++# Pairs evaluated; order determines which model is "A" vs "B" in the prompt.
++_PAIRS = [("base", "sft"), ("base", "dpo"), ("sft", "dpo")]
++
++
++def _pairwise_judge_messages(
++    track: str,
++    prompt: str,
++    reference: str,
++    answer_a: str,
++    answer_b: str,
++) -> List[Dict[str, str]]:
++    criteria = "\n".join(f"  - {r}" for r in _RUBRICS.get(track, _RUBRICS["dialog"]))
++    ref_block = (
++        f"\nReference answer (for grounding only):\n{reference}\n"
++        if (reference or "").strip()
++        else ""
++    )
++    system = (
++        "You are an expert evaluator comparing two AI-generated answers to the same prompt. "
++        "First reason step by step, then output ONLY a JSON object — no markdown fences, no extra text — "
++        'with keys "verdict" ("A", "B", or "tie") and "reason" (max 80 words).'
+     )
+-    if track == "code":
+-        rubric = "Correctness first, then completeness and code quality."
+-    elif track == "summarization":
+-        rubric = "Faithfulness and coverage first, then clarity and concision."
+-    else:
+-        rubric = "Helpfulness, correctness, tone, and structure."
+     user = (
+-        f"Task type: {track}\n"
+-        f"Rubric: {rubric}\n\n"
+-        f"Prompt:\n{prompt}\n\n"
+-        f"Reference:\n{reference}\n\n"
+-        f"Candidate answer:\n{answer}\n\n"
+-        'Return JSON exactly like: {"score": 7, "reason": "..."}.'
++        f"Task type: {track}\n\n"
++        f"Evaluation criteria:\n{criteria}\n\n"
++        f"User prompt:\n{prompt}\n"
++        f"{ref_block}\n"
++        f"=== Answer A ===\n{answer_a}\n\n"
++        f"=== Answer B ===\n{answer_b}\n\n"
++        "Step 1 — Briefly analyse both answers against each criterion above.\n"
++        "Step 2 — Output JSON:\n"
++        '{"verdict": "A"|"B"|"tie", "reason": "<≤80 words>"}'
+     )
+-    return [{"role": "system", "content": sys}, {"role": "user", "content": user}]
++    return [{"role": "system", "content": system}, {"role": "user", "content": user}]
+ 
+ 
+-def _safe_score(raw: str) -> Tuple[Optional[int], str]:
++def _safe_verdict(raw: str) -> Tuple[Optional[str], str]:
+     text = (raw or "").strip()
+     if not text:
+         return None, "empty"
+-    try:
+-        obj = json.loads(text)
+-    except Exception:
+-        m = re.search(r"\{[\s\S]*\}", text)
+-        if not m:
+-            return None, "parse_error"
++    # Look for a flat JSON object containing "verdict" (no nested braces needed).
++    m = re.search(r'\{[^{}]*"verdict"[^{}]*\}', text, re.IGNORECASE)
++    if m:
+         try:
+             obj = json.loads(m.group(0))
++            v = str(obj.get("verdict", "")).strip().upper()
++            if v in ("A", "B", "TIE"):
++                return ("tie" if v == "TIE" else v), str(obj.get("reason", ""))[:400]
+         except Exception:
+-            return None, "parse_error"
+-    try:
+-        score = int(obj.get("score"))
+-        if score < 1:
+-            score = 1
+-        if score > 10:
+-            score = 10
+-        reason = str(obj.get("reason", ""))[:500]
+-        return score, reason
+-    except Exception:
+-        return None, "parse_error"
++            pass
++    # Plain-text fallback for models that ignore JSON instructions.
++    tl = text.lower()
++    for token, label in (
++        ('"verdict":"a"', "A"), ('"verdict": "a"', "A"),
++        ('"verdict":"b"', "B"), ('"verdict": "b"', "B"),
++        ('"verdict":"tie"', "tie"), ('"verdict": "tie"', "tie"),
++    ):
++        if token in tl:
++            return label, text[:400]
++    return None, "parse_error"
++
++
++def _flip(verdict: Optional[str]) -> Optional[str]:
++    """Flip A↔B to normalise a BA-order verdict back to AB perspective."""
++    if verdict == "A":
++        return "B"
++    if verdict == "B":
++        return "A"
++    return verdict  # "tie" or None unchanged
+ 
+ 
+ def compute_llm_judge(
+@@ -167,44 +225,135 @@ def compute_llm_judge(
+     sleep_sec: float,
+     timeout_sec: int,
+ ) -> Dict[str, Any]:
+-    per_model_scores: Dict[str, List[int]] = {"base": [], "sft": [], "dpo": []}
+-    failures = 0
+-    for ref, pred in aligned:
+-        prompt = ref.get("prompt", "")
+-        reference = ref.get("reference", "")
+-        for model_key in ("base", "sft", "dpo"):
+-            answer = pred.get(model_key, "")
+-            raw = _chat_completion_openai_compat(
++    """Pairwise LLM judge.
++
++    For every prompt, each pair of models (base/sft/dpo) is evaluated twice:
++    once in AB order and once in BA order.  The BA verdict is flipped back to
++    AB perspective so the two can be compared.  When both orderings agree the
++    result is recorded as-is; when they disagree the item is counted as a tie
++    (position-bias artefact).  This yields a position-bias-corrected win-rate
++    for each model across all pairs it participates in.
++    """
++    pair_results: Dict[str, Any] = {}
++    total_failures = 0
++
++    for m_a, m_b in _PAIRS:
++        pair_key = f"{m_a}_vs_{m_b}"
++        items: List[Dict[str, Any]] = []
++        wins: Dict[str, int] = {m_a: 0, m_b: 0, "tie": 0}
++        n_consistent = 0
++
++        for i, (ref, pred) in enumerate(aligned):
++            prompt_text = ref.get("prompt", "")
++            reference = ref.get("reference", "")
++            ans_a = truncate_at_instruction(pred.get(m_a, ""))
++            ans_b = truncate_at_instruction(pred.get(m_b, ""))
++
++            # --- AB order ---
++            raw_ab = _chat_completion_openai_compat(
+                 model=judge_model,
+-                messages=_judge_prompt(track, prompt, reference, answer),
++                messages=_pairwise_judge_messages(track, prompt_text, reference, ans_a, ans_b),
+                 api_key=judge_api_key,
+                 base_url=judge_base_url,
+                 timeout_sec=timeout_sec,
+                 json_mode=json_mode,
+             )
+-            score, _reason = _safe_score(raw)
+-            if score is None:
+-                failures += 1
+-                continue
+-            per_model_scores[model_key].append(score)
++            verdict_ab, reason_ab = _safe_verdict(raw_ab)
++            if verdict_ab is None:
++                total_failures += 1
++            if sleep_sec > 0:
++                time.sleep(sleep_sec)
++
++            # --- BA order (position-bias check) ---
++            raw_ba = _chat_completion_openai_compat(
++                model=judge_model,
++                messages=_pairwise_judge_messages(track, prompt_text, reference, ans_b, ans_a),
++                api_key=judge_api_key,
++                base_url=judge_base_url,
++                timeout_sec=timeout_sec,
++                json_mode=json_mode,
++            )
++            verdict_ba_raw, reason_ba = _safe_verdict(raw_ba)
++            if verdict_ba_raw is None:
++                total_failures += 1
+             if sleep_sec > 0:
+                 time.sleep(sleep_sec)
+ 
+-    def avg(xs: List[int]) -> float:
+-        return round(sum(xs) / len(xs), 4) if xs else 0.0
++            # Normalise BA verdict to AB perspective.
++            verdict_ba_norm = _flip(verdict_ba_raw)
++
++            # Consistent = both orderings agree (ties count as agreeing with each other).
++            consistent = (
++                verdict_ab is not None
++                and verdict_ba_norm is not None
++                and verdict_ab == verdict_ba_norm
++            )
++            if consistent:
++                n_consistent += 1
++
++            # Position-bias-corrected final verdict.
++            if consistent:
++                final = verdict_ab
++            elif verdict_ab is not None or verdict_ba_norm is not None:
++                final = "tie"
++            else:
++                final = None
++
++            if final == "A":
++                wins[m_a] += 1
++            elif final == "B":
++                wins[m_b] += 1
++            elif final == "tie":
++                wins["tie"] += 1
++
++            items.append({
++                "idx": i,
++                "verdict_ab": verdict_ab,
++                "verdict_ba_norm": verdict_ba_norm,
++                "consistent": consistent,
++                "final": final,
++                "reason_ab": reason_ab,
++                "reason_ba": reason_ba,
++            })
++
++        n = len(aligned)
++        total_decided = wins[m_a] + wins[m_b] + wins["tie"]
++        pair_results[pair_key] = {
++            f"{m_a}_wins": wins[m_a],
++            f"{m_b}_wins": wins[m_b],
++            "ties": wins["tie"],
++            f"{m_a}_win_rate": round(wins[m_a] / max(total_decided, 1), 4),
++            f"{m_b}_win_rate": round(wins[m_b] / max(total_decided, 1), 4),
++            "tie_rate": round(wins["tie"] / max(total_decided, 1), 4),
++            "position_consistent_rate": round(n_consistent / max(n, 1), 4),
++            "items": items,
++        }
+ 
+-    out: Dict[str, Any] = {
++    # Aggregate win-rates per model across all pairs it participates in.
++    model_wins: Dict[str, int] = {"base": 0, "sft": 0, "dpo": 0}
++    model_total: Dict[str, int] = {"base": 0, "sft": 0, "dpo": 0}
++    for m_a, m_b in _PAIRS:
++        pk = f"{m_a}_vs_{m_b}"
++        pr = pair_results[pk]
++        pair_total = pr[f"{m_a}_wins"] + pr[f"{m_b}_wins"] + pr["ties"]
++        for side in (m_a, m_b):
++            model_wins[side] += pr[f"{side}_wins"]
++            model_total[side] += pair_total
++
++    win_rates = {
++        m: round(model_wins[m] / max(model_total[m], 1), 4)
++        for m in ("base", "sft", "dpo")
++    }
++
++    return {
+         "judge_model": judge_model,
+         "judge_base_url": judge_base_url,
+         "judge_json_mode": json_mode,
+-        "judge_sleep_sec": sleep_sec,
+         "num_judged_items": len(aligned),
+-        "judge_failures": failures,
+-        "base": {"llm_judge_score": avg(per_model_scores["base"])},
+-        "sft": {"llm_judge_score": avg(per_model_scores["sft"])},
+-        "dpo": {"llm_judge_score": avg(per_model_scores["dpo"])},
++        "judge_failures": total_failures,
++        "win_rates": win_rates,
++        "pairs": pair_results,
+     }
+-    return out
+ 
+ 
+ def main() -> None:
+@@ -227,12 +376,33 @@ def main() -> None:
+ 
+     compare_rows = load_jsonl(Path(args.compare_path))
+     ref_rows = load_jsonl(Path(args.refs_path))
+-    by_prompt = {r["prompt"]: r for r in compare_rows}
+-    aligned = [(r, by_prompt[r["prompt"]]) for r in ref_rows if r["prompt"] in by_prompt]
++
++    # Whitespace-tolerant alignment: compare_models.py and refs.jsonl can have
++    # subtle whitespace differences (trailing newlines, doubled blank lines)
++    # that silently turn `aligned` into the empty list and zero out every
++    # metric. Normalise on both sides and report align_rate.
++    def _norm_prompt(p: str) -> str:
++        return " ".join((p or "").split())
++
++    by_prompt = {_norm_prompt(r["prompt"]): r for r in compare_rows}
++    aligned = [
++        (r, by_prompt[_norm_prompt(r["prompt"])])
++        for r in ref_rows
++        if _norm_prompt(r["prompt"]) in by_prompt
++    ]
++    align_rate = round(len(aligned) / max(len(ref_rows), 1), 4)
++    if len(aligned) < len(ref_rows):
++        print(
++            f"WARN: aligned {len(aligned)}/{len(ref_rows)} "
++            f"(rate={align_rate}); check prompt normalisation between "
++            f"refs and compare files."
++        )
+ 
+     metrics: Dict[str, Any] = {
+         "track": args.track,
+         "num_eval_items": len(aligned),
++        "num_ref_items": len(ref_rows),
++        "align_rate": align_rate,
+         "base": {},
+         "sft": {},
+         "dpo": {},
+@@ -250,7 +420,8 @@ def main() -> None:
+         for model_key in ("base", "sft", "dpo"):
+             vals = []
+             for ref, pred in aligned:
+-                score = scorer.score(ref["reference"], pred.get(model_key, "")).get("rougeL")
++                pred_text = truncate_at_instruction(pred.get(model_key, ""))
++                score = scorer.score(ref["reference"], pred_text).get("rougeL")
+                 vals.append(score.fmeasure if score else 0.0)
+             metrics[model_key]["rougeL_f1"] = round(sum(vals) / max(len(vals), 1), 4)
+         metrics["primary_metric"] = "rougeL_f1"
+@@ -260,7 +431,8 @@ def main() -> None:
+             passed = 0
+             total = 0
+             for ref, pred in aligned:
+-                code = extract_code_block(pred.get(model_key, ""))
++                pred_text = truncate_at_instruction(pred.get(model_key, ""))
++                code = extract_code_block(pred_text)
+                 p, t = run_python_tests(code, ref.get("tests", []))
+                 passed += p
+                 total += t
+@@ -269,18 +441,40 @@ def main() -> None:
+         metrics["primary_metric"] = "test_pass_rate"
+ 
+     else:
++        # Old heuristic awarded +0.4 to anything ≥80 chars, which is essentially
++        # everything — every model scored 0.66–0.69 and the metric was useless.
++        # New version is a weak-but-discriminative sanity check; the primary
++        # signal for the dialog track should still come from the LLM judge.
+         polite_words = ("please", "thank", "sorry", "appreciate", "kindly")
+         for model_key in ("base", "sft", "dpo"):
+             scores = []
+-            for _ref, pred in aligned:
+-                txt = (pred.get(model_key, "") or "").lower()
++            for ref, pred in aligned:
++                txt = truncate_at_instruction(pred.get(model_key, "")).lower()
++                ref_text = (ref.get("reference") or "").lower()
+                 score = 0.0
+-                if len(txt) >= 80:
+-                    score += 0.4
+-                if any(w in txt for w in polite_words):
+-                    score += 0.3
+-                if "\n" in txt or "1." in txt or "-" in txt:
++                # 1) length in a reasonable band (penalises both too-short and
++                # over-long base hallucinations).
++                n_words = len(txt.split())
++                if 40 <= n_words <= 200:
+                     score += 0.3
++                elif 20 <= n_words < 40 or 200 < n_words <= 350:
++                    score += 0.15
++                # 2) token Jaccard with reference — proxy for "addresses the
++                # same content" without rewarding paraphrase-distance the way
++                # rougeL would.
++                if ref_text and txt:
++                    ref_tokens = set(ref_text.split())
++                    txt_tokens = set(txt.split())
++                    union = len(ref_tokens | txt_tokens)
++                    if union:
++                        jacc = len(ref_tokens & txt_tokens) / union
++                        score += min(0.4, jacc * 2.0)
++                # 3) politeness cue.
++                if any(w in txt for w in polite_words):
++                    score += 0.15
++                # 4) structural cue (newlines or list-style enumeration).
++                if "\n" in txt or "1." in txt:
++                    score += 0.15
+                 scores.append(min(score, 1.0))
+             metrics[model_key]["dialog_heuristic"] = round(sum(scores) / max(len(scores), 1), 4)
+         metrics["primary_metric"] = "dialog_heuristic"

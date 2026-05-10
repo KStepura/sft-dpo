@@ -1,0 +1,3 @@
+Done. kept=50, dropped=2, trimmed=0
+Saved to: experiment_v2/data/dpo_pairs.v2_smoke.clean.jsonl
+Stats saved to: results/experiments/v2_smoke_quick_20260506_203109/clean_stats.json

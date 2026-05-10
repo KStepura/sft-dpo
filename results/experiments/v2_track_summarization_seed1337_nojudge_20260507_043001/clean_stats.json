@@ -1,0 +1,10 @@
+{
+  "kept": 519,
+  "dropped": 8,
+  "trimmed": 0,
+  "reasons": {
+    "looks_truncated": 8
+  },
+  "in_path": "data/dpo_pairs.v2_sum_seed1337.raw.jsonl",
+  "out_path": "data/dpo_pairs.v2_sum_seed1337.clean.jsonl"
+}

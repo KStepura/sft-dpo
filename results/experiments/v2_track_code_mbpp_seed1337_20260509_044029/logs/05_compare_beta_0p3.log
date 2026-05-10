@@ -1,0 +1,20 @@
+Loading tokenizer: Qwen/Qwen2.5-3B
+Loading base model (чистый inference): Qwen/Qwen2.5-3B
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:09<00:09,  9.20s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:14<00:00,  6.90s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:14<00:00,  7.24s/it]
+Loading separate base copy for SFT adapter: Qwen/Qwen2.5-3B
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.40s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:05<00:00,  2.63s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:05<00:00,  2.75s/it]
+Loading SFT adapter: experiment_v2/outputs/v2_track_code_mbpp_seed1337_20260509_044029/sft
+Loading separate base copy for DPO adapter: Qwen/Qwen2.5-3B
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.29s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:05<00:00,  2.61s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:05<00:00,  2.71s/it]
+Loading DPO adapter: experiment_v2/outputs/v2_track_code_mbpp_seed1337_20260509_044029/dpo_beta_0p3_best
+Running 40 prompts. Saving to: results/experiments/v2_track_code_mbpp_seed1337_20260509_044029/compare/compare_beta_0p3.jsonl
+  done 5/40
+  done 10/40
+  done 15/40
+  done 20/40
+  done 25/40
+  done 30/40
+  done 35/40
+  done 40/40
+Done.

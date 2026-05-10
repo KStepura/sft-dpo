@@ -1,0 +1,15 @@
+{"prompt": "What is the difference between supervised learning and reinforcement learning? Give a concrete example of each.", "reference": ""}
+{"prompt": "Write a Python function that checks if a string is a palindrome, with at least two test cases.", "reference": ""}
+{"prompt": "Summarize in 2 sentences: \"Attention mechanisms allow models to focus on relevant parts of the input when generating each output token.\"", "reference": ""}
+{"prompt": "Translate to English: 'Качество данных имеет решающее значение для обучения языковых моделей.'", "reference": ""}
+{"prompt": "Write a professional reply declining a meeting invitation due to a scheduling conflict.", "reference": ""}
+{"prompt": "List 5 key differences between GPT-style (decoder-only) and BERT-style (encoder-only) models.", "reference": ""}
+{"prompt": "Explain gradient descent in simple terms. What can go wrong during training?", "reference": ""}
+{"prompt": "Write a Python function that counts word frequency in a string and returns the top 3 most common words.", "reference": ""}
+{"prompt": "What is tokenization in NLP and why does it matter for language models?", "reference": ""}
+{"prompt": "Give 3 advantages and 3 disadvantages of using pre-trained language models for domain-specific tasks.", "reference": ""}
+{"prompt": "Explain what a learning rate scheduler does in neural network training and name two common types.", "reference": ""}
+{"prompt": "Translate to Russian: 'The model was fine-tuned on a curated dataset of human preference pairs.'", "reference": ""}
+{"prompt": "Write a Python function to compute cosine similarity between two lists of numbers.", "reference": ""}
+{"prompt": "Explain what hallucination means in the context of large language models and give one practical way to reduce it.", "reference": ""}
+{"prompt": "Write a polite email to a professor asking for feedback on a draft research proposal.", "reference": ""}

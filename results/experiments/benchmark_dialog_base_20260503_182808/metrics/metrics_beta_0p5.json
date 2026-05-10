@@ -1,0 +1,736 @@
+{
+  "track": "dialog",
+  "num_eval_items": 25,
+  "base": {
+    "dialog_heuristic": 0.78
+  },
+  "sft": {
+    "dialog_heuristic": 0.684
+  },
+  "dpo": {
+    "dialog_heuristic": 0.664
+  },
+  "primary_metric": "dialog_heuristic",
+  "llm_judge": {
+    "judge_model": "qwen2.5:7b",
+    "judge_base_url": "http://127.0.0.1:11434/v1",
+    "judge_json_mode": false,
+    "num_judged_items": 25,
+    "judge_failures": 0,
+    "win_rates": {
+      "base": 0.2,
+      "sft": 0.14,
+      "dpo": 0.24
+    },
+    "pairs": {
+      "base_vs_sft": {
+        "base_wins": 5,
+        "sft_wins": 5,
+        "ties": 15,
+        "base_win_rate": 0.2,
+        "sft_win_rate": 0.2,
+        "tie_rate": 0.6,
+        "position_consistent_rate": 0.4,
+        "items": [
+          {
+            "idx": 0,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A more closely follows the original prompt and instruction, providing a relevant response.",
+            "reason_ba": "Answer B more closely matches the original prompt, addressing the specific issue of a late and damaged order while also asking for an order ID."
+          },
+          {
+            "idx": 1,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly addresses the user's request, while Answer B includes unnecessary phrases.",
+            "reason_ba": "Answer A is more directly empathetic and offers relevant alternatives. Answer B is less clear in its empathy and the suggested alternative (finding a different event) may not be helpful for the user."
+          },
+          {
+            "idx": 2,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more detailed, collaborative, and addresses the user's request comprehensively. Answer B is concise but lacks the structured approach and additional details of Answer A.",
+            "reason_ba": "Answer A is more concise, directly addresses the need for collaboration, and avoids unnecessary details about a tight schedule."
+          },
+          {
+            "idx": 3,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more helpful, clear, and polite. It also follows the instruction better by mentioning PR number and size.",
+            "reason_ba": "Answer A is more concise and matches the reference answer's tone. Answer B, while clear, is slightly longer and adds unnecessary details."
+          },
+          {
+            "idx": 4,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B follows instructions and provides a clear path forward, while A does not address the user's request directly.",
+            "reason_ba": "Answer A is more helpful and accurate, directly addressing the user's situation without unnecessary information. It also follows instructions better."
+          },
+          {
+            "idx": 5,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A directly addresses the user's anger, while Answer B is more general and less likely to calm an angry customer.",
+            "reason_ba": "Answer A is more helpful and addresses the user's frustration. It also follows instructions better."
+          },
+          {
+            "idx": 6,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer A is repetitive and does not provide a graceful way to suggest an alternative. Answer B is more concise and respectful, suggesting an alternative.",
+            "reason_ba": "Answer A is more helpful and provides a full response, while Answer B repeats the same phrase multiple times without improvement."
+          },
+          {
+            "idx": 7,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A directly addresses the request for an extension and prompts further communication. Answer B does not mention requiring instructor approval or submitting partial work.",
+            "reason_ba": "Answer A directly addresses the request and provides clear instructions, while Answer B is vague and does not fully address the need for instructor approval."
+          },
+          {
+            "idx": 8,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is inaccurate and unhelpful, while B is accurate but does not fully address the user's request.",
+            "reason_ba": "Answer A is more helpful and accurate, providing relevant details about encryption and compliance. Answer B is incomplete and lacks necessary information."
+          },
+          {
+            "idx": 9,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more helpful, clear, and follows the friendly tone. Answer B is concise but lacks detail and structure.",
+            "reason_ba": "Answer A is more concise and directly addresses the prompt, while Answer B includes unnecessary formalities and personalization."
+          },
+          {
+            "idx": 10,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B more accurately reflects the user's request for an immediate human agent and is clearer in its response.",
+            "reason_ba": "Answer A is more helpful and directly addresses the user's request for an immediate human agent. Answer B incorrectly states it cannot escalate, which is not aligned with the prompt."
+          },
+          {
+            "idx": 11,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more helpful and clear, providing specific resources. Answer B is repetitive and less structured.",
+            "reason_ba": "Answer A is more concise and directly addresses the prompt. Answer B repeats information unnecessarily."
+          },
+          {
+            "idx": 12,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more helpful, clear, and follows instructions by addressing the customer's request directly. Answer B is less specific and lacks a commitment to action.",
+            "reason_ba": "Answer A is more concise and directly addresses the prompt. Answer B adds unnecessary details about prioritization."
+          },
+          {
+            "idx": 13,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more helpful, clear, and polite. It provides specific pricing information and an offer to assist further.",
+            "reason_ba": "Answer A is more concise and directly addresses the user's request. Answer B, while detailed, exceeds the length constraint."
+          },
+          {
+            "idx": 14,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more detailed, structured, and shows a deeper commitment to customer service.",
+            "reason_ba": "Answer A is more concise and directly addresses the user's request. Answer B, while detailed, exceeds the expected format."
+          },
+          {
+            "idx": 15,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A provides a structured approach with clear steps, while Answer B is vague and lacks specific advice.",
+            "reason_ba": "Answer B provides a structured approach with specific steps, making it more helpful and clear. Answer A is less detailed and repetitive."
+          },
+          {
+            "idx": 16,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B correctly addresses the prompt, while Answer A is irrelevant and off-topic.",
+            "reason_ba": "Answer B is concise and follows the format, while Answer A does not address the specific request."
+          },
+          {
+            "idx": 17,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more detailed and aligns better with the prompt, while Answer B is less formal and doesn't fully address the refund policy.",
+            "reason_ba": "Answer A is more formal, concise, and directly addresses the user's request. Answer B is less professional and doesn't fully outline the refund policy."
+          },
+          {
+            "idx": 18,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both are helpful and accurate, but A is more concise and directly addresses the user's request.",
+            "reason_ba": "Both are helpful and accurate, but A is slightly more concise."
+          },
+          {
+            "idx": 19,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B provides specific, actionable questions while Answer A is vague and does not follow the instruction format.",
+            "reason_ba": "Answer A is more helpful and clear, providing specific questions. Answer B is too vague."
+          },
+          {
+            "idx": 20,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more helpful and clear, providing a constructive response. Answer B lacks the encouragement to provide feedback.",
+            "reason_ba": "Answer B better addresses the praise and shows a willingness to improve, aligning with the reference answer."
+          },
+          {
+            "idx": 21,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise and directly addresses the request. Answer B is less helpful and overly apologetic.",
+            "reason_ba": "Answer A is overly apologetic and lengthy, not directly addressing the request. Answer B succinctly states the user's desire for expedited shipping."
+          },
+          {
+            "idx": 22,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more detailed, professional, and structured, while Answer B is concise but less comprehensive.",
+            "reason_ba": "Answer B is longer and more detailed, but not necessary for the prompt. Answer A is concise yet clear and professional."
+          },
+          {
+            "idx": 23,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B is more concise, accurate, and directly addresses the user's request about GDPR deletion.",
+            "reason_ba": "Answer A is more helpful and clear, providing relevant information about GDPR deletion. Answer B is repetitive and inaccurate."
+          },
+          {
+            "idx": 24,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B is more concise and directly addresses the user's request without unnecessary repetition.",
+            "reason_ba": "Answer A is more concise and directly addresses the prompt. Answer B, while informative, exceeds the necessary length."
+          }
+        ]
+      },
+      "base_vs_dpo": {
+        "base_wins": 5,
+        "dpo_wins": 7,
+        "ties": 13,
+        "base_win_rate": 0.2,
+        "dpo_win_rate": 0.28,
+        "tie_rate": 0.52,
+        "position_consistent_rate": 0.48,
+        "items": [
+          {
+            "idx": 0,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more helpful and clear, addressing the specific issue of late delivery and damaged packaging. Answer B does not address the crushed box.",
+            "reason_ba": "Both answers are polite, offer help, and ask for the order ID. However, Answer B is slightly more detailed and maintains a professional tone throughout."
+          },
+          {
+            "idx": 1,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more helpful and clear, offering specific alternatives. Answer B is less relevant and lacks empathy.",
+            "reason_ba": "Answer B more directly addresses the user's request by offering specific alternatives and maintaining an empathetic tone."
+          },
+          {
+            "idx": 2,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more collaborative, detailed, and respectful of the format. Answer B is concise but lacks a formal tone and structure.",
+            "reason_ba": "Answer A is more collaborative and flexible, while Answer B is formal and slightly less responsive to the user's request for a collaborative approach."
+          },
+          {
+            "idx": 3,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more helpful and clear, following the format and tone constraints better.",
+            "reason_ba": "Answer B is more specific and includes the PR number, making it slightly more helpful. However, both are accurate and follow instructions well."
+          },
+          {
+            "idx": 4,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B is more helpful and reassuring, following the tone of support better. It also implicitly guides the user without explicitly requesting unnecessary information.",
+            "reason_ba": "Answer A is more helpful and addresses the user's situation effectively. It also follows instructions better by providing a clear next step."
+          },
+          {
+            "idx": 5,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B is more calming, addresses the frustration, and shows a commitment to addressing the issue promptly.",
+            "reason_ba": "Answer A is more helpful and calming, follows instructions well, and maintains a respectful tone. Answer B shifts focus to the user for more information."
+          },
+          {
+            "idx": 6,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly addresses the user's request, while Answer B is repetitive and doesn't provide a clear alternative suggestion.",
+            "reason_ba": "Answer A is more helpful and clear, while Answer B is repetitive and does not fully address the request."
+          },
+          {
+            "idx": 7,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B provides a more helpful and flexible response, offering an extension while encouraging the student for further assistance. It also maintains a supportive tone.",
+            "reason_ba": "Answer A is more helpful and clear, providing specific instructions. Answer B lacks the necessary details about approval and submission."
+          },
+          {
+            "idx": 8,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is factually incorrect and does not address the user's request. Answer B, while overly detailed, correctly states that credit card numbers are not stored but tokens are kept instead.",
+            "reason_ba": "Answer A is more helpful and accurate, providing relevant details about encryption and data sharing policies. Answer B is incomplete and lacks necessary information."
+          },
+          {
+            "idx": 9,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more structured, clear, and follows the format and length constraints better than Answer B.",
+            "reason_ba": "Answer B is more concise, follows the format of a friendly onboarding reply, and clearly lists week-one expectations."
+          },
+          {
+            "idx": 10,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B more accurately reflects the user's request for an immediate human agent and is clearer in its response.",
+            "reason_ba": "Answer B is more accurate and helpful, as it directly addresses the user's request for an immediate human agent."
+          },
+          {
+            "idx": 11,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more helpful and clear, providing specific resources. Answer B is repetitive and less structured.",
+            "reason_ba": "Answer A is more concise and directly addresses the prompt. Answer B repeats information unnecessarily."
+          },
+          {
+            "idx": 12,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more detailed, addresses the user's request directly, and shows a clear plan. Answer B is less structured and doesn't fully address the need for transparency.",
+            "reason_ba": "Answer A is more concise and directly addresses the user's request. Answer B, while thorough, exceeds the length constraint."
+          },
+          {
+            "idx": 13,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more polite, well-structured, and adheres to the tone constraint. Answer B lacks formality and structure.",
+            "reason_ba": "Answer B is more polite, detailed, and maintains a professional tone. It also includes a salutation and sign-off."
+          },
+          {
+            "idx": 14,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more detailed, structured, and formal, better addressing the user's request. Answer B is concise but less comprehensive.",
+            "reason_ba": "Answer A is more concise and directly addresses the user's request. Answer B, while detailed, exceeds the typical length for such a prompt."
+          },
+          {
+            "idx": 15,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A provides a structured approach with clear steps, while Answer B offers a single suggestion without addressing the manager's request comprehensively.",
+            "reason_ba": "Answer A is more concise, clear, and directly addresses the user's request. Answer B is overly detailed and deviates from the brevity required."
+          },
+          {
+            "idx": 16,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B directly addresses the prompt, is concise, and invites beta signup. Answer A is irrelevant to the prompt.",
+            "reason_ba": "Answer A is more helpful, clear, and follows instructions better. Answer B does not address the request properly."
+          },
+          {
+            "idx": 17,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A more closely follows the prompt by specifically outlining the refund policy within the timeframe requested, while Answer B is less direct and broader in its approach.",
+            "reason_ba": "Answer B directly addresses the threat of a chargeback and maintains professionalism, while Answer A does not mention the chargeback threat."
+          },
+          {
+            "idx": 18,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more helpful and clear, providing a slightly longer and more structured response.",
+            "reason_ba": "Both are helpful and accurate, but Answer A is slightly more concise."
+          },
+          {
+            "idx": 19,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B provides specific, actionable questions while Answer A is vague and does not follow the instruction format.",
+            "reason_ba": "Answer A provides specific, helpful questions while Answer B is vague and does not follow the instruction."
+          },
+          {
+            "idx": 20,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more helpful and clear, providing a specific suggestion for feedback. Answer B is slightly less direct in its call to action.",
+            "reason_ba": "Answer A is more helpful and clear, providing a direct response to the praise. It also includes an invitation for feedback, which Answer B does not."
+          },
+          {
+            "idx": 21,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly addresses the request, while Answer B is longer and less to the point.",
+            "reason_ba": "Answer A is more helpful and clear, offering an upgrade option with a fee. Answer B merely restates the user's request without providing a solution."
+          },
+          {
+            "idx": 22,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more detailed, structured, and professional, while Answer B is concise but less comprehensive.",
+            "reason_ba": "Answer A is more concise and directly addresses the request, while Answer B, though detailed, slightly deviates from a professional refusal."
+          },
+          {
+            "idx": 23,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B is more concise, accurate, and directly addresses the user's request about GDPR deletion.",
+            "reason_ba": "Answer A is more helpful and accurate, providing specific instructions. Answer B is repetitive and irrelevant."
+          },
+          {
+            "idx": 24,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B is more concise and directly addresses the user's request without unnecessary repetition.",
+            "reason_ba": "Answer A is more concise and directly addresses the user's request, while Answer B is repetitive and deviates from the task."
+          }
+        ]
+      },
+      "sft_vs_dpo": {
+        "sft_wins": 2,
+        "dpo_wins": 5,
+        "ties": 18,
+        "sft_win_rate": 0.08,
+        "dpo_win_rate": 0.2,
+        "tie_rate": 0.72,
+        "position_consistent_rate": 0.28,
+        "items": [
+          {
+            "idx": 0,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A more closely follows the reference, including a request for a photo.",
+            "reason_ba": "Answer A is more concise and directly addresses the user's request without unnecessary formality."
+          },
+          {
+            "idx": 1,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more helpful and clear, addressing the user's request with alternatives. Answer B is less relevant and doesn't offer useful suggestions.",
+            "reason_ba": "Answer B more directly addresses the user's request, offering relevant alternatives and maintaining a supportive tone."
+          },
+          {
+            "idx": 2,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly addresses the need for collaboration while providing a clear next step. Answer B, though detailed, could be seen as slightly longer and less focused on the immediate request.",
+            "reason_ba": "Answer A is more helpful and collaborative, providing a clear path forward. Answer B is concise but less detailed in collaboration."
+          },
+          {
+            "idx": 3,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly addresses the request. Answer B, while polite, adds unnecessary wording.",
+            "reason_ba": "Answer A is more helpful and clear, providing a specific reference (PR #482). Answer B lacks this detail."
+          },
+          {
+            "idx": 4,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B is more helpful and reassuring, following the tone and providing additional support. Answer A is less detailed in addressing the user's frustration.",
+            "reason_ba": "Answer B is more concise and directly requests necessary information, making it more helpful. However, Answer A is still clear and supportive."
+          },
+          {
+            "idx": 5,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more detailed and elaborates on the commitment to excellent service, while Answer B is concise but equally effective.",
+            "reason_ba": "Answer A is more calming and directly addresses the user's feelings, while Answer B is slightly less direct in addressing the frustration."
+          },
+          {
+            "idx": 6,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B is more concise and directly addresses the user's request. It maintains a polite tone without unnecessary details.",
+            "reason_ba": "Answer A is more helpful and clear, directly addressing the user's request. Answer B does not provide a specific, graceful way to decline."
+          },
+          {
+            "idx": 7,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A directly addresses the request, while Answer B includes unnecessary advice about punctuality.",
+            "reason_ba": "Answer A is more helpful by offering specific instructions and considering the student's request. It also follows the format better."
+          },
+          {
+            "idx": 8,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B is more accurate, as it correctly states that credit card numbers are not stored. It also adheres to the format and length constraints better.",
+            "reason_ba": "Answer B is more concise and directly addresses the user's request without unnecessary details."
+          },
+          {
+            "idx": 9,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more detailed and structured, better following the given format. Answer B is less clear and concise.",
+            "reason_ba": "Answer A is more friendly and concise, better aligning with the prompt's tone. Answer B is overly formal and detailed."
+          },
+          {
+            "idx": 10,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both lack helpfulness and are not factually incorrect, but Answer B is more concise and clear.",
+            "reason_ba": "Answer B is more helpful and encouraging, suggesting a retry rather than giving up immediately."
+          },
+          {
+            "idx": 11,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly addresses the prompt, while Answer B slightly deviates by mentioning personal experience.",
+            "reason_ba": "Answer A is more concise and directly addresses the user's request, while Answer B is slightly longer without significant added value."
+          },
+          {
+            "idx": 12,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more structured and directly addresses the user's request, while Answer B is less clear and concise.",
+            "reason_ba": "Answer A is more concise and directly addresses the user's request, while Answer B is slightly longer without adding significant value."
+          },
+          {
+            "idx": 13,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more polite and follows the tone constraint better. Answer B lacks a formal salutation and closing.",
+            "reason_ba": "Answer B is more polite, concise, and follows the tone constraint better."
+          },
+          {
+            "idx": 14,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly addresses the user's request, while Answer B exceeds the length and adds unnecessary content.",
+            "reason_ba": "Answer A is more detailed and addresses the user's request more comprehensively, while still being concise."
+          },
+          {
+            "idx": 15,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B is more helpful and creative in suggesting alternative rewards, which can better maintain morale. It also follows the instruction more closely.",
+            "reason_ba": "Answer A is more helpful and clear, providing alternative ways to reward the employee. Answer B lacks specificity and fails to address morale effectively."
+          },
+          {
+            "idx": 16,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A more closely matches the reference, using 'not now' and inviting signup. Answer B is less direct.",
+            "reason_ba": "Answer A more closely matches the reference, using 'not now' and inviting signup. It's also clearer and more structured."
+          },
+          {
+            "idx": 17,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise, aligns better with the prompt's tone, and directly addresses the need to stay professional.",
+            "reason_ba": "Answer A is more helpful and clear, addressing the user's request directly. Answer B is less formal and doesn't explicitly outline the refund policy."
+          },
+          {
+            "idx": 18,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both are helpful and accurate, but Answer A is slightly more detailed in the suggestion.",
+            "reason_ba": "Both are helpful and accurate, but Answer A is slightly more concise."
+          },
+          {
+            "idx": 19,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly addresses the user's request, while Answer B includes unnecessary questions about troubleshooting.",
+            "reason_ba": "Answer A is more comprehensive, covering troubleshooting steps and software version, while Answer B focuses only on reproduction details."
+          },
+          {
+            "idx": 20,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B more closely follows the reference, showing a commitment to improvement and valuing feedback.",
+            "reason_ba": "Answer A is more helpful and clear, providing a direct response to the praise. Answer B is less detailed and slightly vague."
+          },
+          {
+            "idx": 21,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B is more concise, directly addresses the request, and maintains a professional tone.",
+            "reason_ba": "Answer A is more concise and directly addresses the user's request without unnecessary sentiment."
+          },
+          {
+            "idx": 22,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more helpful and clear, offering a discussion option. Answer B is slightly less clear in structure.",
+            "reason_ba": "Answer A is slightly more concise and directly states the refusal, while Answer B is equally clear but longer."
+          },
+          {
+            "idx": 23,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B is more concise, directly addresses the user's request, and specifies the time frame for deletion.",
+            "reason_ba": "Answer B more directly addresses the user's request and is clearer in providing a simple way to delete data."
+          },
+          {
+            "idx": 24,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both are helpful and accurate, but Answer B provides additional context about privacy, which is not strictly required.",
+            "reason_ba": "Answer A is more helpful and clear, providing a reason for the refusal. Answer B lacks clarity by omitting the privacy rationale."
+          }
+        ]
+      }
+    }
+  }
+}

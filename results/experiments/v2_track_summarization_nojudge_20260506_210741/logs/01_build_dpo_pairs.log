@@ -1,0 +1,16 @@
+Loading dataset: tatsu-lab/alpaca (alpaca, split=train)
+Using 600 examples for DPO pairs
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:16<00:16, 16.24s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:26<00:00, 13.00s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:26<00:00, 13.48s/it]
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.75s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:06<00:00,  2.88s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:06<00:00,  3.01s/it]
+policy_source=onpolicy
+Written 50 pairs
+Written 100 pairs
+Written 150 pairs
+Written 200 pairs
+Written 250 pairs
+Written 300 pairs
+Written 350 pairs
+Written 400 pairs
+Written 450 pairs
+Written 500 pairs
+Done. Saved 524 pairs to experiment_v2/data/dpo_pairs.v2_sum.raw.jsonl

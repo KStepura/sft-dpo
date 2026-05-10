@@ -1,0 +1,10 @@
+{
+  "kept": 521,
+  "dropped": 5,
+  "trimmed": 1,
+  "reasons": {
+    "looks_truncated": 5
+  },
+  "in_path": "data/dpo_pairs.v2_dialog_seed1337.raw.jsonl",
+  "out_path": "data/dpo_pairs.v2_dialog_seed1337.clean.jsonl"
+}

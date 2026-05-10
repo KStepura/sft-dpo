@@ -1,0 +1,1144 @@
+{
+  "track": "code",
+  "num_eval_items": 40,
+  "base": {
+    "test_pass_rate": 0.0167,
+    "tests_total": 120
+  },
+  "sft": {
+    "test_pass_rate": 0.0667,
+    "tests_total": 120
+  },
+  "dpo": {
+    "test_pass_rate": 0.025,
+    "tests_total": 120
+  },
+  "primary_metric": "test_pass_rate",
+  "llm_judge": {
+    "judge_model": "qwen2.5:7b",
+    "judge_base_url": "http://127.0.0.1:11434/v1",
+    "judge_json_mode": false,
+    "num_judged_items": 40,
+    "judge_failures": 0,
+    "win_rates": {
+      "base": 0.375,
+      "sft": 0.25,
+      "dpo": 0.0625
+    },
+    "pairs": {
+      "base_vs_sft": {
+        "base_wins": 12,
+        "sft_wins": 3,
+        "ties": 25,
+        "base_win_rate": 0.3,
+        "sft_win_rate": 0.075,
+        "tie_rate": 0.625,
+        "position_consistent_rate": 0.475,
+        "items": [
+          {
+            "idx": 0,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B correctly removes matching tuples, handles edge cases, and is more aligned with the prompt. Answer A does not address the task correctly.",
+            "reason_ba": "Answer A correctly implements the task, handles all cases, and is more readable. Answer B incorrectly uses sets for tuples."
+          },
+          {
+            "idx": 1,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly counts lists, handles nested tuples, and is more readable. Answer B incorrectly counts all elements, not just lists.",
+            "reason_ba": "Answer B correctly counts nested lists, while Answer A does not handle tuples containing lists."
+          },
+          {
+            "idx": 2,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly uses math.factorial, while B incorrectly checks n * 1. Answer A is more clear and efficient.",
+            "reason_ba": "Answer A is more efficient and handles edge cases better. Answer B uses math.factorial, which recalculates the entire factorial each iteration."
+          },
+          {
+            "idx": 3,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise, uses string concatenation directly, and includes a print statement for demonstration. Answer B sorts twice unnecessarily.",
+            "reason_ba": "Answer B is more concise, uses map for efficiency, and includes a print statement demonstrating usage."
+          },
+          {
+            "idx": 4,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly implements the task, is clear and efficient. Answer B fails to address the triangle sides and is overly complex.",
+            "reason_ba": "Answer B correctly names the function, handles the required parameters, and is more readable."
+          },
+          {
+            "idx": 5,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly sorts by the first element of tuples, handles all cases, and is clearer. Answer B has a syntax error.",
+            "reason_ba": "Answer B correctly sorts the list based on the first element of tuples. Answer A is incorrect due to a lambda error and incomplete logic."
+          },
+          {
+            "idx": 6,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly uses Python's string reversal, while Answer B unnecessarily defines a separate function for reversing.",
+            "reason_ba": "Answer A is more readable and structured, with separate functions for reversing and checking. Answer B uses a one-liner which is less clear."
+          },
+          {
+            "idx": 7,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are identical and meet the criteria equally well.",
+            "reason_ba": "Both A and B are correct, complete, clear, and efficient. No significant differences in quality."
+          },
+          {
+            "idx": 8,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both answers are incorrect and incomplete, lack efficiency, and are unclear. They do not address the original prompt.",
+            "reason_ba": "Answer A correctly matches a word at the end with optional punctuation. Answer B is irrelevant to the prompt."
+          },
+          {
+            "idx": 9,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly implements the task, while Answer B is a copy of the reference and does not address the Fibonacci sequence task.",
+            "reason_ba": "Both answers are incorrect for the task, neither handles edge cases properly nor is efficient. However, Answer B is more concise and closer to the correct approach."
+          },
+          {
+            "idx": 10,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A uses a more efficient and common bitwise operation to find the result, while Answer B's approach is less clear and not as commonly understood.",
+            "reason_ba": "Answer B is more concise and efficient. Answer A does not correctly handle the case where n has only one bit set."
+          },
+          {
+            "idx": 11,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is simpler and more direct, matching the reference. Answer B includes an epsilon parameter but diverges from the Babylonian method.",
+            "reason_ba": "Answer B is simpler, more efficient, and directly computes the square root without additional parameters. Answer A uses an epsilon value which complicates the implementation."
+          },
+          {
+            "idx": 12,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are correct, complete, clear, and efficient. No significant differences in quality.",
+            "reason_ba": "Both A and B are correct, complete, clear, and efficient. No significant differences in quality."
+          },
+          {
+            "idx": 13,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B is correct, complete, clear, and efficient. Answer A is repetitive and incorrect.",
+            "reason_ba": "Answer A is correct, complete, clear, and efficient. Answer B is incomplete and irrelevant."
+          },
+          {
+            "idx": 14,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more complete, clear, and efficient. It avoids modifying the original list by creating a new one.",
+            "reason_ba": "Answer A is more concise and directly returns the modified list. Answer B includes an unnecessary variable assignment and prints the result, which is not required by the prompt."
+          },
+          {
+            "idx": 15,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A directly addresses the prompt, while Answer B calculates the sum of divisors for each number separately and multiplies them, not addressing the common divisors requirement.",
+            "reason_ba": "Answer B directly matches the prompt and is more concise, while Answer A includes unnecessary functions."
+          },
+          {
+            "idx": 16,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B is more concise, correct, and efficient. Answer A overcomplicates the problem with a 2D array.",
+            "reason_ba": "Answer A is more concise, correct, and efficient. Answer B is overly complex with unnecessary 2D array usage."
+          },
+          {
+            "idx": 17,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both answers are correct and complete, but Answer B follows the prompt more closely. Answer A includes unnecessary instructions.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient. No significant differences in quality."
+          },
+          {
+            "idx": 18,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is a duplicate and irrelevant. Answer B correctly removes tuples of length K, while Answer A attempts to find max values in tuples.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient. They differ only in naming conventions and minor formatting."
+          },
+          {
+            "idx": 19,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B does not correctly implement the task, while Answer A accurately counts consecutive ones but incorrectly handles substrings. Answer B is more relevant to the given prompt.",
+            "reason_ba": "Answer B correctly implements the task, while Answer A does not handle substrings properly and is inefficient."
+          },
+          {
+            "idx": 20,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers correctly implement the sorting functionality using lambda. They are equally clear and efficient.",
+            "reason_ba": "Both answers correctly implement the sorting task, are clear and efficient. Answer B uses a different function name but meets all criteria equally well."
+          },
+          {
+            "idx": 21,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B correctly implements the given task, while Answer A addresses a different problem and is not relevant.",
+            "reason_ba": "Answer B correctly implements the task, while A does not address the given prompt about bits and is unrelated to finding maximum 1's."
+          },
+          {
+            "idx": 22,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more complete and clearer, with proper function naming and syntax. Answer B has incomplete code and less clear variable names.",
+            "reason_ba": "Answer A is correct and complete, while Answer B has incomplete code."
+          },
+          {
+            "idx": 23,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both are correct, but Answer A is more concise and clearer. Answer B uses a less efficient approach.",
+            "reason_ba": "Answer A is more complete, handling edge cases. Answer B directly uses min() without defining it."
+          },
+          {
+            "idx": 24,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more Pythonic, handles variable k directly, and uses a dictionary for better readability. Answer B has fixed size count array which limits its use.",
+            "reason_ba": "Answer B correctly implements the logic, handles all cases, and is more readable. Answer A has incorrect bounds in count array."
+          },
+          {
+            "idx": 25,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B correctly implements the task, while A does not address the given prompt and instead counts consecutive ones in a binary array.",
+            "reason_ba": "Answer B correctly implements the task, handles edge cases, and is clear. Answer A does not address the given prompt and instead counts hexagonal numbers."
+          },
+          {
+            "idx": 26,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly checks the last digit, while B's logic is flawed and doesn't handle hexadecimal inputs.",
+            "reason_ba": "Answer B correctly checks the remainder when divided by 2, while Answer A incorrectly increments and bitwise ANDs with 2."
+          },
+          {
+            "idx": 27,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both answers are correct, handle all cases, and are equally clear. Answer B is more concise.",
+            "reason_ba": "Answer A is more concise and correct. Answer B has an incomplete line, making it incorrect."
+          },
+          {
+            "idx": 28,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B correctly implements the decimal check with regex and handles edge cases. Answer A introduces unrelated functions and instructions, reducing clarity.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient for the given task."
+          },
+          {
+            "idx": 29,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A uses the Sieve of Eratosthenes, which is more efficient. Answer B has a logical error and incorrect variable names.",
+            "reason_ba": "Answer B is more efficient and concise. It handles edge cases better and uses a sieve algorithm for prime number generation."
+          },
+          {
+            "idx": 30,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both answers are incorrect and incomplete. They do not handle edge cases properly and the formula used is wrong.",
+            "reason_ba": "Answer B correctly handles edge cases and follows the problem statement. Answer A does not match the given prompt requirements."
+          },
+          {
+            "idx": 31,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly handles edge cases, while Answer B does not remove the last occurrence if it's at the end of the string.",
+            "reason_ba": "Answer A correctly removes the first and last occurrence, is more efficient, and clearer. Answer B may not always remove both occurrences."
+          },
+          {
+            "idx": 32,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly implements the recursive formula, while Answer B incorrectly uses a dynamic programming approach that doesn't match the Newman–Shanks–Williams sequence.",
+            "reason_ba": "Answer A correctly implements the sequence, while Answer B is a recursive version that does not match the Newman–Shanks–Williams sequence."
+          },
+          {
+            "idx": 33,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise, handles tuples of equal length correctly, and avoids unnecessary complexity. Answer B fails for unequal tuple lengths.",
+            "reason_ba": "Answer B correctly handles nested tuples and all cases, while Answer A does not. Answer B is also more concise and clear."
+          },
+          {
+            "idx": 34,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers correctly remove even characters. Code structure and efficiency are similar.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient for the given task."
+          },
+          {
+            "idx": 35,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both answers correctly implement the sorting of a Counter object and finding the max value, but neither fully addresses all criteria. Answer A is more relevant to the prompt but lacks efficiency in sorting. Answer B is efficient but doesn't sort by value as required.",
+            "reason_ba": "Answer A correctly sorts the counter by value, while Answer B is a duplicate and does not address the task."
+          },
+          {
+            "idx": 36,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly implements the task, while Answer B does not address the original prompt about checking for a substring.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient for the given task."
+          },
+          {
+            "idx": 37,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and matches the function name format. Answer B uses a variable name 'test_tup' which could be confusing.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient."
+          },
+          {
+            "idx": 38,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more complete, clear, and efficient. It directly addresses the prompt without including unnecessary functions.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient."
+          },
+          {
+            "idx": 39,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly handles the task, is more complete by including a full function definition and example usage, and is clearer with variable names. Answer B lacks an example and has less clear naming.",
+            "reason_ba": "Answer A is more concise and directly addresses the prompt. Answer B includes an example call which is unnecessary."
+          }
+        ]
+      },
+      "base_vs_dpo": {
+        "base_wins": 18,
+        "dpo_wins": 1,
+        "ties": 21,
+        "base_win_rate": 0.45,
+        "dpo_win_rate": 0.025,
+        "tie_rate": 0.525,
+        "position_consistent_rate": 0.55,
+        "items": [
+          {
+            "idx": 0,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B correctly handles tuples and returns a set. Answer A incorrectly converts tuples to sets, changing the original data type.",
+            "reason_ba": "Answer B correctly handles tuples and returns a tuple. Answer A uses sets, changing the output type to a set."
+          },
+          {
+            "idx": 1,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more complete, correct, and clear. Answer B has syntax errors and incorrect variable names.",
+            "reason_ba": "Answer B correctly uses the input name 'tup', handles nested tuples, and is more concise."
+          },
+          {
+            "idx": 2,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise, uses a meaningful function name, and properly closes the factorial calculation. Answer B has syntax errors and an incomplete line.",
+            "reason_ba": "Answer B uses the correct function name and completes the task without truncation, while Answer A has a syntax error."
+          },
+          {
+            "idx": 3,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise, handles the task correctly and efficiently. Answer B does not handle the requirement of taking a list of digits as input.",
+            "reason_ba": "Answer B is more concise, handles the task correctly and efficiently, and is clearer in structure."
+          },
+          {
+            "idx": 4,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly implements the task, is clear and concise. Answer B incorrectly checks for a right triangle instead of an equilateral one.",
+            "reason_ba": "Answer B correctly checks for equilateral triangles, is clear and well-structured. Answer A incorrectly uses Pythagorean theorem instead of comparing sides."
+          },
+          {
+            "idx": 5,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly sorts by the first element, handles all cases, and is clearer. Answer B incorrectly filters instead of sorting and is less efficient.",
+            "reason_ba": "Answer B correctly implements the sorting based on the first element of tuples. Answer A does not meet the criteria as it sorts by the second element and has logical errors."
+          },
+          {
+            "idx": 6,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise, clear, and efficient. Answer B has syntax errors and poor naming.",
+            "reason_ba": "Answer B is more concise, uses proper function naming, and handles the task correctly without unnecessary variables."
+          },
+          {
+            "idx": 7,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are identical and meet the criteria equally well.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient. No significant differences in quality."
+          },
+          {
+            "idx": 8,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly implements the original prompt, while Answer B does not match the requirements and contains syntax errors.",
+            "reason_ba": "Answer B correctly implements the task, handles edge cases, and is clear. Answer A does not match the prompt requirements."
+          },
+          {
+            "idx": 9,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly implements the task, while B has syntax errors and incorrect function name.",
+            "reason_ba": "Answer B correctly implements the task, is concise and efficient. Answer A has syntax errors and incorrect variable names."
+          },
+          {
+            "idx": 10,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly implements the solution, while Answer B does not address the prompt and is unrelated.",
+            "reason_ba": "Answer B correctly implements the solution, is concise and efficient. Answer A does not address the task properly."
+          },
+          {
+            "idx": 11,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more complete, correct, and clear. Answer B lacks a proper loop structure for iteration.",
+            "reason_ba": "Answer B correctly implements the Babylonian method, handles edge cases, and is more readable. Answer A does not follow the method accurately."
+          },
+          {
+            "idx": 12,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and efficient. Answer B duplicates code unnecessarily.",
+            "reason_ba": "Both solutions are correct, efficient, and clear. Answer B is more concise."
+          },
+          {
+            "idx": 13,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both answers are incomplete and do not meet the task requirements. Neither provides a function to convert a string to a list as specified.",
+            "reason_ba": "Answer A correctly splits the string into a list, handles the task requirements, and is clear. Answer B is incomplete and does not provide a valid function."
+          },
+          {
+            "idx": 14,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more complete, clear, and efficient. It avoids default parameter issues in Answer B.",
+            "reason_ba": "Answer B is more concise, avoids unnecessary parameter name, and includes a sample call which is not strictly required but adds clarity."
+          },
+          {
+            "idx": 15,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is simpler and directly calculates the sum of common divisors, while Answer B uses a more complex approach that doesn't address the task correctly.",
+            "reason_ba": "Both answers are correct, handle all cases, and are clear. Answer B is more concise."
+          },
+          {
+            "idx": 16,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly implements the dynamic programming solution, while Answer B incorrectly calculates the number of ways to paint the fence.",
+            "reason_ba": "Answer A is more concise, correct, and efficient. Answer B is overly complex with a 2D array approach that isn't necessary."
+          },
+          {
+            "idx": 17,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly implements the task, while Answer B does not. Answer B incorrectly wraps the result in an extra tuple.",
+            "reason_ba": "Both answers correctly implement the function, handle all cases, and are equally clear and efficient."
+          },
+          {
+            "idx": 18,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is a duplicate and irrelevant. Answer B correctly removes tuples of length K, while Answer A attempts to find max values in tuples.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient. They differ only in naming conventions and minor formatting."
+          },
+          {
+            "idx": 19,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B correctly implements the task, while Answer A does not match the prompt. Answer B is also more efficient and clearer.",
+            "reason_ba": "Answer A correctly implements the task, is clear and efficient. Answer B incorrectly calculates consecutive ones and is incomplete."
+          },
+          {
+            "idx": 20,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A does not address the original prompt. Answer B correctly sorts tuples as instructed.",
+            "reason_ba": "Both answers correctly implement the sorting task using lambda. They are equally clear and efficient."
+          },
+          {
+            "idx": 21,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B correctly implements the task, while Answer A is irrelevant to the given prompt.",
+            "reason_ba": "Answer B correctly implements the task, while A does not address the given prompt."
+          },
+          {
+            "idx": 22,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly calculates the surface area and includes the full formula. Answer B is incomplete and missing part of the calculation.",
+            "reason_ba": "Answer A correctly calculates the surface area. Answer B has incomplete code and missing multiplication."
+          },
+          {
+            "idx": 23,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both are correct, but Answer A is more clear and concise. Answer B uses a less common variable name 'min' which shadows the built-in function.",
+            "reason_ba": "Answer A is more efficient and matches the reference. Answer B uses min() twice unnecessarily."
+          },
+          {
+            "idx": 24,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more Pythonic, uses a single loop for counting, and handles the task without extra parameters. Answer B is less efficient with nested loops.",
+            "reason_ba": "Answer B is more concise, uses a dictionary correctly, and handles all requirements. Answer A has redundant loops."
+          },
+          {
+            "idx": 25,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B correctly implements the hexadecimal counting task, while A attempts a different problem and is incorrect.",
+            "reason_ba": "Answer B correctly handles the task, is clear and efficient. Answer A incorrectly counts all numbers >= 10 as valid hexadecimal numbers."
+          },
+          {
+            "idx": 26,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly checks the last digit, while Answer B incorrectly assumes all even single hex digits are '0', 'A' or 'a'.",
+            "reason_ba": "Answer B uses modulo operation, which is more efficient and works for any even hexadecimal number. Answer A only checks the last character."
+          },
+          {
+            "idx": 27,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly returns the minimum length, while Answer B unnecessarily stores the sublist with the minimum length.",
+            "reason_ba": "Answer A correctly finds the sublist with minimum length, handles edge cases, and is more readable."
+          },
+          {
+            "idx": 28,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B correctly implements the regex for checking decimals with precision of 2. Answer A introduces unrelated functions and instructions, making it less focused on the task.",
+            "reason_ba": "Answer B is more aligned with the original prompt, correctly checks for a decimal with precision of 2. Answer A does not match the required regex pattern."
+          },
+          {
+            "idx": 29,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A uses the Sieve of Eratosthenes, which is more efficient. Answer B has redundant checks and less optimized logic.",
+            "reason_ba": "Answer B is more efficient and concise. It handles edge cases better and uses a sieve algorithm for prime number generation."
+          },
+          {
+            "idx": 30,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both answers are incorrect and incomplete. They do not correctly calculate the number of triangles, and Answer B is poorly formatted.",
+            "reason_ba": "Answer B correctly handles the edge case where n < 3 and uses a more accurate formula."
+          },
+          {
+            "idx": 31,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly handles edge cases, while Answer B does not handle the case where the character is not in the string.",
+            "reason_ba": "Answer B correctly handles the absence of the character, while A does not. Both lack efficiency and clarity compared to the reference."
+          },
+          {
+            "idx": 32,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly implements the recursive formula, while Answer B does not accurately represent Newman–Shanks–Williams primes.",
+            "reason_ba": "Answer B correctly implements the recursive formula for Newman–Shanks–Williams primes, while Answer A does not accurately represent these primes."
+          },
+          {
+            "idx": 33,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more complete, correct, and efficient. Answer B has logical errors and inefficiencies.",
+            "reason_ba": "Answer B correctly implements the task, is clear and efficient. Answer A fails to handle nested tuples and is inefficient."
+          },
+          {
+            "idx": 34,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers correctly implement the task, are complete and efficient. Answer A is more concise but both are clear.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient for the given task."
+          },
+          {
+            "idx": 35,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly implements the task, while Answer B does not. Answer A is clear and efficient, whereas Answer B is incomplete and incorrect.",
+            "reason_ba": "Answer B correctly implements the task, is clear and efficient. Answer A does not sort by value and has syntax errors."
+          },
+          {
+            "idx": 36,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly implements the task, while Answer B incorrectly checks for equality instead of containment.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient for the given task."
+          },
+          {
+            "idx": 37,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are correct, complete, clear, and efficient. Answer A uses a built-in method for simplicity.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient. Answer B uses tuple's built-in method for brevity."
+          },
+          {
+            "idx": 38,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more readable, follows PEP 8 conventions, and handles the task correctly. Answer B has naming issues and syntax errors.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient. Answer B uses more descriptive variable names."
+          },
+          {
+            "idx": 39,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is correct, complete, clear, and efficient. Answer B incorrectly uses addition instead of multiplication.",
+            "reason_ba": "Answer B correctly implements the task, handles all cases, and is clear. Answer A uses addition instead of multiplication."
+          }
+        ]
+      },
+      "sft_vs_dpo": {
+        "sft_wins": 17,
+        "dpo_wins": 4,
+        "ties": 19,
+        "sft_win_rate": 0.425,
+        "dpo_win_rate": 0.1,
+        "tie_rate": 0.475,
+        "position_consistent_rate": 0.65,
+        "items": [
+          {
+            "idx": 0,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly implements the task, handles all cases, and is more aligned with the prompt. Answer B incorrectly uses sets and does not match tuple pairs.",
+            "reason_ba": "Answer B correctly removes matching tuples, handles edge cases, and is more aligned with the prompt. Answer A does not address the task of removing matching tuples from two separate lists."
+          },
+          {
+            "idx": 1,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B correctly counts nested lists, while Answer A does not handle tuples containing non-list elements.",
+            "reason_ba": "Answer A correctly counts lists within a tuple, handles nested structures, and is more readable. Answer B incorrectly counts all elements as lists."
+          },
+          {
+            "idx": 2,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more efficient and clearer. Answer B uses math.factorial, which is unnecessary and less efficient.",
+            "reason_ba": "Answer A correctly uses math.factorial, handles the task requirements, and is more readable. Answer B incorrectly checks n * 1 in the loop condition."
+          },
+          {
+            "idx": 3,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise, handles the input as a list of digits directly, and avoids unnecessary string operations.",
+            "reason_ba": "Answer B correctly sorts and reverses the list, while Answer A incorrectly converts to string and uses spaces. Answer B is more efficient and clearer."
+          },
+          {
+            "idx": 4,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly checks if all sides are equal, handles input as expected, and is clearer. Answer B incorrectly uses Pythagorean theorem for equilateral check.",
+            "reason_ba": "Answer A correctly checks for equal sides, is more concise, and handles the task as requested. Answer B misinterprets the input and does not check for equilateral triangles."
+          },
+          {
+            "idx": 5,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly uses the first element of tuples for sorting, while Answer B sorts based on a condition unrelated to the task.",
+            "reason_ba": "Answer B correctly sorts by the first element of tuples, while A does not handle the task as required."
+          },
+          {
+            "idx": 6,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly implements the task, is more complete and clear, and uses a function name that matches the prompt. Answer B has unclear variable names and incorrect implementation.",
+            "reason_ba": "Answer B correctly implements the task, handles edge cases, and is more readable. Answer A has syntax errors and does not meet all requirements."
+          },
+          {
+            "idx": 7,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are correct, complete, clear, and efficient. No significant differences.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient."
+          },
+          {
+            "idx": 8,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly uses regex for matching, handles optional punctuation, and is clearer. Answer B incorrectly compiles the pattern and checks against itself.",
+            "reason_ba": "Answer A correctly uses regex for matching, handles punctuation, and is clearer. Answer B's pattern is incorrect and redundant."
+          },
+          {
+            "idx": 9,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is correct, complete, clear, and efficient. Answer B has syntax errors and is less readable.",
+            "reason_ba": "Answer B is correct, complete, clear, and efficient. Answer A has syntax errors (e.g., 'sum Range' instead of 'sum_range')."
+          },
+          {
+            "idx": 10,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly implements the logic, is concise, and handles all cases. Answer B does not address the prompt requirements.",
+            "reason_ba": "Answer B correctly implements the task, is concise and efficient. Answer A does not address the problem correctly."
+          },
+          {
+            "idx": 11,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A correctly implements the Babylonian method, handles edge cases, and is more complete. Answer B does not converge properly for all inputs.",
+            "reason_ba": "Answer B correctly implements the Babylonian method, handles edge cases, and is more efficient. Answer A does not follow the prompt and lacks clarity."
+          },
+          {
+            "idx": 12,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise, efficient, and easier to read. Answer B uses unnecessary list conversions.",
+            "reason_ba": "Both answers are correct, handle all cases, and are efficient. Answer A is slightly less concise but equally clear."
+          },
+          {
+            "idx": 13,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is simpler and more efficient. Answer B uses deque, which is unnecessary for this task.",
+            "reason_ba": "Answer B is simpler, more efficient, and directly meets the requirement. Answer A uses deque unnecessarily."
+          },
+          {
+            "idx": 14,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more efficient and avoids default parameter issues. Answer B correctly shifts the element but is less optimal.",
+            "reason_ba": "Both are correct and complete. Answer B is clearer and more efficient without unnecessary slicing."
+          },
+          {
+            "idx": 15,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B correctly calculates the sum of common divisors, while Answer A does not address the task requirements.",
+            "reason_ba": "Answer A correctly implements the task, handles edge cases, and is more efficient. Answer B incorrectly calculates common divisors."
+          },
+          {
+            "idx": 16,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise, handles the base cases correctly, and avoids unnecessary functions. Answer B uses different variable names and logic that complicates readability without improving efficiency.",
+            "reason_ba": "Answer B correctly implements the dynamic programming solution, while Answer A has logical errors and does not match the problem description."
+          },
+          {
+            "idx": 17,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise and avoids unnecessary parentheses. Both are correct, but A is clearer.",
+            "reason_ba": "Answer B uses the correct variable name 'n' and avoids unnecessary tuple creation, making it more efficient and clearer."
+          },
+          {
+            "idx": 18,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are correct, complete, clear, and efficient. No significant differences.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient."
+          },
+          {
+            "idx": 19,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B correctly implements the task, handles all cases, and is clearer. Answer A incorrectly counts substrings without checking ends.",
+            "reason_ba": "Answer A correctly implements the logic, is more efficient by avoiding unnecessary checks, and is clearer with variable names. Answer B overcounts substrings."
+          },
+          {
+            "idx": 20,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are correct, complete, clear, and efficient. Answer A uses 'test_list' while B uses 'test_list', differing only in naming.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient. Answer B is more specific in naming the function."
+          },
+          {
+            "idx": 21,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is correct, complete, clear, and efficient. Answer B has a syntax error.",
+            "reason_ba": "Answer B correctly uses bitwise operations as per the prompt. Answer A has a syntax error and incorrect logic."
+          },
+          {
+            "idx": 22,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A uses the correct variable name 'surface_cone' and follows the reference answer's formula. Answer B has a minor naming issue with 'surface_area_cone'. Both are efficient, but A is slightly more aligned with the reference.",
+            "reason_ba": "Answer A correctly calculates the surface area using the formula πr(r+l), while Answer B incorrectly multiplies r by only one term under the square root."
+          },
+          {
+            "idx": 23,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are correct, handle all cases, and are equally clear. Answer B is slightly more efficient by using a different variable name.",
+            "reason_ba": "Both answers are correct, handle all cases, and are equally clear. Answer B is more descriptive in naming."
+          },
+          {
+            "idx": 24,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B correctly implements the logic, while Answer A does not handle all edge cases and has an unnecessary limit on count array size.",
+            "reason_ba": "Answer A correctly implements the logic, handles all cases, and is more efficient. Answer B has limited range for count array."
+          },
+          {
+            "idx": 25,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly handles all cases, is more efficient, and clearer. Answer B incorrectly assumes all numbers above 9 are hexadecimal.",
+            "reason_ba": "Answer A is simpler and more efficient. Answer B uses recursion unnecessarily, making it less clear and potentially less efficient."
+          },
+          {
+            "idx": 26,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly checks the last digit for evenness, is more efficient, and clearer. Answer B incorrectly named parameters and only checks three cases.",
+            "reason_ba": "Answer A correctly checks the last digit. Answer B incorrectly increments and masks, not suitable for hexadecimal."
+          },
+          {
+            "idx": 27,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly and efficiently finds the shortest sublist. Answer B is less efficient with unnecessary iteration.",
+            "reason_ba": "Answer A correctly handles all cases, is more readable, and efficient. Answer B does not work for nested lists."
+          },
+          {
+            "idx": 28,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more complete, clear, and efficient. It returns a boolean value directly, while Answer B uses unnecessary string comparisons.",
+            "reason_ba": "Answer B correctly uses regex for precision of 2, handles edge cases better, and is more clear in its return values."
+          },
+          {
+            "idx": 29,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A uses the Sieve of Eratosthenes, which is more efficient. Answer B iterates unnecessarily up to n-1.",
+            "reason_ba": "Answer A correctly implements the Sieve of Eratosthenes, while Answer B uses .count(), which is less efficient and unnecessary."
+          },
+          {
+            "idx": 30,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are incorrect and incomplete. Neither handles edge cases properly, and Answer B uses an incorrect formula.",
+            "reason_ba": "Both answers are incorrect and incomplete. Neither handles edge cases properly, and the formulas used do not accurately count equilateral triangles within a larger triangle."
+          },
+          {
+            "idx": 31,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly handles edge cases and is more efficient. Answer B uses replace, which may not handle all edge cases.",
+            "reason_ba": "Answer A correctly removes the first and last occurrence, while Answer B only removes the first occurrence. Answer A is also more complete and clear."
+          },
+          {
+            "idx": 32,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B correctly implements the formula for Newman–Shanks–Williams primes, while Answer A incorrectly uses a dynamic programming approach similar to Fibonacci. B is more efficient and accurate.",
+            "reason_ba": "Answer B correctly implements the sequence, handles edge cases, and is more efficient and clear."
+          },
+          {
+            "idx": 33,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is correct, complete, clear, and efficient. Answer B fails on clarity and efficiency.",
+            "reason_ba": "Answer B correctly handles tuple lengths, while Answer A has logical errors and inefficiencies."
+          },
+          {
+            "idx": 34,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise, efficient, and adheres closely to the prompt. Answer B incorrectly includes even-indexed characters.",
+            "reason_ba": "Answer A correctly implements the task, is more readable, and handles edge cases better. Answer B incorrectly starts from index 1."
+          },
+          {
+            "idx": 35,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is correct, complete, clear, and efficient. Answer B is incorrect and incomplete.",
+            "reason_ba": "Answer B correctly sorts the counter by value, handles all cases, and is clearer. Answer A incorrectly implements sorting and returns only the first item."
+          },
+          {
+            "idx": 36,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A correctly uses 'in' to check for substring presence, while B incorrectly uses '==' which checks for identity, not containment.",
+            "reason_ba": "Both answers are correct, handle all cases, and are equally clear. Answer B is more efficient by directly checking for substring presence."
+          },
+          {
+            "idx": 37,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise, uses tuple count method for simplicity. Answer B is less clear with different variable names and redundant initialization.",
+            "reason_ba": "Both answers are correct, complete, clear, and efficient. Answer B uses tuple's built-in method for brevity."
+          },
+          {
+            "idx": 38,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise, uses a more conventional variable name, and follows Python naming conventions better.",
+            "reason_ba": "Answer B is more consistent with the prompt, uses proper variable names, and is clearer."
+          },
+          {
+            "idx": 39,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is correct, complete, clear, and efficient. Answer B incorrectly uses addition instead of multiplication.",
+            "reason_ba": "Answer B correctly implements index-wise multiplication and is more efficient. Answer A adds instead of multiplying."
+          }
+        ]
+      }
+    }
+  }
+}

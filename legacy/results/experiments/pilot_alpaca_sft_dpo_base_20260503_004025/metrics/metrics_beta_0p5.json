@@ -1,0 +1,250 @@
+{
+  "track": "dialog",
+  "num_eval_items": 7,
+  "base": {
+    "dialog_heuristic": 0.7857
+  },
+  "sft": {
+    "dialog_heuristic": 0.6
+  },
+  "dpo": {
+    "dialog_heuristic": 0.6
+  },
+  "primary_metric": "dialog_heuristic",
+  "llm_judge": {
+    "judge_model": "qwen2.5:7b",
+    "judge_base_url": "http://127.0.0.1:11434/v1",
+    "judge_json_mode": false,
+    "num_judged_items": 7,
+    "judge_failures": 0,
+    "win_rates": {
+      "base": 0.2857,
+      "sft": 0.0,
+      "dpo": 0.0714
+    },
+    "pairs": {
+      "base_vs_sft": {
+        "base_wins": 2,
+        "sft_wins": 0,
+        "ties": 5,
+        "base_win_rate": 0.2857,
+        "sft_win_rate": 0.0,
+        "tie_rate": 0.7143,
+        "position_consistent_rate": 0.2857,
+        "items": [
+          {
+            "idx": 0,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B correctly explains RLHF, while A is irrelevant and Answer C repeats itself without fully addressing the question.",
+            "reason_ba": "Both answers are incorrect and do not address the given prompt about RLHF."
+          },
+          {
+            "idx": 1,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A provides more detailed information and adheres to the three-sentence limit better than Answer B.",
+            "reason_ba": "Answer A is more concise and directly addresses the prompt. Answer B, while informative, exceeds the three-sentence requirement."
+          },
+          {
+            "idx": 2,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more polite, well-structured, and addresses the user's request more thoroughly.",
+            "reason_ba": "Answer A is more concise and directly addresses the request without unnecessary details."
+          },
+          {
+            "idx": 3,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more helpful and accurate to the initial prompt. Answer B repeats itself unnecessarily.",
+            "reason_ba": "Both translations are accurate and clear, but Answer A is more helpful as it directly addresses the user's request."
+          },
+          {
+            "idx": 4,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more helpful and clear, providing a straightforward function with proper input validation. Answer B uses recursion without explicit validation messages.",
+            "reason_ba": "Answer B handles negative inputs more gracefully and provides a clear message. It also follows the prompt better by including an example."
+          },
+          {
+            "idx": 5,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A provides more comprehensive mitigation strategies and addresses the prompt requirements better.",
+            "reason_ba": "Answer B provides more detailed mitigation strategies and covers model drift, which Answer A does not."
+          },
+          {
+            "idx": 6,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more clear, well-structured, and easier to read. It also provides specific methods for reducing overfitting.",
+            "reason_ba": "Answer A is more detailed and well-structured, providing specific techniques like L1/L2 regularization, dropout, and early stopping. Answer B is concise but less comprehensive."
+          }
+        ]
+      },
+      "base_vs_dpo": {
+        "base_wins": 2,
+        "dpo_wins": 0,
+        "ties": 5,
+        "base_win_rate": 0.2857,
+        "dpo_win_rate": 0.0,
+        "tie_rate": 0.7143,
+        "position_consistent_rate": 0.2857,
+        "items": [
+          {
+            "idx": 0,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B correctly explains RLHF, while A is irrelevant and repetitive.",
+            "reason_ba": "Both answers are incorrect and do not address the given prompt about RLHF. They are also redundant as they are identical."
+          },
+          {
+            "idx": 1,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A provides more detailed information and covers additional techniques, making it more helpful and accurate.",
+            "reason_ba": "Answer A is more concise and directly addresses the prompt, while Answer B provides additional information that exceeds the 3-sentence requirement."
+          },
+          {
+            "idx": 2,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more polite, well-structured, and follows the format constraints better.",
+            "reason_ba": "Answer A is more concise and directly addresses the request without unnecessary details."
+          },
+          {
+            "idx": 3,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more helpful and accurate to the initial prompt. Answer B repeats itself unnecessarily.",
+            "reason_ba": "Both translations are accurate and clear, but Answer A is more helpful as it directly addresses the user's request."
+          },
+          {
+            "idx": 4,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more helpful and clear, providing a straightforward function with proper input validation. Answer B uses recursion without explicit validation messages.",
+            "reason_ba": "Answer B handles negative inputs more gracefully and provides a clear message. It also follows the prompt better by including an example."
+          },
+          {
+            "idx": 5,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more comprehensive and directly addresses the user's request, while Answer B includes an additional risk (lack of explainability) not requested.",
+            "reason_ba": "Answer B provides more comprehensive mitigation strategies and addresses additional risks like model drift, making it clearer and more helpful."
+          },
+          {
+            "idx": 6,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise, easier to read, and directly addresses the user's request without unnecessary complexity.",
+            "reason_ba": "Answer A provides more detailed methods for reducing overfitting and is better structured."
+          }
+        ]
+      },
+      "sft_vs_dpo": {
+        "sft_wins": 0,
+        "dpo_wins": 1,
+        "ties": 6,
+        "sft_win_rate": 0.0,
+        "dpo_win_rate": 0.1429,
+        "tie_rate": 0.8571,
+        "position_consistent_rate": 0.4286,
+        "items": [
+          {
+            "idx": 0,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly addresses the request for simple terms. Answer B includes 'accuracy' which was not part of the prompt.",
+            "reason_ba": "Answer A provides more detail about the adjustment process and accuracy improvement, making it slightly more helpful."
+          },
+          {
+            "idx": 1,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B is more helpful and clear, providing additional context on fine-tuning for accuracy. Answer A is less detailed but still accurate.",
+            "reason_ba": "Answer A is more detailed and well-structured, providing a clearer explanation of the process."
+          },
+          {
+            "idx": 2,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more detailed and shows a willingness to work harder, making it slightly more helpful.",
+            "reason_ba": "Answer A is more concise and directly states the request, while Answer B reiterates points unnecessarily."
+          },
+          {
+            "idx": 3,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are identical and meet all criteria perfectly.",
+            "reason_ba": "Both answers are identical and meet all criteria perfectly."
+          },
+          {
+            "idx": 4,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are identical and meet all criteria perfectly.",
+            "reason_ba": "Both answers are identical and meet all criteria perfectly."
+          },
+          {
+            "idx": 5,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B provides more accurate and detailed mitigation strategies, especially for overfitting and security risks.",
+            "reason_ba": "Answer A provides more accurate mitigation strategies for overfitting and security risks, while Answer B uses less precise terms like 'interpretability' without clear explanation."
+          },
+          {
+            "idx": 6,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is slightly more concise and directly addresses the user's request for three practical ways, while Answer B reiterates the complexity reduction point twice.",
+            "reason_ba": "Answer A provides a more detailed explanation of reducing overfitting by mentioning early stopping, while Answer B does not. Both are clear and accurate."
+          }
+        ]
+      }
+    }
+  }
+}

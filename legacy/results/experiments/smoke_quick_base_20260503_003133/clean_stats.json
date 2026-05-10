@@ -1,0 +1,13 @@
+{
+  "kept": 52,
+  "dropped": 8,
+  "trimmed": 4,
+  "reasons": {
+    "looks_truncated": 3,
+    "chosen_eq_rejected": 1,
+    "chosen_too_short": 3,
+    "rejected_too_short": 1
+  },
+  "in_path": "data/dpo_pairs.smoke_quick_base.raw.jsonl",
+  "out_path": "data/dpo_pairs.smoke_quick_base.clean.jsonl"
+}

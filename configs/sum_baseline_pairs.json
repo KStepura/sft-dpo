@@ -1,0 +1,64 @@
+{
+  "name": "v2_sum_baseline_pairs_nojudge",
+  "track": "summarization",
+  "description": "Summarization v2: on-policy DPO, IPO, \u0441\u0438\u043c\u043c\u0435\u0442\u0440\u0438\u0447\u043d\u0430\u044f \u043e\u0431\u0440\u0435\u0437\u043a\u0430, \u0447\u0435\u043a\u043f\u043e\u0439\u043d\u0442-selection.",
+  "base_model_id": "Qwen/Qwen2.5-3B",
+  "dataset_id": "tatsu-lab/alpaca",
+  "prompt_style": "alpaca",
+  "seed": 42,
+  "paths": {
+    "data_raw": "data/dpo_pairs.v2_sum_baseline.raw.jsonl",
+    "data_clean": "data/dpo_pairs.v2_sum_baseline.clean.jsonl",
+    "outputs_root": "outputs"
+  },
+  "data": {
+    "num_examples": 600,
+    "max_new_tokens": 128,
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "min_chars": 20,
+    "drop_if_truncated": true,
+    "drop_if_equal": true,
+    "make_strict_prompt": true,
+    "policy_source": "baseline"
+  },
+  "sft": {
+    "max_steps": 200,
+    "lr": 0.0002,
+    "batch_size": 1,
+    "grad_accum": 16,
+    "max_seq_len": 1024,
+    "no_packing": true
+  },
+  "dpo": {
+    "betas": [
+      0.3
+    ],
+    "max_steps": 40,
+    "lr": 2e-06,
+    "batch_size": 1,
+    "grad_accum": 16,
+    "max_length": 1024,
+    "max_prompt_length": 512,
+    "loss_type": "ipo",
+    "save_steps": 10,
+    "save_total_limit": 6,
+    "select_checkpoint": true
+  },
+  "eval": {
+    "refs_path": "data/refs.benchmark_summarization_base.jsonl",
+    "max_new_tokens": 200,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "do_sample": false,
+    "postprocess_outputs": true
+  },
+  "judge": {
+    "model": "",
+    "base_url": "http://127.0.0.1:11434/v1",
+    "api_key": "",
+    "json_mode": false,
+    "sleep_sec": 0.15,
+    "timeout_sec": 120
+  }
+}

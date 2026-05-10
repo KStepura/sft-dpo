@@ -1,0 +1,11 @@
+Loading dataset: google-research-datasets/mbpp (mbpp, split=train)
+Using 374 examples for DPO pairs
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.98s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:06<00:00,  3.08s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:06<00:00,  3.22s/it]
+Written 50 pairs
+Written 100 pairs
+Written 150 pairs
+Written 200 pairs
+Written 250 pairs
+Written 300 pairs
+Written 350 pairs
+Done. Saved 374 pairs to data/dpo_pairs.benchmark_mbpp_base.raw.jsonl

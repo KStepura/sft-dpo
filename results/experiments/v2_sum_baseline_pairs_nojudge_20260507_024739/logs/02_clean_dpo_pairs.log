@@ -1,0 +1,3 @@
+Done. kept=520, dropped=24, trimmed=16
+Saved to: experiment_v2/data/dpo_pairs.v2_sum_baseline.clean.jsonl
+Stats saved to: results/experiments/v2_sum_baseline_pairs_nojudge_20260507_024739/clean_stats.json

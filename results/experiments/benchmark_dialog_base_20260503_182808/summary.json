@@ -1,0 +1,235 @@
+{
+  "exp_id": "benchmark_dialog_base_20260503_182808",
+  "created_at": "2026-05-03T23:26:37",
+  "config_path": "/workspace/thesis-llm-alignment/configs/benchmark_dialog_base.json",
+  "seed": 42,
+  "track": "dialog",
+  "clean_stats_path": "results/experiments/benchmark_dialog_base_20260503_182808/clean_stats.json",
+  "steps": [
+    {
+      "name": "build_dpo_pairs",
+      "seconds": 4368.37,
+      "log_path": "results/experiments/benchmark_dialog_base_20260503_182808/logs/01_build_dpo_pairs.log"
+    },
+    {
+      "name": "clean_dpo_pairs",
+      "seconds": 0.21,
+      "log_path": "results/experiments/benchmark_dialog_base_20260503_182808/logs/02_clean_dpo_pairs.log"
+    },
+    {
+      "name": "train_sft",
+      "seconds": 2718.17,
+      "log_path": "results/experiments/benchmark_dialog_base_20260503_182808/logs/03_train_sft.log"
+    },
+    {
+      "name": "train_dpo_beta_0p05",
+      "seconds": 2182.16,
+      "log_path": "results/experiments/benchmark_dialog_base_20260503_182808/logs/04_train_dpo_beta_0p05.log"
+    },
+    {
+      "name": "compare_beta_0p05",
+      "seconds": 550.61,
+      "log_path": "results/experiments/benchmark_dialog_base_20260503_182808/logs/05_compare_beta_0p05.log"
+    },
+    {
+      "name": "eval_metrics_beta_0p05",
+      "seconds": 2.15,
+      "log_path": "results/experiments/benchmark_dialog_base_20260503_182808/logs/06_eval_metrics_beta_0p05.log"
+    },
+    {
+      "name": "train_dpo_beta_0p1",
+      "seconds": 2140.91,
+      "log_path": "results/experiments/benchmark_dialog_base_20260503_182808/logs/04_train_dpo_beta_0p1.log"
+    },
+    {
+      "name": "compare_beta_0p1",
+      "seconds": 553.52,
+      "log_path": "results/experiments/benchmark_dialog_base_20260503_182808/logs/05_compare_beta_0p1.log"
+    },
+    {
+      "name": "eval_metrics_beta_0p1",
+      "seconds": 2.43,
+      "log_path": "results/experiments/benchmark_dialog_base_20260503_182808/logs/06_eval_metrics_beta_0p1.log"
+    },
+    {
+      "name": "train_dpo_beta_0p2",
+      "seconds": 2174.63,
+      "log_path": "results/experiments/benchmark_dialog_base_20260503_182808/logs/04_train_dpo_beta_0p2.log"
+    },
+    {
+      "name": "compare_beta_0p2",
+      "seconds": 542.88,
+      "log_path": "results/experiments/benchmark_dialog_base_20260503_182808/logs/05_compare_beta_0p2.log"
+    },
+    {
+      "name": "eval_metrics_beta_0p2",
+      "seconds": 2.19,
+      "log_path": "results/experiments/benchmark_dialog_base_20260503_182808/logs/06_eval_metrics_beta_0p2.log"
+    },
+    {
+      "name": "train_dpo_beta_0p5",
+      "seconds": 2128.57,
+      "log_path": "results/experiments/benchmark_dialog_base_20260503_182808/logs/04_train_dpo_beta_0p5.log"
+    },
+    {
+      "name": "compare_beta_0p5",
+      "seconds": 540.08,
+      "log_path": "results/experiments/benchmark_dialog_base_20260503_182808/logs/05_compare_beta_0p5.log"
+    },
+    {
+      "name": "eval_metrics_beta_0p5",
+      "seconds": 2.63,
+      "log_path": "results/experiments/benchmark_dialog_base_20260503_182808/logs/06_eval_metrics_beta_0p5.log"
+    }
+  ],
+  "compare": [
+    {
+      "beta": 0.05,
+      "path": "results/experiments/benchmark_dialog_base_20260503_182808/compare/compare_beta_0p05.jsonl",
+      "stats": {
+        "num_prompts": 25,
+        "avg_len_base": 625.2,
+        "avg_len_sft": 262.7,
+        "avg_len_dpo": 270.1
+      },
+      "dpo_metrics_path": "outputs/experiments/benchmark_dialog_base_20260503_182808/dpo_beta_0p05/dpo_metrics.json",
+      "dpo_metrics": {
+        "kl_final": null,
+        "loss_final": 0.2432,
+        "reward_margin_final": 2.0390467643737793,
+        "num_log_records": 20,
+        "checkpoint": "outputs/experiments/benchmark_dialog_base_20260503_182808/dpo_beta_0p05/checkpoint-200",
+        "kl_candidates": {},
+        "beta": 0.05,
+        "max_steps": 200,
+        "dpo_data_path": "data/dpo_pairs.benchmark_dialog_base.clean.jsonl"
+      },
+      "metrics_path": "results/experiments/benchmark_dialog_base_20260503_182808/metrics/metrics_beta_0p05.json",
+      "metrics": {
+        "track": "dialog",
+        "num_eval_items": 25,
+        "base": {
+          "dialog_heuristic": 0.78
+        },
+        "sft": {
+          "dialog_heuristic": 0.684
+        },
+        "dpo": {
+          "dialog_heuristic": 0.592
+        },
+        "primary_metric": "dialog_heuristic"
+      }
+    },
+    {
+      "beta": 0.1,
+      "path": "results/experiments/benchmark_dialog_base_20260503_182808/compare/compare_beta_0p1.jsonl",
+      "stats": {
+        "num_prompts": 25,
+        "avg_len_base": 625.2,
+        "avg_len_sft": 262.7,
+        "avg_len_dpo": 284.0
+      },
+      "dpo_metrics_path": "outputs/experiments/benchmark_dialog_base_20260503_182808/dpo_beta_0p1/dpo_metrics.json",
+      "dpo_metrics": {
+        "kl_final": null,
+        "loss_final": 0.145,
+        "reward_margin_final": 3.2304508686065674,
+        "num_log_records": 20,
+        "checkpoint": "outputs/experiments/benchmark_dialog_base_20260503_182808/dpo_beta_0p1/checkpoint-200",
+        "kl_candidates": {},
+        "beta": 0.1,
+        "max_steps": 200,
+        "dpo_data_path": "data/dpo_pairs.benchmark_dialog_base.clean.jsonl"
+      },
+      "metrics_path": "results/experiments/benchmark_dialog_base_20260503_182808/metrics/metrics_beta_0p1.json",
+      "metrics": {
+        "track": "dialog",
+        "num_eval_items": 25,
+        "base": {
+          "dialog_heuristic": 0.78
+        },
+        "sft": {
+          "dialog_heuristic": 0.684
+        },
+        "dpo": {
+          "dialog_heuristic": 0.616
+        },
+        "primary_metric": "dialog_heuristic"
+      }
+    },
+    {
+      "beta": 0.2,
+      "path": "results/experiments/benchmark_dialog_base_20260503_182808/compare/compare_beta_0p2.jsonl",
+      "stats": {
+        "num_prompts": 25,
+        "avg_len_base": 625.2,
+        "avg_len_sft": 262.7,
+        "avg_len_dpo": 278.8
+      },
+      "dpo_metrics_path": "outputs/experiments/benchmark_dialog_base_20260503_182808/dpo_beta_0p2/dpo_metrics.json",
+      "dpo_metrics": {
+        "kl_final": null,
+        "loss_final": 0.0745,
+        "reward_margin_final": 4.959439754486084,
+        "num_log_records": 20,
+        "checkpoint": "outputs/experiments/benchmark_dialog_base_20260503_182808/dpo_beta_0p2/checkpoint-200",
+        "kl_candidates": {},
+        "beta": 0.2,
+        "max_steps": 200,
+        "dpo_data_path": "data/dpo_pairs.benchmark_dialog_base.clean.jsonl"
+      },
+      "metrics_path": "results/experiments/benchmark_dialog_base_20260503_182808/metrics/metrics_beta_0p2.json",
+      "metrics": {
+        "track": "dialog",
+        "num_eval_items": 25,
+        "base": {
+          "dialog_heuristic": 0.78
+        },
+        "sft": {
+          "dialog_heuristic": 0.684
+        },
+        "dpo": {
+          "dialog_heuristic": 0.664
+        },
+        "primary_metric": "dialog_heuristic"
+      }
+    },
+    {
+      "beta": 0.5,
+      "path": "results/experiments/benchmark_dialog_base_20260503_182808/compare/compare_beta_0p5.jsonl",
+      "stats": {
+        "num_prompts": 25,
+        "avg_len_base": 625.2,
+        "avg_len_sft": 262.7,
+        "avg_len_dpo": 270.2
+      },
+      "dpo_metrics_path": "outputs/experiments/benchmark_dialog_base_20260503_182808/dpo_beta_0p5/dpo_metrics.json",
+      "dpo_metrics": {
+        "kl_final": null,
+        "loss_final": 0.0228,
+        "reward_margin_final": 8.14412784576416,
+        "num_log_records": 20,
+        "checkpoint": "outputs/experiments/benchmark_dialog_base_20260503_182808/dpo_beta_0p5/checkpoint-200",
+        "kl_candidates": {},
+        "beta": 0.5,
+        "max_steps": 200,
+        "dpo_data_path": "data/dpo_pairs.benchmark_dialog_base.clean.jsonl"
+      },
+      "metrics_path": "results/experiments/benchmark_dialog_base_20260503_182808/metrics/metrics_beta_0p5.json",
+      "metrics": {
+        "track": "dialog",
+        "num_eval_items": 25,
+        "base": {
+          "dialog_heuristic": 0.78
+        },
+        "sft": {
+          "dialog_heuristic": 0.684
+        },
+        "dpo": {
+          "dialog_heuristic": 0.664
+        },
+        "primary_metric": "dialog_heuristic"
+      }
+    }
+  ]
+}

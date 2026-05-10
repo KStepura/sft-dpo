@@ -1,0 +1,736 @@
+{
+  "track": "summarization",
+  "num_eval_items": 25,
+  "base": {
+    "rougeL_f1": 0.1881
+  },
+  "sft": {
+    "rougeL_f1": 0.3103
+  },
+  "dpo": {
+    "rougeL_f1": 0.2228
+  },
+  "primary_metric": "rougeL_f1",
+  "llm_judge": {
+    "judge_model": "qwen2.5:7b",
+    "judge_base_url": "http://127.0.0.1:11434/v1",
+    "judge_json_mode": false,
+    "num_judged_items": 25,
+    "judge_failures": 0,
+    "win_rates": {
+      "base": 0.12,
+      "sft": 0.32,
+      "dpo": 0.06
+    },
+    "pairs": {
+      "base_vs_sft": {
+        "base_wins": 1,
+        "sft_wins": 8,
+        "ties": 16,
+        "base_win_rate": 0.04,
+        "sft_win_rate": 0.32,
+        "tie_rate": 0.64,
+        "position_consistent_rate": 0.4,
+        "items": [
+          {
+            "idx": 0,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B more accurately reflects the source, covers key points, is concise, and readable.",
+            "reason_ba": "Answer B more accurately reflects the source, covers key points without unnecessary padding, and is slightly more fluent."
+          },
+          {
+            "idx": 1,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more faithful, concise, and readable. It captures all key points without unnecessary details.",
+            "reason_ba": "Answer B accurately reflects the key points and is more concise, omitting unnecessary details about the economic downturn."
+          },
+          {
+            "idx": 2,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are concise, cover key points, and are readable. However, Answer B is slightly more faithful to the original prompt.",
+            "reason_ba": "Both answers are equally faithful, cover the key points, and are concise and readable."
+          },
+          {
+            "idx": 3,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B more closely matches the reference, capturing all key points concisely and fluently.",
+            "reason_ba": "Answer A is more concise and faithful, capturing all key points without unnecessary details."
+          },
+          {
+            "idx": 4,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B more accurately reflects the source, covers all key points concisely, and is fluent.",
+            "reason_ba": "Answer A more closely matches the prompt, covering all key points concisely and fluently."
+          },
+          {
+            "idx": 5,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A provides a slightly more detailed explanation of cost reduction, which is faithful to the prompt. Both answers are concise and readable, but A covers all key points without unnecessary repetition.",
+            "reason_ba": "Answer A is more concise and faithful to the original, omitting unnecessary details while maintaining key points."
+          },
+          {
+            "idx": 6,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more faithful, concise, and readable. Answer B has unnecessary padding.",
+            "reason_ba": "Answer A is more faithful, covers all key points concisely, and reads fluently without padding."
+          },
+          {
+            "idx": 7,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A accurately reflects the source and is more concise without repeating 'but' before 'funding remains.'",
+            "reason_ba": "Answer A is more concise and fluent, omitting the unnecessary 'but' before 'funding remains.'"
+          },
+          {
+            "idx": 8,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "tie",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B captures all key points concisely and fluently, while Answer A repeats the instruction unnecessarily.",
+            "reason_ba": "Both answers are identical and meet all criteria equally well."
+          },
+          {
+            "idx": 9,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B is more concise and faithful, capturing all key points without unnecessary padding.",
+            "reason_ba": "Answer A is more concise and faithful to the original, omitting unnecessary details like 'lol'."
+          },
+          {
+            "idx": 10,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful, omitting unnecessary details while maintaining key points.",
+            "reason_ba": "Answer A is more faithful, covers all key points, and is slightly more concise and readable."
+          },
+          {
+            "idx": 11,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more faithful, concise, and readable while capturing all key points.",
+            "reason_ba": "Answer A is more concise and fluent, capturing all key points without unnecessary details."
+          },
+          {
+            "idx": 12,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A uses 'flattened' instead of 'remained stagnant,' which is more concise and fluent.",
+            "reason_ba": "Answer A more closely matches the reference in wording and structure, maintaining faithfulness better."
+          },
+          {
+            "idx": 13,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B more accurately reflects the source, covers key points concisely, and is clearer.",
+            "reason_ba": "Answer A is more faithful, covers all key points, and is slightly more concise and readable."
+          },
+          {
+            "idx": 14,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful, omitting unnecessary 'successfully' while maintaining key points.",
+            "reason_ba": "Answer A is more faithful, covers all key points, and is slightly more concise and fluent."
+          },
+          {
+            "idx": 15,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise, faithful, and readable while still covering all key points.",
+            "reason_ba": "Answer A is more concise and faithful to the key points without unnecessary details."
+          },
+          {
+            "idx": 16,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly reflects the key points without unnecessary padding.",
+            "reason_ba": "Answer A is more faithful, concise, and fluent while still covering all key points."
+          },
+          {
+            "idx": 17,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B accurately reflects the source, covers key points concisely, and is more fluent.",
+            "reason_ba": "Answer A is more faithful, covers all key points, and is more concise and readable compared to B."
+          },
+          {
+            "idx": 18,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful to the original, omitting unnecessary details.",
+            "reason_ba": "Answer A is more faithful, covers all key points concisely, and reads fluently. Answer B slightly repeats 'stabilized' and omits 'water quality'."
+          },
+          {
+            "idx": 19,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A includes 'industry faced scrutiny' which better captures the original's tone and context compared to B.",
+            "reason_ba": "Answer A is more concise and directly mirrors the original key points without unnecessary words."
+          },
+          {
+            "idx": 20,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is slightly more concise and directly mirrors the user prompt's structure.",
+            "reason_ba": "Answer A uses 'have banned' which is more recent and dynamic compared to 'banned' in B. Both are faithful, cover key points, concise, and readable."
+          },
+          {
+            "idx": 21,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A provides a slightly more fluent and clear summary, maintaining the same structure as the reference.",
+            "reason_ba": "Answer A is more concise and directly mirrors the reference summary."
+          },
+          {
+            "idx": 22,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B more accurately reflects the source, covers key points, is concise, and readable.",
+            "reason_ba": "Answer A is more concise, faithful, and covers the key points better than Answer B. Answer B includes unnecessary information not related to the prompt."
+          },
+          {
+            "idx": 23,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B more accurately reflects the original, covers key points, is concise and readable.",
+            "reason_ba": "Answer A is more faithful, covers all key points concisely, and reads fluently. Answer B introduces irrelevant details."
+          },
+          {
+            "idx": 24,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B more accurately reflects the source, covers key points concisely, and is more fluent.",
+            "reason_ba": "Answer A is more faithful, concise, and readable while covering all key points."
+          }
+        ]
+      },
+      "base_vs_dpo": {
+        "base_wins": 5,
+        "dpo_wins": 3,
+        "ties": 17,
+        "base_win_rate": 0.2,
+        "dpo_win_rate": 0.12,
+        "tie_rate": 0.68,
+        "position_consistent_rate": 0.4,
+        "items": [
+          {
+            "idx": 0,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A more accurately reflects the source, covers all key points concisely, and is more fluent.",
+            "reason_ba": "Answer B more accurately captures key points and is more concise and fluent without padding."
+          },
+          {
+            "idx": 1,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more faithful, concise, and readable. Answer B includes unnecessary content about the economic downturn.",
+            "reason_ba": "Answer B accurately reflects the source, covers key points concisely, and is clear. Answer A includes unnecessary information about an economic downturn."
+          },
+          {
+            "idx": 2,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both summaries are concise, cover key points, and are readable. However, Answer B is slightly more faithful to the original prompt.",
+            "reason_ba": "Both answers are faithful, cover key points, concise, and readable."
+          },
+          {
+            "idx": 3,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more faithful, concise, and reads fluently without unnecessary padding.",
+            "reason_ba": "Answer A is more concise and fluent, avoiding unnecessary padding. It also captures the key points better."
+          },
+          {
+            "idx": 4,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A more closely follows the prompt, providing a concise and accurate summary without unnecessary details.",
+            "reason_ba": "Answer B more closely follows the prompt, is concise, and maintains readability without unnecessary details."
+          },
+          {
+            "idx": 5,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and fluent, while Answer B includes unnecessary repetition.",
+            "reason_ba": "Answer A is more concise and fluent, while Answer B repeats 'primary' unnecessarily."
+          },
+          {
+            "idx": 6,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful to the original, while Answer B includes unnecessary padding.",
+            "reason_ba": "Answer A is more faithful, covers all key points concisely, and reads fluently without padding."
+          },
+          {
+            "idx": 7,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both are faithful and cover key points, but A is more concise without unnecessary details.",
+            "reason_ba": "Answer A is more concise and fluent, avoiding unnecessary repetition."
+          },
+          {
+            "idx": 8,
+            "verdict_ab": "tie",
+            "verdict_ba_norm": "tie",
+            "consistent": true,
+            "final": "tie",
+            "reason_ab": "Both answers are faithful and concise, but neither captures all key points or is as fluent as the reference.",
+            "reason_ba": "Both answers meet the criteria equally well, capturing key points and being concise."
+          },
+          {
+            "idx": 9,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful to the original, omitting unnecessary details.",
+            "reason_ba": "Answer A is more faithful, concise, and readable without unnecessary padding."
+          },
+          {
+            "idx": 10,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both are faithful and cover key points, but A is more concise and fluent.",
+            "reason_ba": "Answer A is more faithful, covers all key points, and is slightly more concise and readable."
+          },
+          {
+            "idx": 11,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more faithful, concise, and readable. It captures all key points without unnecessary details.",
+            "reason_ba": "Answer A is more concise and fluent, with slightly better coverage of all key points."
+          },
+          {
+            "idx": 12,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful, omitting unnecessary details while maintaining key points.",
+            "reason_ba": "Answer A is more faithful, covers all key points concisely, and reads fluently without unnecessary padding."
+          },
+          {
+            "idx": 13,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B better covers the key points, is more concise, and reads fluently without unnecessary padding.",
+            "reason_ba": "Answer A is more faithful, covers all key points, and is more concise and readable compared to B."
+          },
+          {
+            "idx": 14,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise and faithful to the key points without unnecessary details.",
+            "reason_ba": "Answer B better covers key points and is more concise without sacrificing clarity."
+          },
+          {
+            "idx": 15,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful to the original, avoiding unnecessary details.",
+            "reason_ba": "Answer A is more concise and faithful to the key points, avoiding unnecessary details."
+          },
+          {
+            "idx": 16,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Both are faithful and cover key points, but A is more concise and fluent.",
+            "reason_ba": "Answer B more concisely captures key points and maintains readability without unnecessary details."
+          },
+          {
+            "idx": 17,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B accurately reflects the source, covers key points concisely, and is clear. Answer A is irrelevant to the prompt.",
+            "reason_ba": "Answer A is more faithful, covers all key points, and is more concise and readable compared to B."
+          },
+          {
+            "idx": 18,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both are faithful and cover key points, but A is more concise and fluent.",
+            "reason_ba": "Answer A is more faithful, covers all key points, and reads more fluently."
+          },
+          {
+            "idx": 19,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful to the original, omitting unnecessary details.",
+            "reason_ba": "Answer A is more faithful, covers all key points, and is slightly more concise and readable."
+          },
+          {
+            "idx": 20,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both are faithful and cover key points, but A is more concise and fluent.",
+            "reason_ba": "Answer A is more detailed, covers all key points, and is slightly more fluent."
+          },
+          {
+            "idx": 21,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful to the original, omitting unnecessary details about technology adoption.",
+            "reason_ba": "Answer A provides more context and a clearer conclusion, making it slightly more fluent and comprehensive."
+          },
+          {
+            "idx": 22,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "B",
+            "consistent": true,
+            "final": "B",
+            "reason_ab": "Answer B accurately reflects the source, covers key points, is concise and readable.",
+            "reason_ba": "Answer A more accurately reflects the source, covers key points, is concise and readable. Answer B is less clear and relevant to the prompt."
+          },
+          {
+            "idx": 23,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B more accurately reflects the original, covers key points, is concise and readable without unnecessary padding.",
+            "reason_ba": "Answer B more closely follows the prompt, is concise, and captures key points without unnecessary details."
+          },
+          {
+            "idx": 24,
+            "verdict_ab": "B",
+            "verdict_ba_norm": "A",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer B accurately reflects the source, covers key points, is concise and readable. Answer A deviates to an unrelated topic.",
+            "reason_ba": "Answer B is more concise and faithful to the prompt, capturing all key points without unnecessary details."
+          }
+        ]
+      },
+      "sft_vs_dpo": {
+        "sft_wins": 8,
+        "dpo_wins": 0,
+        "ties": 17,
+        "sft_win_rate": 0.32,
+        "dpo_win_rate": 0.0,
+        "tie_rate": 0.68,
+        "position_consistent_rate": 0.32,
+        "items": [
+          {
+            "idx": 0,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise and faithful to the original, without unnecessary padding or repetition.",
+            "reason_ba": "Both are faithful and cover key points, but B is more concise and fluent without unnecessary details."
+          },
+          {
+            "idx": 1,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more faithful, concise, and readable. Answer B includes unnecessary 'recently' and 'due to the economic downturn', which are not in the prompt.",
+            "reason_ba": "Answer A is more faithful, concise, and readable. It accurately reflects the source without unnecessary padding."
+          },
+          {
+            "idx": 2,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly mirrors the reference summary.",
+            "reason_ba": "Answer A is more faithful, covers all key points concisely, and reads fluently."
+          },
+          {
+            "idx": 3,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise and faithful, capturing all key points without unnecessary details.",
+            "reason_ba": "Both are faithful and cover key points. Answer B is more concise and fluent."
+          },
+          {
+            "idx": 4,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise and faithful to the original, omitting unnecessary details.",
+            "reason_ba": "Both cover key points, are concise and readable. Answer B is slightly more faithful and direct."
+          },
+          {
+            "idx": 5,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful to the original, omitting unnecessary details.",
+            "reason_ba": "Answer A is more concise and fluent, omitting unnecessary details."
+          },
+          {
+            "idx": 6,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful to the original without unnecessary padding or repetition.",
+            "reason_ba": "Answer A is more faithful, concise, and fluent while still covering all key points."
+          },
+          {
+            "idx": 7,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both cover key points, but A is more concise and fluent.",
+            "reason_ba": "Answer A is more faithful, covers all key points, and is slightly more concise and readable."
+          },
+          {
+            "idx": 8,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise and faithful to the original, omitting unnecessary details about productivity and costs.",
+            "reason_ba": "Both meet criteria, but B is more concise and fluent without extra details."
+          },
+          {
+            "idx": 9,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise and faithful to the key points without unnecessary details.",
+            "reason_ba": "Answer B more concisely captures key points without unnecessary details or repetition."
+          },
+          {
+            "idx": 10,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful, omitting unnecessary details while maintaining key points.",
+            "reason_ba": "Answer A is more faithful, covers all key points, and is slightly more concise and fluent."
+          },
+          {
+            "idx": 11,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and directly mirrors the reference summary without unnecessary phrases.",
+            "reason_ba": "Answer A is more concise and fluent, omitting unnecessary 'its'."
+          },
+          {
+            "idx": 12,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful, omitting unnecessary details without losing key points.",
+            "reason_ba": "Answer A is more concise and includes the goal of keeping market share, while Answer B is slightly repetitive."
+          },
+          {
+            "idx": 13,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise and faithful to the key points without unnecessary details.",
+            "reason_ba": "Answer B more concisely captures key points without unnecessary details."
+          },
+          {
+            "idx": 14,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise and faithful to the key points without unnecessary details.",
+            "reason_ba": "Answer B is more concise and faithful to the key points without unnecessary details or padding."
+          },
+          {
+            "idx": 15,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful to the key points without unnecessary padding.",
+            "reason_ba": "Answer A is more faithful, covers all key points concisely, and reads fluently without padding."
+          },
+          {
+            "idx": 16,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "A",
+            "consistent": true,
+            "final": "A",
+            "reason_ab": "Answer A is more concise and faithful to the original, while Answer B includes unnecessary details.",
+            "reason_ba": "Answer B more concisely captures key points and maintains readability without unnecessary details."
+          },
+          {
+            "idx": 17,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A more faithfully reflects the source and is slightly more concise.",
+            "reason_ba": "Answer A is more concise and fluent, capturing all key points without unnecessary repetition."
+          },
+          {
+            "idx": 18,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A more accurately reflects the original, uses concise language, and is slightly clearer.",
+            "reason_ba": "Answer A is more concise and faithful, capturing the key points without unnecessary details."
+          },
+          {
+            "idx": 19,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful to the original, omitting unnecessary details.",
+            "reason_ba": "Answer A is more faithful, covers all key points, and is slightly more concise and readable."
+          },
+          {
+            "idx": 20,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both are faithful and cover key points, but A is more concise and fluent.",
+            "reason_ba": "Answer A is more faithful, covers all key points, and is slightly more concise and readable."
+          },
+          {
+            "idx": 21,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Both are faithful and cover key points, but Answer A is more concise and readable without unnecessary details.",
+            "reason_ba": "Answer A is more concise and adds relevant information about potential benefits, while Answer B repeats the key points without improvement."
+          },
+          {
+            "idx": 22,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful to the original, while Answer B includes unnecessary details.",
+            "reason_ba": "Answer A is more concise and includes the debate on acceptable error rates, while Answer B omits this crucial detail."
+          },
+          {
+            "idx": 23,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and captures all key points without unnecessary details. Answer B includes redundant information about the leagues continuing to implement rules despite pushback.",
+            "reason_ba": "Answer A is more faithful, covers all key points, and is slightly more concise and readable."
+          },
+          {
+            "idx": 24,
+            "verdict_ab": "A",
+            "verdict_ba_norm": "B",
+            "consistent": false,
+            "final": "tie",
+            "reason_ab": "Answer A is more concise and faithful to the original, while Answer B adds unnecessary details not present in the prompt.",
+            "reason_ba": "Answer A is more concise, faithful, and covers all key points without unnecessary details. Answer B misses the point about reducing losses due to theft."
+          }
+        ]
+      }
+    }
+  }
+}

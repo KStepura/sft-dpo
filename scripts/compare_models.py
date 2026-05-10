@@ -28,6 +28,8 @@ from typing import List, Dict, Any, Optional
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig, set_seed
 
+from prompt_utils import format_alpaca_prompt_prefix, format_chat_prompt_prefix
+
 try:
     from peft import PeftModel
 except ImportError as e:
@@ -43,10 +45,37 @@ DEFAULT_PROMPTS = [
 ]
 
 
+def truncate_at_instruction(text: str) -> str:
+    # Mirrors postprocess_rejected in build_dpo_pairs.py and the helper in
+    # eval_metrics.py. Strips hallucinated follow-up "### Instruction:" blocks
+    # that base models append after answering, so downstream metrics see only
+    # the actual response.
+    text = (text or "").strip()
+    for cut_mark in ["\n\n### Instruction:", "\n### Instruction:"]:
+        if cut_mark in text:
+            text = text.split(cut_mark, 1)[0].strip()
+    resp_mark = "### Response:"
+    if text.count(resp_mark) >= 2:
+        text = text.split(resp_mark)[-1].strip()
+    return text
+
+
 def read_prompts(path: Optional[str]) -> List[str]:
     if not path:
         return DEFAULT_PROMPTS[:]
     prompts: List[str] = []
+    path_lower = path.lower()
+    if path_lower.endswith(".jsonl"):
+        with open(path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                obj = json.loads(line)
+                p = obj.get("prompt", "")
+                if p:
+                    prompts.append(p)
+        return prompts or DEFAULT_PROMPTS[:]
     with open(path, "r", encoding="utf-8") as f:
         for line in f:
             s = line.strip()
@@ -58,19 +87,13 @@ def read_prompts(path: Optional[str]) -> List[str]:
     return prompts or DEFAULT_PROMPTS[:]
 
 
-def maybe_apply_chat_template(tok: AutoTokenizer, user_text: str) -> str:
+def format_prompt(tok: AutoTokenizer, user_text: str, prompt_style: str) -> str:
     """
-    Qwen-Instruct обычно лучше работает через chat template.
-    Если шаблон есть — используем.
+    Должно совпадать с train/build_dpo_pairs/clean (alpaca vs chat).
     """
-    if hasattr(tok, "apply_chat_template") and tok.chat_template:
-        msgs = [{"role": "user", "content": user_text}]
-        # add_generation_prompt добавляет маркер начала ответа ассистента
-        return tok.apply_chat_template(
-            msgs, tokenize=False, add_generation_prompt=True
-        )
-    # fallback: просто как есть
-    return user_text
+    if prompt_style == "chat":
+        return format_chat_prompt_prefix(tok, user_text, "")
+    return format_alpaca_prompt_prefix(user_text, "")
 
 
 @torch.inference_mode()
@@ -161,6 +184,20 @@ def main():
     ap.add_argument("--top_p", type=float, default=0.9)
     ap.add_argument("--do_sample", action="store_true", help="если не задано — будет greedy")
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument(
+        "--prompt_style",
+        type=str,
+        choices=("chat", "alpaca"),
+        default="chat",
+        help="Должен совпадать с обучением: chat для *-Instruct, alpaca для base.",
+    )
+    ap.add_argument(
+        "--postprocess_outputs",
+        action="store_true",
+        help="Strip hallucinated '### Instruction:' continuations from each "
+             "model's output before writing the compare file. Recommended for "
+             "alpaca-style prompts on non-Instruct base models.",
+    )
 
     args = ap.parse_args()
     set_seed(args.seed)
@@ -172,15 +209,17 @@ def main():
     print(f"Loading tokenizer: {args.base_model_id}")
     tok = load_tokenizer(args.base_model_id)
 
-    print(f"Loading base model: {args.base_model_id}")
+    # Отдельные копии весов base: нельзя вешать LoRA на тот же объект, с которого потом
+    # генерируем «base» — в PEFT адаптер и база делят граф, и ответы base/sft совпадают.
+    print(f"Loading base model (чистый inference): {args.base_model_id}")
     base_model = load_base_model(args.base_model_id)
 
+    print(f"Loading separate base copy for SFT adapter: {args.base_model_id}")
+    base_for_sft = load_base_model(args.base_model_id)
     print(f"Loading SFT adapter: {args.sft_adapter_dir}")
-    sft_model = attach_lora(base_model, args.sft_adapter_dir)
+    sft_model = attach_lora(base_for_sft, args.sft_adapter_dir)
 
-    # Чтобы DPO не “наследовал” SFT-адаптер внутри того же объекта, грузим отдельную копию base.
-    # Это чуть дороже по памяти, но сравнение будет корректным.
-    print(f"Reloading base model for DPO: {args.base_model_id}")
+    print(f"Loading separate base copy for DPO adapter: {args.base_model_id}")
     base_for_dpo = load_base_model(args.base_model_id)
 
     print(f"Loading DPO adapter: {args.dpo_adapter_dir}")
@@ -197,7 +236,7 @@ def main():
     print(f"Running {len(prompts)} prompts. Saving to: {args.out_path}")
     with open(args.out_path, "w", encoding="utf-8") as f:
         for i, user_prompt in enumerate(prompts, 1):
-            prompt_text = maybe_apply_chat_template(tok, user_prompt)
+            prompt_text = format_prompt(tok, user_prompt, args.prompt_style)
 
             base_out = generate_one(
                 base_model, tok, prompt_text,
@@ -220,6 +259,11 @@ def main():
                 top_p=args.top_p,
                 do_sample=args.do_sample,
             )
+
+            if args.postprocess_outputs:
+                base_out = truncate_at_instruction(base_out)
+                sft_out = truncate_at_instruction(sft_out)
+                dpo_out = truncate_at_instruction(dpo_out)
 
             rec = {
                 "prompt": user_prompt,
