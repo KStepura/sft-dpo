@@ -1,4 +1,4 @@
-# Пайплайн сравнения SFT и DPO на одной базовой модели. 
+Пайплайн сравнения SFT и DPO на одной базовой модели. 
 Кросс-доменная оценка на трёх треках.
 
 | | |
@@ -117,14 +117,12 @@ LoRA-адаптеры (`outputs/`, ~27 GB) и raw-логи (`logs/`) исклю�
 | Apples-to-apples | `configs/sum_baseline_pairs{,_seed1337}.json` vs `configs/summarization{,_seed1337}.json` |
 | IPO vs sigmoid | `configs/sum_sigmoid.json` vs `configs/summarization.json` |
 | Cross-domain D1–D6 | `bash runs/run_cross_domain_d1.sh && bash runs/run_cross_domain_d2.sh && bash runs/run_cross_domain_matrix.sh` |
-| Полная ночная цепочка | `bash runs/run_overnight_chain.sh` |
+| Полная цепочка | `bash runs/run_overnight_chain.sh` |
 | Перегенерация фигур | `.venv/bin/python scripts/analysis/make_figures.py` |
 | Перегенерация сводки | `.venv/bin/python scripts/analysis/aggregate.py` |
 
-## Цитирование
 
 ```
 Степура Е.В. Адаптация языковой модели: сравнение Supervised Fine-Tuning и
-Direct Preference Optimization на кросс-доменных бенчмарках. Бакалаврская
-ВКР, НИУ ВШЭ, ФКН, 2026.
+Direct Preference Optimization на кросс-доменных бенчмарках. ВКР, НИУ ВШЭ, ФКН, 2026.
 ```
